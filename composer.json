@@ -8,9 +8,8 @@
     {
         "name": "Uncle Cheese",
         "email": "unclecheese@leftandmain.com"
-    },
-    "require":
-    {
+    }],
+    "require": {
         "silverstripe/framework": "3.*",
 	    "silverstripe/cms": "3.*"
     }
