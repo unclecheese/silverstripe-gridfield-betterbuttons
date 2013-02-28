@@ -1,6 +1,9 @@
 Better Buttons for GridField
 ====================================
 
+![Screenshot](http://dashboard.unclecheeseproductions.com/mysite/images/better_buttons.png)
+
+
 Modifies the detail form of GridFields to use more user-friendly actions, including:
 
 * **Save and add another**: Create a record, and go right to adding another one, without having to click the back button, and then add again.
