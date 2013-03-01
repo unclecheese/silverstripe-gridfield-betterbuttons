@@ -1,0 +1,14 @@
+et_EE:
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Jah, kustuta see kirje.'
+    CANCEL: Katkesta
+    NEXTRECORD: 'Liigu järgmisele kirjele'
+    PREVIOUSRECORD: 'Liigu eelmisele kirjele'
+    SAVEANDADD: 'Salvesta ja lisa veel üks'
+    SAVEANDADDFILES: 'Salvesta ja lisa fail(e)'
+    SAVEANDCLOSE: 'Salvesta ja sule'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Ei, ära kustuta'
+    Delete: Kustuta
+    SAVE: Salvesta
+    SAVEANDCLOSE: 'Salvesta ja sule'
