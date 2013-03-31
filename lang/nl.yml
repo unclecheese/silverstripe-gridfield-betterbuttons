@@ -1,0 +1,14 @@
+nl:
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Definitief verwijderen'
+    CANCEL: 'Annuleren'
+    NEXTRECORD: 'Volgende'
+    PREVIOUSRECORD: 'Vorige'
+    SAVEANDADD: 'Opslaan en nieuwe aanmaken'
+    SAVEANDADDFILES: 'Opslaan en nieuwe bestand(en) toevoegen'
+    SAVEANDCLOSE: 'Opslaan en sluiten'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Annuleren'
+    Delete: 'Verwijder'
+    SAVE: 'Opslaan'
+    SAVEANDCLOSE: 'Opslaan en sluiten'
