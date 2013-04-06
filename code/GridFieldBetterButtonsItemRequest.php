@@ -92,6 +92,12 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 					->addExtraClass('ss-ui-action-constructive')
 					
 			);
+			
+			// Creates a record and offers a blank form to create another
+			$actions->push(FormAction::create("doSaveAndAdd", _t('GridFieldBetterButtons.SAVEANDADD','Save and add another'))
+					->setUseButtonTag(true)
+					->addExtraClass("ss-ui-action-constructive")
+			);
 
 			// Saves the record and redirects back to same record 
 			$actions->push(FormAction::create('doSave', _t('GridFieldDetailForm.SAVE', 'Save'))
