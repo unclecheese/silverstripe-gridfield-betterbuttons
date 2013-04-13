@@ -1,0 +1,14 @@
+de:
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Ja, diesen Eintrag löschen.'
+    CANCEL: Abbrechen
+    NEXTRECORD: 'Zum nächsten Eintrag'
+    PREVIOUSRECORD: 'Zum vorherigen Eintrag'
+    SAVEANDADD: 'Speichern und neuen Eintrag hinzufügen'
+    SAVEANDADDFILES: 'Speichern und Dateii(en) hinzufügen'
+    SAVEANDCLOSE: 'Speichern und schließen'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Nein, nicht löschen'
+    Delete: Löschen
+    SAVE: Speichern
+    SAVEANDCLOSE: 'Speichern und schließen'
