@@ -6,10 +6,6 @@ $.entwine('ss', function($) {
 		
 		Toggled: false,
 
-		onmatch: function() {
-			console.log("yo");
-		},
-
 		onclick: function(e) {
 			e.preventDefault();
 			

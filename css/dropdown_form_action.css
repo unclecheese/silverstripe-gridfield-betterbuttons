@@ -1,0 +1,94 @@
+.cms .Actions .dropdown-form-action {
+	position: absolute;
+	z-index: 9999999;
+	display: none;
+}
+
+.dropdown-form-action .dropdown-form-action-menu,
+.dropdown-form-action .dropdown-form-action-panel {
+	min-width: 160px;
+	max-width: 360px;
+	list-style: none;
+	background: #FFF;
+	border: solid 1px #DDD;
+	border: solid 1px rgba(0, 0, 0, .2);
+	border-radius: 6px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	overflow: visible;
+	padding: 4px 0;
+	margin: 0;
+}
+
+.dropdown-form-action .dropdown-form-action-panel {
+	padding: 10px;
+}
+
+.dropdown-form-action.dropdown-form-action-tip {
+	margin-top: 8px;
+}
+
+.dropdown-form-action.dropdown-form-action-tip:before {
+  position: absolute;
+  bottom: -6px;
+  left: 9px;
+  content: '';
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #CCC;
+  border-top-color: rgba(0, 0, 0, 0.2);
+  display: inline-block;
+}
+
+
+.dropdown-form-action.dropdown-form-action-tip:after {
+  position: absolute;
+  bottom: -5px;
+  left: 10px;
+  content: '';
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #FFF;
+  display: inline-block;
+}
+
+
+
+.dropdown-form-action.dropdown-form-action-scroll .dropdown-form-action-menu,
+.dropdown-form-action.dropdown-form-action-scroll .dropdown-form-action-panel {
+	max-height: 358px;
+	overflow: auto;
+}
+
+.dropdown-form-action .dropdown-form-action-menu li {
+	list-style: none;
+	padding: 0 0;
+	margin: 0;
+	line-height: 18px;
+}
+
+.dropdown-form-action .dropdown-form-action-menu li > button {
+	display: block;
+	color: rgb(21,86,178);
+	text-decoration: none;
+	line-height: 18px;
+	padding: 3px 15px;
+	white-space: nowrap;
+	background:transparent;
+	border:0;
+	width:100%;
+	text-align:left;
+}
+
+.dropdown-form-action .dropdown-form-action-menu li > button:hover {	
+	cursor: pointer;
+	border:0;
+	background:#eee;
+	box-shadow: none;
+}
+
+.dropdown-form-action .dropdown-form-action-menu li > button[disabled] {
+	color:#ccc;
+}
+.dropdown-form-action .dropdown-form-action-menu li > button[disabled]:hover {
+	background-color:transparent;
+}

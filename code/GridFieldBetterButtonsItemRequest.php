@@ -50,7 +50,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
 		
 		$actions = FieldList::create();
-		
 		// New records
 		if($this->owner->record->ID == 0) {
 			// Scan for UploadField instances, since those require a save before adding.
@@ -86,18 +85,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 		// Existing records
 		else {
-			// Saves the record and goes back to list
-			$actions->push(FormAction::create('doSaveAndQuit', _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'))
-					->setUseButtonTag(true)
-					->addExtraClass('ss-ui-action-constructive')
-					
-			);
-			
-			// Creates a record and offers a blank form to create another
-			$actions->push(FormAction::create("doSaveAndAdd", _t('GridFieldBetterButtons.SAVEANDADD','Save and add another'))
-					->setUseButtonTag(true)
-					->addExtraClass("ss-ui-action-constructive")
-			);
 
 			// Saves the record and redirects back to same record 
 			$actions->push(FormAction::create('doSave', _t('GridFieldDetailForm.SAVE', 'Save'))
@@ -105,6 +92,23 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 					->addExtraClass('ss-ui-action-constructive')
 					//->setAttribute('data-icon', 'accept')
 			);
+
+			$actions->push(DropdownFormAction::create(_t('GridFieldBetterButtons.SAVEAND','Save and...'), array(
+					FormAction::create("doSaveAndAdd",_t('GridFieldBetterButtons.SAVEANDADDNEW','Save and add new')),
+					FormAction::create("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close')),
+					$n = FormAction::create("doSaveAndNext", _t('GridFieldDetailForm.SAVEANDNEXT','Save and go to next record')),
+					$p = FormAction::create("doSaveAndPrev", _t('GridFieldDetailForm.SAVEANDPREV','Save and go to previous record'))
+				))
+				->addExtraClass("ss-ui-action-constructive")
+			);
+
+			if(!$this->getPreviousRecordID()) {				
+				$p->addExtraClass('disabled');
+			}
+
+			if(!$this->getNextRecordID()) {
+				$n->setAttribute('disabled',true);
+			}
 
 			// Cancels the delete action
 			$actions->push(LiteralField::create('cancelDelete', "<a class='gridfield-better-buttons-undodelete ss-ui-button' href='javascript:void(0)'>"._t('GridFieldDetailForm.CANCELDELETE', 'No. Don\'t delete')."</a>"));
@@ -116,29 +120,14 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 				->setAttribute("data-toggletext", _t('GridFieldBetterButtons.AREYOUSURE','Yes. Delete this item.'))
 			);
 
-
-			// Prev/next links. Todo: This doesn't scale well.
-			$map = $this->owner->gridField->getList()->column('ID');
-			$offset = array_search($this->owner->record->ID, $map);
-			$cssClass = $offset > 0 ? "cms-panel-link" : "disabled";
-			$prevLink = $offset > 0 ? Controller::join_links($this->owner->gridField->Link(),"item", $map[$offset-1]) : "javascript:void(0);";
-			$linkTitle = $offset > 0 ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
-				
-			$form->Fields()->unshift(LiteralField::create("prev", 
-				sprintf(
-					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /></a>",
-					$cssClass,
-					$prevLink,
-					$linkTitle
-				)
-			));
-
-			$hasNext = isset($map[$offset+1]);
-			$cssClass = $hasNext ? "cms-panel-link" : "disabled";
-			$prevLink = $hasNext ? Controller::join_links($this->owner->gridField->Link(),"item", $map[$offset+1]) : "javascript:void(0);";
-			$linkTitle = $hasNext ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
+			$nextRecordID = $this->getNextRecordID();			
+			$cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
+			$prevLink = $nextRecordID ? Controller::join_links($this->owner->gridField->Link(),"item", $nextRecordID) : "javascript:void(0);";
+			$linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
 		
-			$form->Fields()->unshift(LiteralField::create("next", 
+			
+			$actions->push(LiteralField::create("prev_next_open",'<div class="gridfield-better-buttons-prevnext-wrap">'));
+			$actions->push(LiteralField::create("next", 
 				sprintf(
 					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
 					$cssClass,
@@ -146,6 +135,22 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 					$linkTitle
 				)
 			));
+
+			// Prev/next links. Todo: This doesn't scale well.
+			$previousRecordID = $this->getPreviousRecordID();
+			$cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
+			$prevLink = $previousRecordID ? Controller::join_links($this->owner->gridField->Link(),"item", $previousRecordID) : "javascript:void(0);";
+			$linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
+
+			$actions->push(LiteralField::create("prev", 
+				sprintf(
+					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /></a>",
+					$cssClass,
+					$prevLink,
+					$linkTitle
+				)
+			));
+			$actions->push(LiteralField::create("prev_next_close",'</div>'));
 
 
 		}
@@ -198,6 +203,21 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		return Controller::curr()->redirect($this->getBackLink());
 	}
 
+
+
+	public function doSaveAndNext($data, $form) {
+		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
+		$link = Controller::join_links($this->owner->gridField->Link(),"item", $this->getNextRecordID());
+		return $this->saveAndRedirect($data, $form, $link);		
+	}
+
+
+
+	public function doSaveAndPrev($data, $form) {
+		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
+		$link = Controller::join_links($this->owner->gridField->Link(),"item", $this->getPreviousRecordID());
+		return $this->saveAndRedirect($data, $form, $link);		
+	}
 
 
 
@@ -288,6 +308,24 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			return $responseNegotiator->respond($controller->getRequest());
 		}
 		return Controller::curr()->redirect($redirectLink);
+	}
+
+
+
+
+	public function getPreviousRecordID() {
+		$map = $this->owner->gridField->getManipulatedList()->column('ID');
+		$offset = array_search($this->owner->record->ID, $map);
+		return ($offset > 0) ? $map[$offset-1] : false;
+	}
+
+
+
+
+	public function getNextRecordID() {
+		$map = $this->owner->gridField->getManipulatedList()->column('ID');
+		$offset = array_search($this->owner->record->ID, $map);
+		return isset($map[$offset+1]) ? $map[$offset+1] : false;
 	}
 
 }

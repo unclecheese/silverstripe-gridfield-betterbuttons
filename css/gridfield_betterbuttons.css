@@ -24,3 +24,11 @@
 	display:none;
 	float:right;
 }
+
+.cms .gridfield-better-buttons-prevnext-wrap {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 86px;
+	margin-left: -43px;	
+}
