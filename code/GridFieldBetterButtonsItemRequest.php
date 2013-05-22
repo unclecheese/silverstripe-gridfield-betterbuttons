@@ -90,14 +90,14 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$actions->push(FormAction::create('doSave', _t('GridFieldDetailForm.SAVE', 'Save'))
 					->setUseButtonTag(true)
 					->addExtraClass('ss-ui-action-constructive')
-					//->setAttribute('data-icon', 'accept')
+					->setAttribute('data-icon', 'accept')
 			);
 
 			$actions->push(DropdownFormAction::create(_t('GridFieldBetterButtons.SAVEAND','Save and...'), array(
-					FormAction::create("doSaveAndAdd",_t('GridFieldBetterButtons.SAVEANDADDNEW','Save and add new')),
-					FormAction::create("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close')),
-					$n = FormAction::create("doSaveAndNext", _t('GridFieldDetailForm.SAVEANDNEXT','Save and go to next record')),
-					$p = FormAction::create("doSaveAndPrev", _t('GridFieldDetailForm.SAVEANDPREV','Save and go to previous record'))
+					FormAction::create("doSaveAndAdd",_t('GridFieldBetterButtons.SAVEANDADDNEW','Save and add new'))->addExtraClass("saveAndAddNew"),
+					FormAction::create("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'))->addExtraClass("saveAndClose"),
+					$n = FormAction::create("doSaveAndNext", _t('GridFieldDetailForm.SAVEANDNEXT','Save and go to next record'))->addExtraClass("saveAndGoNext"),
+					$p = FormAction::create("doSaveAndPrev", _t('GridFieldDetailForm.SAVEANDPREV','Save and go to previous record'))->addExtraClass("saveAndGoPrev")
 				))
 				->addExtraClass("ss-ui-action-constructive")
 			);

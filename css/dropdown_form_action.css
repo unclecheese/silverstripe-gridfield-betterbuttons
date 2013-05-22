@@ -92,3 +92,33 @@
 .dropdown-form-action .dropdown-form-action-menu li > button[disabled]:hover {
 	background-color:transparent;
 }
+
+
+.dropdown-form-action .dropdown-form-action-menu li > button{
+	padding-left:32px;
+	position: relative;
+}
+.dropdown-form-action .dropdown-form-action-menu li > button:after{
+	position: absolute;
+	content:' ';
+	left:7px;
+	top:2px;
+	display: block;
+	width: 20px;
+	height: 20px;
+}
+.saveAndGoNext:after{
+	background: url('../images/bb_save_and_go_next.png') no-repeat center center;
+}
+.saveAndGoPrev:after{
+	background: url('../images/bb_save_and_go_prev.png') no-repeat center center;
+}
+.saveAndNew:after{
+	background: url('../images/bb_save_and_add_new.png') no-repeat center center;
+}
+.saveAndClose:after{
+	background: url('../images/bb_save_and_close.png') no-repeat center center;
+}
+.saveAndAddNew:after{
+	background: url('../images/bb_save_and_add_new.png') no-repeat center center;
+}
