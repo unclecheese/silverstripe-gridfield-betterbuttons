@@ -15,7 +15,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	/**
 	 * @var array Allowed controller actions
 	 */
-	static $allowed_actions = array (
+	private static $allowed_actions = array (
 		'addnew',
 		'edit',
 		'ItemEditForm'
