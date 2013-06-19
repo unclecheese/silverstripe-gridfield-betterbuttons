@@ -323,7 +323,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 
 	public function getNextRecordID() {
-		$map = $this->owner->gridField->getManipulatedList()->column('ID');
+		$map = $this->owner->gridField->getManipulatedList()->limit(PHP_INT_MAX, 0)->column('ID');
+		// If there are a million results and they were paginated, this is going to be slow now
+		// TODO: Search in the paginated list only somehow (grab the limit + offset and search from there?)
 		$offset = array_search($this->owner->record->ID, $map);
 		return isset($map[$offset+1]) ? $map[$offset+1] : false;
 	}
