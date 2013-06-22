@@ -66,6 +66,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 				$actions->push(FormAction::create("doSave", _t('GridFieldBetterButtons.SAVEANDADDFILES','Save and add file(s)'))
 						->setUseButtonTag(true)
 						->addExtraClass("ss-ui-action-constructive")
+						->setAttribute('data-icon', 'add')
 				);
 			}
 			else {
@@ -73,11 +74,13 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 				$actions->push(FormAction::create("doSaveAndAdd", _t('GridFieldBetterButtons.SAVEANDADD','Save and add another'))
 						->setUseButtonTag(true)
 						->addExtraClass("ss-ui-action-constructive")
+						->setAttribute('data-icon', 'add')
 				);
 				// Creates a record and goes back to list
 				$actions->push(FormAction::create("doSaveAndQuit", _t('GridFieldBetterButtons.SAVEANDCLOSE','Save and close'))
 						->setUseButtonTag(true)
 						->addExtraClass("ss-ui-action-constructive")
+						->setAttribute('data-icon', 'accept')
 				);
 			}
 
