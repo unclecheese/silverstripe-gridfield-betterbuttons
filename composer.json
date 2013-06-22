@@ -10,7 +10,7 @@
         "email": "unclecheese@leftandmain.com"
     }],
     "require": {
-        "silverstripe/framework": "3.*"
+        "silverstripe/framework": ">=3.1.x-dev,<4.0"
     }
     
 }
