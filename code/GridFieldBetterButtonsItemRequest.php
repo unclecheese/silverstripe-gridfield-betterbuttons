@@ -96,6 +96,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$actions->push(DropdownFormAction::create(_t('GridFieldBetterButtons.SAVEAND','Save and...'), array(
 					FormAction::create("doSaveAndAdd",_t('GridFieldBetterButtons.SAVEANDADDNEW','Save and add new'))->addExtraClass("saveAndAddNew"),
 					FormAction::create("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'))->addExtraClass("saveAndClose"),
+					$l = FormAction::create("doPublish", _t('GridFieldBetterButtons.SAVEANDPUBLISH', 'Save and publish'))->addExtraClass("saveAndPublish"),
 					$n = FormAction::create("doSaveAndNext", _t('GridFieldDetailForm.SAVEANDNEXT','Save and go to next record'))->addExtraClass("saveAndGoNext"),
 					$p = FormAction::create("doSaveAndPrev", _t('GridFieldDetailForm.SAVEANDPREV','Save and go to previous record'))->addExtraClass("saveAndGoPrev")
 				))
@@ -108,6 +109,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 			if(!$this->getNextRecordID()) {
 				$n->setAttribute('disabled',true);
+			}
+
+			if(!$this->checkVersioned()) {
+				$l->addExtraClass('disabled');	
 			}
 
 			// Cancels the delete action
@@ -220,6 +225,18 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 
+	/**
+	 * Handle the publish action.
+	 * 
+	 * @param $data array The form data.
+	 * @param $form Form The form object.
+	 */
+	public function doPublish($data, $form) {
+		$return = $this->owner->doSave($data, $form);
+		$this->owner->record->publish('Stage', 'Live');
+		return $return;
+	}
+
 
 	/**
 	 * Gets the top level controller.
@@ -329,6 +346,11 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		$offset = array_search($this->owner->record->ID, $map);
 		return isset($map[$offset+1]) ? $map[$offset+1] : false;
 	}
+
+	public function checkVersioned() {
+		return ( ! singleton($this->owner->record->ClassName)->hasExtension('Versioned') ) ? false : true;
+	}
+
 
 }
 

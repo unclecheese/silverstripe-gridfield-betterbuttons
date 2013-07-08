@@ -11,6 +11,7 @@ nl:
     SAVEANDCLOSE: 'Opslaan en sluiten'
     SAVEANDNEXT: 'Opslaan en naar de volgende'
     SAVEANDPREV: 'Opslaan en naar de vorige'
+    SAVEANDPUBLISH: 'Opslaan en publiceren'    
   GridFieldDetailForm:
     CANCELDELETE: 'Annuleren'
     Delete: 'Verwijder'
