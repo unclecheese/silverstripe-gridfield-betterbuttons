@@ -122,3 +122,6 @@
 .saveAndAddNew:after{
 	background: url('../images/bb_save_and_add_new.png') no-repeat center center;
 }
+.saveAndPublish:after{
+	background: url('../images/bb_save_and_publish.png') no-repeat center center;
+}

@@ -7,6 +7,7 @@ de:
     SAVEANDADD: 'Speichern und neuer Eintrag'
     SAVEANDADDFILES: 'Speichern und Dateien hinzufügen'
     SAVEANDCLOSE: 'Speichern und Schließen'
+    SAVEANDPUBLISH: 'Speichern und veröffentlichen'    
   GridFieldDetailForm:
     CANCELDELETE: 'Nein, bitte nicht löschen'
     Delete: 'Löschen'

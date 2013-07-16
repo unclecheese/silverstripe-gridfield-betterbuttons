@@ -7,6 +7,7 @@ en:
     SAVEANDADD: 'Save and add another'
     SAVEANDADDFILES: 'Save and add file(s)'
     SAVEANDCLOSE: 'Save and close'
+    SAVEANDPUBLISH: 'Save and publish'
   GridFieldDetailForm:
     CANCELDELETE: 'No. Don''t delete'
     Delete: Delete
