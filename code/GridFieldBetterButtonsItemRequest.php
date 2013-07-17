@@ -52,38 +52,18 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		$actions = FieldList::create();
 		// New records
 		if($this->owner->record->ID == 0) {
-			// Scan for UploadField instances, since those require a save before adding.
-			// Todo: there is probably a more intelligent way to do this.
-			$files = false;
-			foreach($this->owner->record->getCMSFields()->dataFields() as $field) {
-				if($field instanceof UploadField) {
-					$files = true;
-					break;
-				}				
-			}
-			if($files) {
-				// If upload fields are present, offer a "save and add files" button
-				$actions->push(FormAction::create("doSave", _t('GridFieldBetterButtons.SAVEANDADDFILES','Save and add file(s)'))
-						->setUseButtonTag(true)
-						->addExtraClass("ss-ui-action-constructive")
-						->setAttribute('data-icon', 'add')
-				);
-			}
-			else {
-				// Creates a record and offers a blank form to create another
-				$actions->push(FormAction::create("doSaveAndAdd", _t('GridFieldBetterButtons.SAVEANDADD','Save and add another'))
-						->setUseButtonTag(true)
-						->addExtraClass("ss-ui-action-constructive")
-						->setAttribute('data-icon', 'add')
-				);
-				// Creates a record and goes back to list
-				$actions->push(FormAction::create("doSaveAndQuit", _t('GridFieldBetterButtons.SAVEANDCLOSE','Save and close'))
-						->setUseButtonTag(true)
-						->addExtraClass("ss-ui-action-constructive")
-						->setAttribute('data-icon', 'accept')
-				);
-			}
-
+			// Creates a record and offers a blank form to create another
+			$actions->push(FormAction::create("doSaveAndAdd", _t('GridFieldBetterButtons.SAVEANDADD','Save and add another'))
+					->setUseButtonTag(true)
+					->addExtraClass("ss-ui-action-constructive")
+					->setAttribute('data-icon', 'add')
+			);
+			// Creates a record and goes back to list
+			$actions->push(FormAction::create("doSaveAndQuit", _t('GridFieldBetterButtons.SAVEANDCLOSE','Save and close'))
+					->setUseButtonTag(true)
+					->addExtraClass("ss-ui-action-constructive")
+					->setAttribute('data-icon', 'accept')
+			);
 		}
 
 		// Existing records
