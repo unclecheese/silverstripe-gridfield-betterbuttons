@@ -1,7 +1,20 @@
+.cms .Actions {
+	overflow: visible;
+}
+
 .cms .Actions .dropdown-form-action {
 	position: absolute;
 	z-index: 9999999;
-	display: none;
+	left: 0;
+	bottom: 120%;
+	display:none;
+}
+
+.dropdown-form-action-container {
+	overflow:visible;
+	position:relative;
+	display:inline-block;
+	vertical-align: bottom;
 }
 
 .dropdown-form-action .dropdown-form-action-menu,
