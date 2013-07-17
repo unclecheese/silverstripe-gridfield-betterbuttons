@@ -42,26 +42,11 @@ $.entwine('ss', function($) {
 	$('.dropdown-form-action').entwine({
 
 		onmatch: function() {
-			trigger = this.getButton();
-			button_top = trigger.position().top;
-			button_left = trigger.position().left;
-			this.css({
-				left: button_left,
-				top: button_top - 127 // This is so ghetto.
-			});
-
 			this.find("li > button").each(function() {
 				$(this).button('destroy');
 			})
-
-		},
-
-		getButton: function() {
-			return $('button[data-form-action-dropdown="#'+this.attr('id')+'"]');
 		}
-
-
-
+		
 	});
 
 
