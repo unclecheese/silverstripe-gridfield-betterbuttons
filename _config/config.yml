@@ -1,3 +1,24 @@
+---
+Name: betterbuttons
+---
 GridFieldDetailForm_ItemRequest:
   extensions:
     - GridFieldBetterButtonsItemRequest
+BetterButtonsViews:
+  create:
+    - Button_SaveAndAdd
+    - Button_SaveAndClose
+    - Button_Cancel
+  edit:
+    - Button_Save
+    - Group_SaveAnd
+    - Button_Cancel
+    - Button_Delete
+
+BetterButtonsGroups:
+  SaveAnd:
+    - Button_SaveAndNew
+    - Button_SaveAndClose
+    - Button_SaveAndNext
+    - Button_SaveAndPrev
+
