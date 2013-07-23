@@ -45,9 +45,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$label = (isset($groupConfig['label'])) ? $groupConfig['label'] : $groupName;
 			$buttons = (isset($groupConfig['buttons'])) ? $groupConfig['buttons'] : array ();
 			$button = DropdownFormAction::create(_t('GridFieldBetterButtons.'.$groupName, $label));
-			foreach($buttons as $b) {
-				if(class_exists($b)) {
-					$buttonObj = Injector::inst()->create($b);
+			foreach($buttons as $b => $bool) {
+				if($bool && class_exists($b)) {
+					$buttonObj = Injector::inst()->create($b);					
 					$button->push($buttonObj);
 					$buttonObj->configureFromForm($form, $this->owner);
 					$buttonObj->transformToInput();										
@@ -83,23 +83,27 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
 		
 		$form->setActions(FieldList::create());		
-		$create = Config::inst()->get("BetterButtonsViews", "create", Config::UNINHERITED);
-		$edit = Config::inst()->get("BetterButtonsViews", "edit", Config::UNINHERITED);
+		$create = Config::inst()->get("BetterButtonsViews", "create");
+		$edit = Config::inst()->get("BetterButtonsViews", "edit");
 		if(!$create) $create = array ();
 		if(!$edit) $edit = array ();		
 
 		// New records
 		if($this->owner->record->ID == 0) {
-			foreach($create as $buttonType) {				
-				$this->addButtonToForm($buttonType, $form);
+			foreach($create as $buttonType => $bool) {				
+				if($bool) {
+					$this->addButtonToForm($buttonType, $form);
+				}
 			}						
 		}
 
 		// Existing records
 		else {
 
-			foreach($edit as $buttonType) {
-				$this->addButtonToForm($buttonType, $form);
+			foreach($edit as $buttonType => $bool) {
+				if($bool) {
+					$this->addButtonToForm($buttonType, $form);
+				}
 			}
 
 			$nextRecordID = $this->getNextRecordID();			
