@@ -75,6 +75,8 @@ class Button_Delete extends Button {
 				->setAttribute("data-toggletext", _t('GridFieldBetterButtons.AREYOUSURE','Yes. Delete this item.'))
 		);
 
+	}
+
 }
 
 
