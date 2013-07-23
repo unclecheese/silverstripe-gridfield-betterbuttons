@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * Decorates {@link GridDetailForm_ItemRequest} to use new form actions and buttons.
  * 
@@ -36,6 +38,37 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 
+	protected function addButtonToForm($buttonType, $form) {
+		if(substr($buttonType, 0, 6) == "Group_") {
+			$groupName = substr($buttonType, 6);
+			$groupConfig = Config::inst()->get("BetterButtonsGroups", $groupName);
+			$label = (isset($groupConfig['label'])) ? $groupConfig['label'] : $groupName;
+			$buttons = (isset($groupConfig['buttons'])) ? $groupConfig['buttons'] : array ();
+			$button = DropdownFormAction::create(_t('GridFieldBetterButtons.'.$groupName, $label));
+			foreach($buttons as $b) {
+				if(class_exists($b)) {
+					$buttonObj = Injector::inst()->create($b);
+					$button->push($buttonObj);
+					$buttonObj->configureFromForm($form, $this->owner);
+					$buttonObj->transformToInput();										
+				}
+				else {
+					throw new Exception("The button type $b doesn't exist.");
+				}
+			}
+			$form->Actions()->push($button);
+		}
+		elseif(class_exists($buttonType)) {
+			$button = Injector::inst()->create($buttonType);
+			$form->Actions()->push($button);
+			$button->configureFromForm($form, $this->owner);
+			$button->transformToButton();
+		}
+		else {
+			throw new Exception("The button type $buttonType doesn't exist.");
+		}				
+	}
+
 
 
 	/**
@@ -49,64 +82,25 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		Requirements::css(BETTER_BUTTONS_DIR.'/css/gridfield_betterbuttons.css');
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
 		
-		$actions = FieldList::create();
+		$form->setActions(FieldList::create());		
+		$create = Config::inst()->get("BetterButtonsViews", "create", Config::UNINHERITED);
+		$edit = Config::inst()->get("BetterButtonsViews", "edit", Config::UNINHERITED);
+		if(!$create) $create = array ();
+		if(!$edit) $edit = array ();		
+
 		// New records
 		if($this->owner->record->ID == 0) {
-			// Creates a record and offers a blank form to create another
-			$actions->push(FormAction::create("doSaveAndAdd", _t('GridFieldBetterButtons.SAVEANDADD','Save and add another'))
-					->setUseButtonTag(true)
-					->addExtraClass("ss-ui-action-constructive")
-					->setAttribute('data-icon', 'add')
-			);
-			// Creates a record and goes back to list
-			$actions->push(FormAction::create("doSaveAndQuit", _t('GridFieldBetterButtons.SAVEANDCLOSE','Save and close'))
-					->setUseButtonTag(true)
-					->addExtraClass("ss-ui-action-constructive")
-					->setAttribute('data-icon', 'accept')
-			);
+			foreach($create as $buttonType) {				
+				$this->addButtonToForm($buttonType, $form);
+			}						
 		}
 
 		// Existing records
 		else {
 
-			// Saves the record and redirects back to same record 
-			$actions->push(FormAction::create('doSave', _t('GridFieldDetailForm.SAVE', 'Save'))
-					->setUseButtonTag(true)
-					->addExtraClass('ss-ui-action-constructive')
-					->setAttribute('data-icon', 'accept')
-			);
-
-			$actions->push(DropdownFormAction::create(_t('GridFieldBetterButtons.SAVEAND','Save and...'), array(
-					FormAction::create("doSaveAndAdd",_t('GridFieldBetterButtons.SAVEANDADDNEW','Save and add new'))->addExtraClass("saveAndAddNew"),
-					FormAction::create("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'))->addExtraClass("saveAndClose"),
-					$l = FormAction::create("doPublish", _t('GridFieldBetterButtons.SAVEANDPUBLISH', 'Save and publish'))->addExtraClass("saveAndPublish"),
-					$n = FormAction::create("doSaveAndNext", _t('GridFieldDetailForm.SAVEANDNEXT','Save and go to next record'))->addExtraClass("saveAndGoNext"),
-					$p = FormAction::create("doSaveAndPrev", _t('GridFieldDetailForm.SAVEANDPREV','Save and go to previous record'))->addExtraClass("saveAndGoPrev")
-				))
-				->addExtraClass("ss-ui-action-constructive")
-			);
-
-			if(!$this->getPreviousRecordID()) {				
-				$p->addExtraClass('disabled');
+			foreach($edit as $buttonType) {
+				$this->addButtonToForm($buttonType, $form);
 			}
-
-			if(!$this->getNextRecordID()) {
-				$n->setAttribute('disabled',true);
-			}
-
-			if(!$this->checkVersioned()) {
-				$l->addExtraClass('disabled');	
-			}
-
-			// Cancels the delete action
-			$actions->push(LiteralField::create('cancelDelete', "<a class='gridfield-better-buttons-undodelete ss-ui-button' href='javascript:void(0)'>"._t('GridFieldDetailForm.CANCELDELETE', 'No. Don\'t delete')."</a>"));
-
-			// Deletes the record
-			$actions->push(FormAction::create('doDelete', _t('GridFieldDetailForm.Delete', 'Delete'))
-				->setUseButtonTag(true)
-				->addExtraClass('gridfield-better-buttons-delete')
-				->setAttribute("data-toggletext", _t('GridFieldBetterButtons.AREYOUSURE','Yes. Delete this item.'))
-			);
 
 			$nextRecordID = $this->getNextRecordID();			
 			$cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
@@ -114,8 +108,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
 		
 			
-			$actions->push(LiteralField::create("prev_next_open",'<div class="gridfield-better-buttons-prevnext-wrap">'));
-			$actions->push(LiteralField::create("next", 
+			$form->Actions()->push(LiteralField::create("prev_next_open",'<div class="gridfield-better-buttons-prevnext-wrap">'));
+			$form->Actions()->push(LiteralField::create("next", 
 				sprintf(
 					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
 					$cssClass,
@@ -130,7 +124,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$prevLink = $previousRecordID ? Controller::join_links($this->owner->gridField->Link(),"item", $previousRecordID) : "javascript:void(0);";
 			$linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
 
-			$actions->push(LiteralField::create("prev", 
+			$form->Actions()->push(LiteralField::create("prev", 
 				sprintf(
 					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /></a>",
 					$cssClass,
@@ -138,16 +132,11 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 					$linkTitle
 				)
 			));
-			$actions->push(LiteralField::create("prev_next_close",'</div>'));
+			$form->Actions()->push(LiteralField::create("prev_next_close",'</div>'));
 
 
 		}
 
-		// Cancels the edit. Same as back button
-		$actions->push(FormAction::create("doCancel", _t('GridFieldBetterButtons.CANCEL','Cancel'))
-			->setUseButtonTag(true)
-		);
-		$form->setActions($actions);
 	}
 
 

@@ -6,6 +6,7 @@ GridFieldDetailForm_ItemRequest:
     - GridFieldBetterButtonsItemRequest
 BetterButtonsViews:
   create:
+    - Button_Save
     - Button_SaveAndAdd
     - Button_SaveAndClose
     - Button_Cancel
@@ -17,8 +18,10 @@ BetterButtonsViews:
 
 BetterButtonsGroups:
   SaveAnd:
-    - Button_SaveAndNew
-    - Button_SaveAndClose
-    - Button_SaveAndNext
-    - Button_SaveAndPrev
+    label: Save and...
+    buttons:
+      - Button_SaveAndAdd
+      - Button_SaveAndClose
+      - Button_SaveAndNext
+      - Button_SaveAndPrev
 
