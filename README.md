@@ -24,29 +24,49 @@ The default configuration:
 ```
 BetterButtonsViews:
   create:
-    - Button_Save
-    - Button_SaveAndAdd
-    - Button_SaveAndClose
-    - Button_Cancel
+    Button_Save: true
+    Button_SaveAndAdd: true
+    Button_SaveAndClose: true
+    Button_Cancel: true
   edit:
-    - Button_Save
-    - Group_SaveAnd
-    - Button_Cancel
-    - Button_Delete
+    Button_Save: true
+    Group_SaveAnd: true
+    Button_Cancel: true
+    Button_Delete: true
 
 BetterButtonsGroups:
   SaveAnd:
     label: Save and...
     buttons:
-      - Button_SaveAndAdd
-      - Button_SaveAndClose
-      - Button_SaveAndNext
-      - Button_SaveAndPrev
+      Button_SaveAndAdd: true
+      Button_SaveAndClose: true
+      Button_SaveAndNext: true
+      Button_SaveAndPrev: true
+
 
 ```
 
 
 Each button type is assigned a symbol in the YAML definition. It can be placed anywhere any number of times. Further, it can be placed in a named group, provided that group has been defined in the BetterButtonsGroups node. A button group is a single button with a label that exposes a series of options on click.
+
+Because of the idiosyncracies of the Config layer merging arrays, the buttons must be defined as on or off (true or false). To remove a button from the default configuration, you must explicitly set it to false in your project configuration. Here is an example custom configuration.
+
+```
+BetterButtonsViews:
+  edit:
+    Button_Save: false
+    Group_SaveAnd: false
+    Group_MyGroup: true
+BetterButtonsGroups:
+  MyGroup:
+    label: This is a group
+    buttons:
+      Button_Save: true
+      Button_SaveAndNext: true
+      
+```
+
+When creating groups, be sure not to duplicate any buttons that are outside the group, as form fields with the same name cannot appear twice in a form.
 
 ## Todo
 
