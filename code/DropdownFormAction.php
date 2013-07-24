@@ -8,14 +8,17 @@ class DropdownFormAction extends CompositeField {
 	protected static $instance_count = 0;	
 
 
+	protected $identifier;
+
 
 	public function __construct($title = null, $children = array ()) {
 		$this->Title = $title;
 		foreach($children as $c) {
 			$c->setUseButtonTag(true);
 		}
-		parent::__construct($children);
+		parent::__construct($children);		
 		self::$instance_count++;
+		$this->identifier = self::$instance_count;
 	}
 
 
@@ -31,7 +34,7 @@ class DropdownFormAction extends CompositeField {
 
 
 	public function DropdownID() {
-		return 'form-action-dropdown-'.self::$instance_count;
+		return 'form-action-dropdown-'.$this->identifier;
 	}
 
 

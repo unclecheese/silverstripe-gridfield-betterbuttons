@@ -15,6 +15,20 @@ BetterButtonsViews:
     Group_SaveAnd: true
     Button_Cancel: true
     Button_Delete: true
+  versioned_create:
+    Button_SaveDraft: true
+    Group_SaveDraftAnd: true
+    Button_Publish: true
+    Group_PublishAnd: true
+    Button_Cancel: true
+  versioned_edit:
+    Button_SaveDraft: true
+    Group_SaveDraftAnd: true
+    Button_Publish: true
+    Group_PublishAnd: true
+    Group_Versioning: true
+    Button_Cancel: true
+    Button_Delete: true
 
 BetterButtonsGroups:
   SaveAnd:
@@ -24,4 +38,19 @@ BetterButtonsGroups:
       Button_SaveAndClose: true
       Button_SaveAndNext: true
       Button_SaveAndPrev: true
+  SaveDraftAnd:
+    label: Save draft and...
+    buttons:
+      Button_SaveAndAdd: true
+      Button_SaveAndClose: true
+  PublishAnd:
+    label: Publish and...
+    buttons:
+      Button_PublishAndAdd: true
+      Button_PublishAndClose: true
+  Versioning:
+    label: Versioning...
+    buttons:
+      Button_Rollback: true
+      Button_Unpublish: true
 
