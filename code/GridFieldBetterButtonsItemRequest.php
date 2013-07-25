@@ -1,6 +1,7 @@
 <?php
 
 
+use UncleCheese\BetterButtons\Buttons;
 
 /**
  * Decorates {@link GridDetailForm_ItemRequest} to use new form actions and buttons.
@@ -34,7 +35,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	 * 
 	 * @param SS_HTTPRequest The request object
 	 */
-	public function addnew(SS_HTTPRequest $r) {
+	public function addnew(\SS_HTTPRequest $r) {
 		return Controller::curr()->redirect(Controller::join_links($this->owner->gridField->Link("item"),"new"));
 	}
 
@@ -47,6 +48,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$buttons = (isset($groupConfig['buttons'])) ? $groupConfig['buttons'] : array ();
 			$button = DropdownFormAction::create(_t('GridFieldBetterButtons.'.$groupName, $label));
 			foreach($buttons as $b => $bool) {
+				$b = "UncleCheese\BetterButtons\Buttons\\".$b;
 				if($bool && class_exists($b)) {
 					$buttonObj = Injector::inst()->create($b);
 					if(!$buttonObj->shouldDisplay($form, $this->owner)) continue;
@@ -61,8 +63,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			}
 			$form->Actions()->push($button);
 		}
-		elseif(class_exists($buttonType)) {
-			$button = Injector::inst()->create($buttonType);
+		elseif(class_exists("UncleCheese\BetterButtons\Buttons\\".$buttonType)) {
+			$button = Injector::inst()->create("UncleCheese\BetterButtons\Buttons\\".$buttonType);
 			if(!$button->shouldDisplay($form, $this->owner)) return;
 			if(($button instanceof Button_Versioned) && !$this->checkVersioned()) continue;
 			$form->Actions()->push($button);
@@ -86,7 +88,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 		Requirements::css(BETTER_BUTTONS_DIR.'/css/gridfield_betterbuttons.css');
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
-		
 		$form->setActions(FieldList::create());		
 		$new = ($this->owner->record->ID == 0);
 		$list = $new ?
@@ -213,6 +214,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 
+
+	public function doNew($data, $form) {
+		return Controller::curr()->redirect($this->owner->Link('addnew'));
+	}
 
 
 
@@ -500,5 +505,4 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 
 }
-
 

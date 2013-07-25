@@ -1,6 +1,9 @@
 <?php
 
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+
 abstract class Button extends \FormAction {
 
 
@@ -65,11 +68,26 @@ class Button_Cancel extends Button {
 
 
 
+
+class Button_New extends Button {
+
+
+	public function __construct() {
+		parent::__construct("doNew", _t('GridFieldBetterButtons.NEWRECORD','New record'));
+		$this			
+			->setAttribute('data-icon', 'add')
+		;
+
+	}
+}
+
+
+
 class Button_Delete extends Button {
 
 	public function __construct() {
 		parent::__construct('doDelete', _t('GridFieldDetailForm.Delete', 'Delete'));
-		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons_delete.js');		
+		\Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons_delete.js');		
 		return $this
 			->setUseButtonTag(true)
 			->addExtraClass('gridfield-better-buttons-delete')
