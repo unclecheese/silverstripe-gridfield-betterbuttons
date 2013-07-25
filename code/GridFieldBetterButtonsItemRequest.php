@@ -1,6 +1,7 @@
 <?php
 
 
+use UncleCheese\BetterButtons\Buttons;
 
 /**
  * Decorates {@link GridDetailForm_ItemRequest} to use new form actions and buttons.
@@ -20,6 +21,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	private static $allowed_actions = array (
 		'addnew',
 		'edit',
+		'save',
 		'ItemEditForm'
 	);
 	
@@ -33,7 +35,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	 * 
 	 * @param SS_HTTPRequest The request object
 	 */
-	public function addnew(SS_HTTPRequest $r) {
+	public function addnew(\SS_HTTPRequest $r) {
 		return Controller::curr()->redirect(Controller::join_links($this->owner->gridField->Link("item"),"new"));
 	}
 
@@ -46,8 +48,11 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$buttons = (isset($groupConfig['buttons'])) ? $groupConfig['buttons'] : array ();
 			$button = DropdownFormAction::create(_t('GridFieldBetterButtons.'.$groupName, $label));
 			foreach($buttons as $b => $bool) {
+				$b = "UncleCheese\BetterButtons\Buttons\\".$b;
 				if($bool && class_exists($b)) {
-					$buttonObj = Injector::inst()->create($b);					
+					$buttonObj = Injector::inst()->create($b);
+					if(!$buttonObj->shouldDisplay($form, $this->owner)) continue;
+					if(($buttonObj instanceof Button_Versioned) && !$this->checkVersioned()) continue;
 					$button->push($buttonObj);
 					$buttonObj->configureFromForm($form, $this->owner);
 					$buttonObj->transformToInput();										
@@ -58,8 +63,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			}
 			$form->Actions()->push($button);
 		}
-		elseif(class_exists($buttonType)) {
-			$button = Injector::inst()->create($buttonType);
+		elseif(class_exists("UncleCheese\BetterButtons\Buttons\\".$buttonType)) {
+			$button = Injector::inst()->create("UncleCheese\BetterButtons\Buttons\\".$buttonType);
+			if(!$button->shouldDisplay($form, $this->owner)) return;
+			if(($button instanceof Button_Versioned) && !$this->checkVersioned()) continue;
 			$form->Actions()->push($button);
 			$button->configureFromForm($form, $this->owner);
 			$button->transformToButton();
@@ -81,39 +88,38 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 		Requirements::css(BETTER_BUTTONS_DIR.'/css/gridfield_betterbuttons.css');
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
-		
 		$form->setActions(FieldList::create());		
-		$create = Config::inst()->get("BetterButtonsViews", "create");
-		$edit = Config::inst()->get("BetterButtonsViews", "edit");
-		if(!$create) $create = array ();
-		if(!$edit) $edit = array ();		
+		$new = ($this->owner->record->ID == 0);
+		$list = $new ?
+			Config::inst()->get("BetterButtonsViews", $this->checkVersioned() ? "versioned_create" : "create") :
+			Config::inst()->get("BetterButtonsViews", $this->checkVersioned() ? "versioned_edit" : "edit");
+		
+		if(!$list) $list = array ();
 
-		// New records
-		if($this->owner->record->ID == 0) {
-			foreach($create as $buttonType => $bool) {				
-				if($bool) {
-					$this->addButtonToForm($buttonType, $form);
-				}
-			}						
+		foreach($list as $buttonType => $bool) {				
+			if($bool && $buttonType) {
+				$this->addButtonToForm($buttonType, $form);
+			}
+		}						
+
+		if(!$new) {
+			$this->addPagination($form->Actions());
 		}
 
-		// Existing records
-		else {
+	}
 
-			foreach($edit as $buttonType => $bool) {
-				if($bool) {
-					$this->addButtonToForm($buttonType, $form);
-				}
-			}
 
+
+
+	protected function addPagination(FieldList $actions) {
 			$nextRecordID = $this->getNextRecordID();			
 			$cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
 			$prevLink = $nextRecordID ? Controller::join_links($this->owner->gridField->Link(),"item", $nextRecordID) : "javascript:void(0);";
 			$linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
 		
 			
-			$form->Actions()->push(LiteralField::create("prev_next_open",'<div class="gridfield-better-buttons-prevnext-wrap">'));
-			$form->Actions()->push(LiteralField::create("next", 
+			$actions->push(LiteralField::create("prev_next_open",'<div class="gridfield-better-buttons-prevnext-wrap">'));
+			$actions->push(LiteralField::create("next", 
 				sprintf(
 					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
 					$cssClass,
@@ -128,7 +134,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$prevLink = $previousRecordID ? Controller::join_links($this->owner->gridField->Link(),"item", $previousRecordID) : "javascript:void(0);";
 			$linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
 
-			$form->Actions()->push(LiteralField::create("prev", 
+			$actions->push(LiteralField::create("prev", 
 				sprintf(
 					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /></a>",
 					$cssClass,
@@ -136,14 +142,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 					$linkTitle
 				)
 			));
-			$form->Actions()->push(LiteralField::create("prev_next_close",'</div>'));
-
-
-		}
+			$actions->push(LiteralField::create("prev_next_close",'</div>'));
 
 	}
-
-
 
 
 	/**
@@ -170,6 +171,18 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		return $this->saveAndRedirect($data, $form, $this->getBackLink());
 	}
 
+
+
+	public function doPublishAndAdd($data, $form) {
+		return $this->publish($data, $form, $this->owner, $this->owner->Link('addnew'));
+	}
+
+
+
+	public function doPublishAndClose($data, $form) {
+		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
+		return $this->publish($data, $form, $this->owner, $this->getBackLink());		
+	}
 
 
 
@@ -201,17 +214,149 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 
-	/**
-	 * Handle the publish action.
-	 * 
-	 * @param $data array The form data.
-	 * @param $form Form The form object.
-	 */
-	public function doPublish($data, $form) {
-		$return = $this->owner->doSave($data, $form);
-		$this->owner->record->publish('Stage', 'Live');
-		return $return;
+
+	public function doNew($data, $form) {
+		return Controller::curr()->redirect($this->owner->Link('addnew'));
 	}
+
+
+
+	public function save($data, $form) {
+		return $this->owner->doSave($data, $form);
+	}
+
+
+
+
+    /**
+     * @param $data
+     * @param $form
+     * @return HTMLText|SS_HTTPResponse|ViewableData_Customised
+     */
+    public function publish($data, $form, $request = null, $redirectURL = null)
+    {
+
+        $new_record = $this->owner->record->ID == 0;
+        $controller = Controller::curr();
+        $list = $this->owner->gridField->getList();
+
+        if ($list instanceof ManyManyList) {
+            // Data is escaped in ManyManyList->add()
+            $extraData = (isset($data['ManyMany'])) ? $data['ManyMany'] : null;
+        } else {
+            $extraData = null;
+        }
+
+        if (!$this->owner->record->canEdit()) {
+            return $controller->httpError(403);
+        }
+
+        if (isset($data['ClassName']) && $data['ClassName'] != $this->owner->record->ClassName) {
+            $newClassName = $data['ClassName'];
+            // The records originally saved attribute was overwritten by $form->saveInto($record) before.
+            // This is necessary for newClassInstance() to work as expected, and trigger change detection
+            // on the ClassName attribute
+            $this->owner->record->setClassName($this->owner->record->ClassName);
+            // Replace $record with a new instance
+            $this->owner->record = $this->owner->record->newClassInstance($newClassName);
+        }
+
+        try {
+            $form->saveInto($this->owner->record);
+            $this->owner->record->write();
+            $list->add($this->owner->record, $extraData);
+            $this->owner->record->publish('Stage', 'Live');
+        } catch (ValidationException $e) {
+            $form->sessionMessage($e->getResult()->message(), 'bad');
+            $responseNegotiator = new PjaxResponseNegotiator(array(
+                'CurrentForm' => function () use (&$form) {
+                    return $form->forTemplate();
+                },
+                'default'     => function () use (&$controller) {
+                    return $controller->redirectBack();
+                }
+            ));
+            if ($controller->getRequest()->isAjax()) {
+                $controller->getRequest()->addHeader('X-Pjax', 'CurrentForm');
+            }
+
+            return $responseNegotiator->respond($controller->getRequest());
+        }
+
+        // TODO Save this item into the given relationship
+
+        if($redirectURL) {
+        	return $controller->redirect($redirectURL);
+        }
+
+
+        $link = '<a href="' . $this->owner->Link('edit') . '">"'
+            . htmlspecialchars($this->owner->record->Title, ENT_QUOTES)
+            . '"</a>';
+        $message = sprintf(
+            'Published %s %s',
+            $this->owner->record->i18n_singular_name(),
+            $link
+        );
+
+        $form->sessionMessage($message, 'good');
+
+        if ($new_record) {
+            return Controller::curr()->redirect($this->owner->Link());
+        } elseif ($this->owner->gridField->getList()->byId($this->owner->record->ID)) {
+            // Return new view, as we can't do a "virtual redirect" via the CMS Ajax
+            // to the same URL (it assumes that its content is already current, and doesn't reload)
+            return $this->owner->edit(Controller::curr()->getRequest());
+        } else {
+            // Changes to the record properties might've excluded the record from
+            // a filtered list, so return back to the main view if it can't be found
+            $noActionURL = $controller->removeAction($data['url']);
+            $controller->getRequest()->addHeader('X-Pjax', 'Content');
+
+            return $controller->redirect($noActionURL, 302);
+        }
+    }
+
+    /**
+     * @return HTMLText|ViewableData_Customised
+     */
+    public function unPublish()
+    {
+        $origStage = Versioned::current_stage();
+        Versioned::reading_stage('Live');
+
+        // This way our ID won't be unset
+        $clone = clone $this->owner->record;
+        $clone->delete();
+
+        Versioned::reading_stage($origStage);
+
+        return $this->owner->edit(Controller::curr()->getRequest());
+    }
+    /**
+     * @param $data
+     * @param $form
+     * @return HTMLText|ViewableData_Customised
+     */
+    public function rollback($data, $form)
+    {
+        if (!$this->owner->record->canEdit()) {
+            return Controller::curr()->httpError(403);
+        }
+
+        $this->owner->record->doRollbackTo('Live');
+
+        $this->owner->record = DataList::create($this->owner->record->class)->byID($this->owner->record->ID);
+
+        $message = _t(
+            'CMSMain.ROLLEDBACKPUBv2',
+            "Rolled back to published version."
+        );
+
+        $form->sessionMessage($message, 'good');
+
+        return $this->owner->edit(Controller::curr()->getRequest());
+    }
 
 
 	/**
@@ -324,10 +469,40 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 	public function checkVersioned() {
-		return ( ! singleton($this->owner->record->ClassName)->hasExtension('Versioned') ) ? false : true;
+		$exts = $this->owner->record->getExtensionInstances();
+		if($exts) {
+			foreach($exts as $e) {
+				if($e instanceof Versioned) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 
-}
 
+	public function recordIsPublished() {
+
+        if(!$this->checkVersioned()) return false;
+        
+        if ($this->owner->record->isNew()) {
+            return false;
+        }
+
+        $table = $this->owner->record->class;
+
+        while (($p = get_parent_class($table)) !== 'DataObject') {
+            $table = $p;
+        }
+
+        return (bool) DB::query("SELECT \"ID\" FROM \"{$table}_Live\" WHERE \"ID\" = {$this->owner->record->ID}")->value();
+    
+
+	}
+
+
+
+
+}
 

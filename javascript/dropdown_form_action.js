@@ -21,6 +21,7 @@ $.entwine('ss', function($) {
 		onclick: function(e) {
 			e.preventDefault();
 			e.stopPropagation();
+			$('.dropdown-form-action').not(this.getDropdown()).hide();
 			if(!this.getDropdown().is(":visible")) {
 				this.getDropdown().show();				
 			}
