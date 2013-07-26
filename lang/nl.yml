@@ -1,19 +1,27 @@
 nl:
+  CMSMain:
+    ROLLEDBACKPUBv2: 'Terugzetten naar gepubliceerde versie'
+    SAVEDRAFT: 'Concept opslaan'
   GridFieldBetterButtons:
-    AREYOUSURE: 'Definitief verwijderen'
-    CANCEL: 'Annuleren'
-    NEXTRECORD: 'Volgende'
-    PREVIOUSRECORD: 'Vorige'
-    SAVEANDADD: 'Opslaan en nieuwe aanmaken'
+    AREYOUSURE: 'Ja, verwijder dit definitief'
+    CANCEL: Annuleren
+    NEWRECORD: 'Nieuwe aanmaken'
+    NEXTRECORD: 'Ga naar de volgende'
+    PREVIOUSRECORD: 'Ga naar de vorige'
     SAVEANDADDNEW: 'Opslaan en nieuwe aanmaken'
-    SAVEAND: 'Opslaan en...'
-    SAVEANDADDFILES: 'Opslaan en nieuwe bestand(en) toevoegen'
-    SAVEANDCLOSE: 'Opslaan en sluiten'
-    SAVEANDNEXT: 'Opslaan en naar de volgende'
-    SAVEANDPREV: 'Opslaan en naar de vorige'
-    SAVEANDPUBLISH: 'Opslaan en publiceren'    
   GridFieldDetailForm:
-    CANCELDELETE: 'Annuleren'
-    Delete: 'Verwijder'
-    SAVE: 'Opslaan'
+    CANCELDELETE: 'Nee, niet definitief verwijderen.'
+    Delete: Verwijderen
+    PUBLISHANDADD: 'Publiceren en nieuwe aanmaken'
+    PUBLISHANDQUITE: 'Publiceren en sluiten'
+    SAVE: Opslaan
     SAVEANDCLOSE: 'Opslaan en sluiten'
+    SAVEANDNEXT: 'Opslaan en ga naar de volgende'
+    SAVEANDPREV: 'Opslaan en ga naar de vorige'
+  SiteTree:
+    BUTTONCANCELDRAFT: 'Annuleer concept veranderingen'
+    BUTTONCANCELDRAFTDESC: 'Verwijder concept en zet terug naar de gepubliceerde versie.'
+    BUTTONPUBLISHED: Gepubliceerd
+    BUTTONSAVED: Opgeslagen
+    BUTTONSAVEPUBLISH: 'Opslaan en publiceren'
+    BUTTONUNPUBLISH: 'Publicatie intrekken'
