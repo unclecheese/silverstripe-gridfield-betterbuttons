@@ -22,6 +22,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		'addnew',
 		'edit',
 		'save',
+		'cancel',
 		'ItemEditForm'
 	);
 	
@@ -50,12 +51,14 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			foreach($buttons as $b => $bool) {
 				$b = "UncleCheese\BetterButtons\Buttons\\".$b;
 				if($bool && class_exists($b)) {
-					$buttonObj = Injector::inst()->create($b);
-					if(!$buttonObj->shouldDisplay($form, $this->owner)) continue;
-					if(($buttonObj instanceof Button_Versioned) && !$this->checkVersioned()) continue;
-					$button->push($buttonObj);
-					$buttonObj->configureFromForm($form, $this->owner);
-					$buttonObj->transformToInput();										
+					$buttonObj = Injector::inst()->create($b, $form, $this->owner);
+					if($buttonObj instanceof UncleCheese\BetterButtons\Buttons\Button) {
+						if(!$buttonObj->shouldDisplay()) continue;
+						if(($buttonObj instanceof Button_Versioned) && !$this->checkVersioned()) continue;
+						$buttonObj->transformToInput();	
+					}		
+					$button->push($buttonObj);					
+												
 				}
 				else {
 					throw new Exception("The button type $b doesn't exist.");
@@ -64,12 +67,14 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$form->Actions()->push($button);
 		}
 		elseif(class_exists("UncleCheese\BetterButtons\Buttons\\".$buttonType)) {
-			$button = Injector::inst()->create("UncleCheese\BetterButtons\Buttons\\".$buttonType);
-			if(!$button->shouldDisplay($form, $this->owner)) return;
-			if(($button instanceof Button_Versioned) && !$this->checkVersioned()) continue;
-			$form->Actions()->push($button);
-			$button->configureFromForm($form, $this->owner);
-			$button->transformToButton();
+			$button = Injector::inst()->create("UncleCheese\BetterButtons\Buttons\\".$buttonType, $form, $this->owner);
+			if($button instanceof UncleCheese\BetterButtons\Buttons\Button) {
+				if(!$button->shouldDisplay()) return;
+				if(($button instanceof Button_Versioned) && !$this->checkVersioned()) continue;
+				$button->transformToButton();
+			}
+			$form->Actions()->push($button);			
+			
 		}
 		else {
 			throw new Exception("The button type $buttonType doesn't exist.");
@@ -192,7 +197,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	 * @param array The form data
 	 * @param Form The form object
 	 */	
-	public function doCancel($data, $form) {
+	public function cancel() {
 		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
 		return Controller::curr()->redirect($this->getBackLink());
 	}

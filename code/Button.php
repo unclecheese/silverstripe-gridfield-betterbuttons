@@ -7,9 +7,7 @@ namespace UncleCheese\BetterButtons\Buttons;
 abstract class Button extends \FormAction {
 
 
-	public function configureFromForm(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-
-	}
+	protected $request;
 
 
 	public function transformToButton() {
@@ -23,8 +21,15 @@ abstract class Button extends \FormAction {
 	}
 
 
-	public function shouldDisplay(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+	public function shouldDisplay() {
 		return true;
+	}
+
+
+
+	public function __construct($name, $title = null, \Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		$this->request = $request;
+		return parent::__construct($name, $title, $form);
 	}
 }
 
@@ -32,8 +37,8 @@ abstract class Button extends \FormAction {
 class Button_Save extends Button {
 
 	
-	public function __construct() {
-		parent::__construct('save',_t('GridFieldDetailForm.SAVE', 'Save'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		parent::__construct('save',_t('GridFieldDetailForm.SAVE', 'Save'), $form, $request);
 		return $this;
 	}
 
@@ -57,12 +62,16 @@ class Button_Save extends Button {
 
 
 
-class Button_Cancel extends Button {
+class Button_Cancel extends \LiteralField {
 
 
-	public function __construct() {
-		parent::__construct("doCancel", _t('GridFieldBetterButtons.CANCEL','Cancel'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		$link = $request->Link("cancel");
+		parent::__construct("doCancel", '<a class="backlink ss-ui-button cms-panel-link" href="'.$link.'">'._t('GridFieldBetterButtons.CANCEL','Cancel').'</a>', $form, $request);
 	}
+
+
+
 
 }
 
@@ -72,8 +81,8 @@ class Button_Cancel extends Button {
 class Button_New extends Button {
 
 
-	public function __construct() {
-		parent::__construct("doNew", _t('GridFieldBetterButtons.NEWRECORD','New record'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		parent::__construct("doNew", _t('GridFieldBetterButtons.NEWRECORD','New record'), $form, $request);
 		$this			
 			->setAttribute('data-icon', 'add')
 		;
@@ -85,9 +94,15 @@ class Button_New extends Button {
 
 class Button_Delete extends Button {
 
-	public function __construct() {
-		parent::__construct('doDelete', _t('GridFieldDetailForm.Delete', 'Delete'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {		
+		parent::__construct('doDelete', _t('GridFieldDetailForm.Delete', 'Delete'), $form, $request);		
+		$this->request = $request;
 		\Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons_delete.js');		
+		$form->Actions()->insertBefore(
+			\LiteralField::create('cancelDelete', "<a class='gridfield-better-buttons-undodelete ss-ui-button' href='javascript:void(0)'>"._t('GridFieldDetailForm.CANCELDELETE', 'No. Don\'t delete')."</a>"),
+			"action_doDelete"
+		);
+		
 		return $this
 			->setUseButtonTag(true)
 			->addExtraClass('gridfield-better-buttons-delete')
@@ -97,19 +112,12 @@ class Button_Delete extends Button {
 	}
 
 
-	public function shouldDisplay(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-		return !$request->recordIsPublished();
+	public function shouldDisplay() {		
+		return !$this->request->recordIsPublished();
 	}
 
 
 
-	public function configureFromForm(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-		$form->Actions()->insertBefore(
-			\LiteralField::create('cancelDelete', "<a class='gridfield-better-buttons-undodelete ss-ui-button' href='javascript:void(0)'>"._t('GridFieldDetailForm.CANCELDELETE', 'No. Don\'t delete')."</a>"),
-			"action_doDelete"
-		);
-		return $this;
-	}
 	
 }
 
@@ -118,8 +126,8 @@ class Button_Delete extends Button {
 class Button_SaveAndAdd extends Button {
 
 	
-	public function __construct() {
-		parent::__construct("doSaveAndAdd",_t('GridFieldBetterButtons.SAVEANDADDNEW','Save and add new'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		parent::__construct("doSaveAndAdd",_t('GridFieldBetterButtons.SAVEANDADDNEW','Save and add new'), $form, $request);
 		return $this;		
 	}
 
@@ -145,8 +153,8 @@ class Button_SaveAndAdd extends Button {
 
 class Button_SaveAndClose extends Button {
 
-	public function __construct() {
-		parent::__construct("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		parent::__construct("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'), $form, $request);
 		return $this;
 
 	}
@@ -174,8 +182,13 @@ class Button_SaveAndClose extends Button {
 class Button_SaveAndNext extends Button {
 
 
-	public function __construct() {
-		parent::__construct("doSaveAndNext", _t('GridFieldDetailForm.SAVEANDNEXT','Save and go to next record'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		parent::__construct("doSaveAndNext", _t('GridFieldDetailForm.SAVEANDNEXT','Save and go to next record'), $form, $request);
+
+		if(!$request->getNextRecordID()) {			
+			$this->setDisabled(true);
+		}		
+
 		return $this;		
 	}
 
@@ -188,19 +201,19 @@ class Button_SaveAndNext extends Button {
 
 
 
-	public function configureFromForm(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-		if(!$request->getNextRecordID()) {			
-			return $this->setDisabled(true);
-		}		
-	}
 }
 
 
 
 class Button_SaveAndPrev extends Button {
 
-	public function __construct() {
-		parent::__construct("doSaveAndPrev", _t('GridFieldDetailForm.SAVEANDPREV','Save and go to previous record'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		parent::__construct("doSaveAndPrev", _t('GridFieldDetailForm.SAVEANDPREV','Save and go to previous record'), $form, $request);
+
+		if(!$request->getPreviousRecordID()) {
+			$this->setDisabled(true);
+		}		
+
 		return $this;
 	}
 
@@ -212,12 +225,6 @@ class Button_SaveAndPrev extends Button {
 	}
 
 
-
-	public function configureFromForm(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-		if(!$request->getPreviousRecordID()) {
-			return $this->setDisabled(true);
-		}		
-	}
 }
 
 
@@ -227,8 +234,8 @@ interface Button_Versioned {}
 
 
 class Button_SaveDraft extends Button implements Button_Versioned {
-	public function __construct() {	
-        parent::__construct('save', _t('SiteTree.BUTTONSAVED', 'Saved'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+        parent::__construct('save', _t('SiteTree.BUTTONSAVED', 'Saved'), $form, $request);
         $this
             ->setAttribute('data-icon', 'accept')
             ->setAttribute('data-icon-alternate', 'addpage')
@@ -243,20 +250,15 @@ class Button_SaveDraft extends Button implements Button_Versioned {
 
 class Button_Publish extends Button implements Button_Versioned {
 
-	public function __construct() {
-        parent::__construct('publish',_t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+        parent::__construct('publish',_t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'), $form, $request);
        	$this
             ->setAttribute('data-icon', 'accept')
             ->setAttribute('data-icon-alternate', 'disk')
             ->setAttribute('data-text-alternate', _t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'))
         ;
 
-        return $this;
-		
-	}
 
-
-	public function configureFromForm(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
 		$published = $request->recordIsPublished();
 		if($published) {
 			$this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));			
@@ -265,18 +267,21 @@ class Button_Publish extends Button implements Button_Versioned {
 			$this->addExtraClass('ss-ui-alternate');
 
 		}
+
+
+        return $this;
+		
 	}
+
+
 
 }
 
 
 class Button_PublishAndAdd extends Button_SaveAndAdd implements Button_Versioned {
 
-	public function __construct() {
-		return parent::__construct()
-			->setName('doPublishAndAdd')
-			->setTitle(_t('GridFieldDetailForm.PUBLISHANDADD','Publish and add new'))
-		;
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		return parent::__construct('doPublishAndAdd', _t('GridFieldDetailForm.PUBLISHANDADD','Publish and add new'), $form, $request);
 	}
 }
 
@@ -284,11 +289,9 @@ class Button_PublishAndAdd extends Button_SaveAndAdd implements Button_Versioned
 
 class Button_PublishAndClose extends Button_SaveAndClose implements Button_Versioned {
 
-	public function __construct() {
-		return parent::__construct()
-			->setName('doPublishAndQuit')
-			->setTitle(_t('GridFieldDetailForm.PUBLISHANDQUITE','Publish and close'))
-		;
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		return parent::__construct('doPublishAndQuit', _t('GridFieldDetailForm.PUBLISHANDQUITE','Publish and close'), $form, $request);
+		
 	}
 }
 
@@ -297,8 +300,8 @@ class Button_PublishAndClose extends Button_SaveAndClose implements Button_Versi
 class Button_Rollback extends Button implements Button_Versioned {
 
 
-	public function __construct() {
-		parent::__construct('rollback', _t('SiteTree.BUTTONCANCELDRAFT','Cancel draft changes'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		parent::__construct('rollback', _t('SiteTree.BUTTONCANCELDRAFT','Cancel draft changes'), $form, $request);
 		$this
 			->setDescription(_t(
                             'SiteTree.BUTTONCANCELDRAFTDESC',
@@ -306,13 +309,14 @@ class Button_Rollback extends Button implements Button_Versioned {
             ))
         ;
 
+        $this->request = $request;
         return $this;
 	}
 
 
 
-	public function shouldDisplay(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-		return $request->record->stagesDiffer('Stage','Live') && $request->recordIsPublished();
+	public function shouldDisplay() {
+		return $this->request->record->stagesDiffer('Stage','Live') && $this->request->recordIsPublished();
 	}
 }
 
@@ -321,8 +325,8 @@ class Button_Rollback extends Button implements Button_Versioned {
 class Button_Unpublish extends Button implements Button_Versioned {
 
 
-	public function __construct() {
-		parent::__construct('unpublish', _t('SiteTree.BUTTONUNPUBLISH', 'Unpublish'));
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
+		parent::__construct('unpublish', _t('SiteTree.BUTTONUNPUBLISH', 'Unpublish'), $form, $request);
 		$this->addExtraClass('ss-ui-action-destructive')
         ;		
 
