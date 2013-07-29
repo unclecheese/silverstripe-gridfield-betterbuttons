@@ -162,9 +162,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		}
 
 		// Cancels the edit. Same as back button
-		$actions->push(FormAction::create("doCancel", _t('GridFieldBetterButtons.CANCEL','Cancel'))
-			->setUseButtonTag(true)
-		);
+		$actions->push(LiteralField::create("doCancel",'<a class="backlink ss-ui-button cms-panel-link" href="'.$this->getBackLink().'?">Cancel</a>'));
 		$form->setActions($actions);
 	}
 
@@ -194,21 +192,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
 		return $this->saveAndRedirect($data, $form, $this->getBackLink());
 	}
-
-
-
-
-	/**
-	 * Goes back to list view
-	 * 
-	 * @param array The form data
-	 * @param Form The form object
-	 */	
-	public function doCancel($data, $form) {
-		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
-		return Controller::curr()->redirect($this->getBackLink());
-	}
-
 
 
 	public function doSaveAndNext($data, $form) {
