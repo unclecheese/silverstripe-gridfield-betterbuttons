@@ -156,7 +156,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		}
 
 		// Cancels the edit. Same as back button
-		$actions->push(LiteralField::create("doCancel",'<a class="backlink ss-ui-button cms-panel-link" href="'.$this->getBackLink().'?" role="button" aria-disabled="false">Cancel</span></a>'));
+		$actions->push(LiteralField::create("doCancel",'<a class="backlink ss-ui-button cms-panel-link" href="'.$this->getBackLink().'?">Cancel</a>'));
 		$form->setActions($actions);
 	}
 
