@@ -8,6 +8,8 @@ sv:
     SAVEANDADDFILES: 'Spara och lägg till fil(er)'
     SAVEANDCLOSE: 'Spara och stäng'
     SAVEANDPUBLISH: 'Spara och publicera'
+    NEWRECORD: 'Ny post'
+    CANCEL: 'Avbryt'
   GridFieldDetailForm:
     CANCELDELETE: 'Nej, radera inte.'
     Delete: Radera
