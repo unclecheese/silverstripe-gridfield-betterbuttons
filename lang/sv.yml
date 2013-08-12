@@ -1,0 +1,15 @@
+sv:
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Ja, radera den här posten'
+    CANCEL: Cancel
+    NEXTRECORD: 'Gå till nästa post'
+    PREVIOUSRECORD: 'Gå till förra posten'
+    SAVEANDADD: 'Spara och lägg till ny'
+    SAVEANDADDFILES: 'Spara och lägg till fil(er)'
+    SAVEANDCLOSE: 'Spara och stäng'
+    SAVEANDPUBLISH: 'Spara och publicera'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Nej, radera inte.'
+    Delete: Radera
+    SAVE: Spara
+    SAVEANDCLOSE: 'Spara och stäng'
