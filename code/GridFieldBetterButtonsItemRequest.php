@@ -491,7 +491,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
         if(!$this->checkVersioned()) return false;
         
-        if ($this->owner->record->isNew()) {
+        if (!$this->owner->record->isInDB()) {
             return false;
         }
 
