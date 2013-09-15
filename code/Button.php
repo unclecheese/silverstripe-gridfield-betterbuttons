@@ -98,9 +98,8 @@ class Button_Delete extends Button {
 		parent::__construct('doDelete', _t('GridFieldDetailForm.Delete', 'Delete'), $form, $request);		
 		$this->request = $request;
 		\Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons_delete.js');		
-		$form->Actions()->insertBefore(
-			\LiteralField::create('cancelDelete', "<a class='gridfield-better-buttons-undodelete ss-ui-button' href='javascript:void(0)'>"._t('GridFieldDetailForm.CANCELDELETE', 'No. Don\'t delete')."</a>"),
-			"action_doDelete"
+		$form->Actions()->push(
+			\LiteralField::create('cancelDelete', "<a class='gridfield-better-buttons-undodelete ss-ui-button' href='javascript:void(0)'>"._t('GridFieldDetailForm.CANCELDELETE', 'No. Don\'t delete')."</a>")			
 		);
 		
 		return $this
@@ -332,6 +331,30 @@ class Button_Unpublish extends Button implements Button_Versioned {
 
         return $this;
 	}
+
+
+}
+
+class Button_FrontendLinks extends \LiteralField {
+
+
+	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {		
+		$link = $request->record->hasMethod('Link') ? $request->record->Link() : "";
+		parent::__construct(
+			"draft_link", 
+			'<a class="" target="_blank" href="'.$link.'?stage=Stage">'._t('GridFieldBetterButtons.VIEWONDRAFTSITE','Draft site').'</a> | 
+			<a class="" target="_blank" href="'.$link.'?stage=Live">'._t('GridFieldBetterButtons.VIEWONLIVESITE','Live site').'</a>',
+			$form, 
+			$request
+		);
+	}
+
+
+
+	public function shouldDisplay() {
+		return $this->request->record->hasMethod('Link');
+	}
+
 
 
 }

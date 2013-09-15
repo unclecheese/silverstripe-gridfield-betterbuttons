@@ -10,16 +10,19 @@ BetterButtonsViews:
     Button_SaveAndClose: true
     Button_Cancel: true
   edit:
+    Button_FrontendLinks: true 
     Button_Save: true
     Button_SaveAndClose: true
     Button_New: true
     Button_Cancel: true
     Button_Delete: true
+
   versioned_create:
     Button_SaveDraft: true
     Button_Publish: true    
     Button_Cancel: true
   versioned_edit:
+    Button_FrontendLinks: true
     Button_SaveDraft: true
     Button_Publish: true    
     Button_New: true
