@@ -5,13 +5,13 @@ use UncleCheese\BetterButtons\Buttons;
 
 /**
  * Decorates {@link GridDetailForm_ItemRequest} to use new form actions and buttons.
+
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  gridfield-betterbuttons
  *
  * */
 class GridFieldBetterButtonsItemRequest extends DataExtension {
-
 
 
 
@@ -52,6 +52,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 
+
 	protected function addButtonToForm($buttonType, $form, $actions = true) {
 		if(substr($buttonType, 0, 6) == "Group_") {
 			$groupName = substr($buttonType, 6);
@@ -63,6 +64,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 				$b = "UncleCheese\BetterButtons\Buttons\\".$b;
 				if($bool && class_exists($b)) {
 					$buttonObj = Injector::inst()->create($b, $form, $this->owner);
+
                     if($buttonObj->hasMethod('shouldDisplay') && !$buttonObj->shouldDisplay()) continue;
 					if($buttonObj instanceof UncleCheese\BetterButtons\Buttons\Button) {
 						if(($buttonObj instanceof Button_Versioned) && !$this->checkVersioned()) continue;
@@ -75,6 +77,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 					throw new Exception("The button type $b doesn't exist.");
 				}
 			}
+
             if($actions) {
                 $form->Actions()->push($button);
             }
@@ -100,6 +103,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			throw new Exception("The button type $buttonType doesn't exist.");
 		}
 	}
+
 
 
 
@@ -154,6 +158,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 
 
+
 	/**
 	 * Saves the form and forwards to a blank form to continue creating
 	 *
@@ -169,6 +174,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 	/**
 	 * Saves the form and goes back to list view
+
 	 *
 	 * @param array The form data
 	 * @param Form The form object
@@ -195,6 +201,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 	/**
 	 * Goes back to list view
+
 	 *
 	 * @param array The form data
 	 * @param Form The form object
@@ -209,6 +216,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	public function doSaveAndNext($data, $form) {
 		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
 		$link = Controller::join_links($this->owner->gridField->Link(),"item", $this->getNextRecordID());
+
 		return $this->saveAndRedirect($data, $form, $link);
 	}
 
@@ -217,6 +225,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	public function doSaveAndPrev($data, $form) {
 		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
 		$link = Controller::join_links($this->owner->gridField->Link(),"item", $this->getPreviousRecordID());
+
 		return $this->saveAndRedirect($data, $form, $link);
 	}
 
@@ -492,7 +501,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	public function recordIsPublished() {
 
         if(!$this->checkVersioned()) return false;
-
         if (!$this->owner->record->isInDB()) {
             return false;
         }
@@ -505,11 +513,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
         return (bool) DB::query("SELECT \"ID\" FROM \"{$table}_Live\" WHERE \"ID\" = {$this->owner->record->ID}")->value();
 
-
 	}
 
 
 
 
 }
-

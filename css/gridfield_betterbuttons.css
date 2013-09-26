@@ -1,3 +1,4 @@
+
 .cms .gridfield-better-buttons-prevnext.disabled {opacity: 0.3;}
 	.cms .gridfield-better-buttons-prevnext img {height:7px;vertical-align:1px;}
 	.cms .gridfield-better-buttons-prevnext .ui-button-text {line-height:1;}
@@ -23,6 +24,7 @@
 	display:none;
 	float:right;
 }
+
 
 .cms .better-buttons-frontend-links {
 	float:right;

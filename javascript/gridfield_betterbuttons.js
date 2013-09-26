@@ -3,11 +3,11 @@
 $.entwine('ss', function($) {
 
 	$('.cms #Form_ItemEditForm .Actions button.gridfield-better-buttons-delete').entwine({
-
 		Toggled: false,
 
 		onclick: function(e) {
 			e.preventDefault();
+
 
 			if(this.getToggled()) {
 				return this._super(e);
@@ -30,11 +30,13 @@ $.entwine('ss', function($) {
 
 	$('.gridfield-better-buttons-undodelete').entwine({
 
+
 		onclick: function(e) {
 			e.preventDefault();
 			$('.gridfield-better-buttons-delete').toggleText();
 			this.hide();
 		}
+
 	});
 
 	$('.better-buttons-utils button').entwine({
@@ -42,7 +44,5 @@ $.entwine('ss', function($) {
 			$('.cms-container').submitForm($('#Form_ItemEditForm'), this);
 		}
 	});
-
-
 });
 })(jQuery);
