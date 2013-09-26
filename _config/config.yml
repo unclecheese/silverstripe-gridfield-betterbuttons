@@ -1,0 +1,47 @@
+---
+Name: betterbuttons
+---
+GridFieldDetailForm_ItemRequest:
+  extensions:
+    - GridFieldBetterButtonsItemRequest
+BetterButtonsUtils:
+  edit:
+    Button_PrevNext: true
+    Button_New: true
+
+BetterButtonsActions:
+  create:
+    Button_Save: true
+    Button_SaveAndClose: true
+
+  edit:
+    Button_Save: true
+    Button_SaveAndClose: true
+    Button_Delete: true
+    Button_FrontendLinks: true
+
+  versioned_create:
+    Button_SaveDraft: true
+    Button_Publish: true
+  versioned_edit:
+    Button_SaveDraft: true
+    Button_Publish: true
+    Group_Versioning: true
+    Button_FrontendLinks: true
+    Button_Delete: true
+    Button_FrontendLinks: true
+
+BetterButtonsGroups:
+  SaveAnd:
+    label: Save and...
+    buttons:
+      Button_SaveAndAdd: true
+      Button_SaveAndClose: true
+      Button_SaveAndNext: true
+      Button_SaveAndPrev: true
+  Versioning:
+    label: Versioning...
+    buttons:
+      Button_Rollback: true
+      Button_Unpublish: true
+

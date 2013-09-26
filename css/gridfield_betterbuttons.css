@@ -1,0 +1,39 @@
+.cms .gridfield-better-buttons-prevnext.disabled {opacity: 0.3;}
+	.cms .gridfield-better-buttons-prevnext img {height:7px;vertical-align:1px;}
+	.cms .gridfield-better-buttons-prevnext .ui-button-text {line-height:1;}
+.cms .gridfield-better-buttons-next {margin-right:12px;}
+.cms .ui-widget.gridfield-better-buttons-delete {
+	float:right;
+	color: #fff;
+	text-shadow:none;
+	border: solid 1px #980c10;
+	background: #d81b21;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ed1c24), to(#aa1317));
+	background: -moz-linear-gradient(top,  #ed1c24,  #aa1317);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ed1c24', endColorstr='#aa1317');
+}
+.cms .ui-widget.gridfield-better-buttons-delete:hover,
+.cms .gridfield-better-buttons-delete:active {
+	background: #b61318;
+	background: -webkit-gradient(linear, left top, left bottom, from(#c9151b), to(#a11115));
+	background: -moz-linear-gradient(top,  #c9151b,  #a11115);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9151b', endColorstr='#a11115');
+}
+.cms .gridfield-better-buttons-undodelete {
+	display:none;
+	float:right;
+}
+
+.cms .better-buttons-frontend-links {
+	float:right;
+	margin-top:7px;
+}
+
+.cms .better-buttons-utils {
+	position: fixed;
+	text-align:right;
+	top: 5px;
+	z-index:70;
+	right:10px;
+	width:50%;
+}
