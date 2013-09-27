@@ -8,6 +8,9 @@ BetterButtonsUtils:
   edit:
     Button_PrevNext: true
     Button_New: true
+  versioned_edit:
+    Button_PrevNext: true
+    Button_New: true
 
 BetterButtonsActions:
   create:
@@ -27,7 +30,6 @@ BetterButtonsActions:
     Button_SaveDraft: true
     Button_Publish: true
     Group_Versioning: true
-    Button_FrontendLinks: true
     Button_Delete: true
     Button_FrontendLinks: true
 

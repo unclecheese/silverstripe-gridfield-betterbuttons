@@ -5,7 +5,7 @@ use UncleCheese\BetterButtons\Buttons;
 
 /**
  * Decorates {@link GridDetailForm_ItemRequest} to use new form actions and buttons.
-
+ *
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  gridfield-betterbuttons
@@ -36,6 +36,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         'doSaveAndPrev',
         'doDelete',
 	);
+
+
+	protected $utils = array ();
 
 
 
@@ -82,7 +85,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
                 $form->Actions()->push($button);
             }
             else {
-                $this->addUtil($form, $button);
+                $this->utils[] = $button;
             }
 		}
 		elseif(class_exists("UncleCheese\BetterButtons\Buttons\\".$buttonType)) {
@@ -96,7 +99,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
                 $form->Actions()->push($button);
             }
             else {
-                $this->addUtil($form, $button);
+                $this->utils[] = $button;
             }
 		}
 		else {
@@ -105,16 +108,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 
-
-
-    protected function addUtil(\Form $form, \ViewableData $button)
-    {
-        $utils = $form->Fields()->fieldByName("BetterButtonsUtils");
-        $content = $utils->getContent();
-        $content .= $button->forTemplate();
-        $utils->setContent($content);
-
-    }
 
 
 
@@ -154,6 +147,15 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		}
         $utils = $form->Fields()->fieldByName("BetterButtonsUtils");
         $utils->setContent($utils->getContent()."</div>");
+
+		if($form->Fields()->hasTabset()) {
+			$form->Fields()->findOrMakeTab('Root')->setTemplate('TabSet');
+			$form->addExtraClass('cms-tabset');
+		}
+		$form->Utils = ArrayList::create($this->utils);
+		$form->setTemplate('BetterButtons_EditForm');
+
+
 	}
 
 
