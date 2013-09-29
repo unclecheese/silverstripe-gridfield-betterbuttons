@@ -85,7 +85,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
                 $form->Actions()->push($button);
             }
             else {
-                $this->utils[] = $button;
+                $this->utils[$button->class] = $button;
             }
 		}
 		elseif(class_exists("UncleCheese\BetterButtons\Buttons\\".$buttonType)) {
@@ -99,7 +99,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
                 $form->Actions()->push($button);
             }
             else {
-                $this->utils[] = $button;
+                $this->utils[$button->class] = $button;
             }
 		}
 		else {
