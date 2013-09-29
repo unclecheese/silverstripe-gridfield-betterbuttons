@@ -1,8 +1,8 @@
 Better Buttons for GridField
 ====================================
 
-![Screenshot](http://dashboard.unclecheeseproductions.com/mysite/images/better_buttons3.png)
-![Screenshot](http://dashboard.unclecheeseproductions.com/mysite/images/better_buttons4.png)
+![Screenshot](http://dashboard.unclecheeseproductions.com/mysite/images/betterbuttons3.png)
+![Screenshot](http://dashboard.unclecheeseproductions.com/mysite/images/betterbuttons4.png)
 
 
 Modifies the detail form of GridFields to use more user-friendly actions, including:
