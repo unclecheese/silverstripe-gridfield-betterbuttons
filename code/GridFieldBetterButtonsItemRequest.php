@@ -55,12 +55,14 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			// Scan for UploadField instances, since those require a save before adding.
 			// Todo: there is probably a more intelligent way to do this.
 			$files = false;
-			foreach($this->owner->record->getCMSFields()->dataFields() as $field) {
-				if($field instanceof UploadField) {
-					$files = true;
-					break;
-				}				
-			}
+      if($dataFields = $this->owner->record->getCMSFields()->dataFields()) {
+        foreach($dataFields as $field) {
+          if($field instanceof UploadField) {
+            $files = true;
+            break;
+          }				
+        }
+      }
 			if($files) {
 				// If upload fields are present, offer a "save and add files" button
 				$actions->push(FormAction::create("doSave", _t('GridFieldBetterButtons.SAVEANDADDFILES','Save and add file(s)'))
