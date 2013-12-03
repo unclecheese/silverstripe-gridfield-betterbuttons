@@ -379,25 +379,28 @@ class Button_PrevNext extends \LiteralField {
 			$cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
 			$prevLink = $previousRecordID ? \Controller::join_links($request->gridField->Link(),"item", $previousRecordID) : "javascript:void(0);";
 			$linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
+			$linkText = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUS','Previous') : "";
 
 			$html .= sprintf(
-					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /> Previous</a>",
+					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /> %s</a>",
 					$cssClass,
 					$prevLink,
-					$linkTitle
+					$linkTitle,
+					$linkText
 			);
 
 			$nextRecordID = $request->getNextRecordID();
 			$cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
 			$prevLink = $nextRecordID ? \Controller::join_links($request->gridField->Link(),"item", $nextRecordID) : "javascript:void(0);";
 			$linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
-
+			$linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT','Next') : "";
 
 			$html .= sprintf(
-					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'>Next <img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
+					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'>%s <img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
 					$cssClass,
 					$prevLink,
-					$linkTitle
+					$linkTitle,
+					$linkText
 			);
 
 			parent::__construct("prev_next", $html);
