@@ -372,12 +372,19 @@ class Button_FrontendLinks extends \LiteralField {
 class Button_PrevNext extends \LiteralField {
 
 	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-			$html = "";
-
+	    $html = "";
+        $parameter ='';
+        if(isset($_REQUEST['q'])&&!empty($_REQUEST['q'])){
+            $parameter .= '?';
+            foreach($_REQUEST['q'] as $key=>$val){
+                $parameter .= 'q['.$key.']'.'='.$val.'&';
+            }
+            $parameter .= 'action_search=Apply+Filter';
+        }
 			// Prev/next links. Todo: This doesn't scale well.
 			$previousRecordID = $request->getPreviousRecordID();
 			$cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
-			$prevLink = $previousRecordID ? \Controller::join_links($request->gridField->Link(),"item", $previousRecordID) : "javascript:void(0);";
+			$prevLink = $previousRecordID ? \Controller::join_links($request->gridField->Link(),"item", $previousRecordID.$parameter) : "javascript:void(0);";
 			$linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
 			$linkText = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUS','Previous') : "";
 
@@ -391,7 +398,7 @@ class Button_PrevNext extends \LiteralField {
 
 			$nextRecordID = $request->getNextRecordID();
 			$cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
-			$prevLink = $nextRecordID ? \Controller::join_links($request->gridField->Link(),"item", $nextRecordID) : "javascript:void(0);";
+			$prevLink = $nextRecordID ? \Controller::join_links($request->gridField->Link(),"item", $nextRecordID.$parameter) : "javascript:void(0);";
 			$linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
 			$linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT','Next') : "";
 
