@@ -377,7 +377,14 @@ class Button_PrevNext extends \LiteralField {
         if(isset($_REQUEST['q'])&&!empty($_REQUEST['q'])){
             $parameter .= '?';
             foreach($_REQUEST['q'] as $key=>$val){
-                $parameter .= 'q['.$key.']'.'='.$val.'&';
+				if(is_array($val)){
+                    foreach($val as $subVal){
+                        $parameter .= 'q['.$key.'][]'.'='.$subVal.'&';
+                    }
+                }
+                else{
+                    $parameter .= 'q['.$key.']'.'='.$val.'&';
+                }               
             }
             $parameter .= 'action_search=Apply+Filter';
         }
