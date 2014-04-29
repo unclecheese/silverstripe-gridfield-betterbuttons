@@ -1,19 +1,19 @@
 nl:
   GridFieldBetterButtons:
-    AREYOUSURE: 'Definitief verwijderen'
-    CANCEL: 'Annuleren'
-    NEXTRECORD: 'Volgende'
-    PREVIOUSRECORD: 'Vorige'
-    SAVEANDADD: 'Opslaan en nieuwe aanmaken'
+    AREYOUSURE: 'Ja, verwijder dit item.'
+    CANCEL: Annuluren
+    NEWRECORD: 'Nieuw item'
+    NEXTRECORD: 'Ga naar volgende item'
+    PREVIOUSRECORD: 'Ga naar vorige item'
     SAVEANDADDNEW: 'Opslaan en nieuwe aanmaken'
-    SAVEAND: 'Opslaan en...'
-    SAVEANDADDFILES: 'Opslaan en nieuwe bestand(en) toevoegen'
-    SAVEANDCLOSE: 'Opslaan en sluiten'
-    SAVEANDNEXT: 'Opslaan en naar de volgende'
-    SAVEANDPREV: 'Opslaan en naar de vorige'
-    SAVEANDPUBLISH: 'Opslaan en publiceren'    
+    VIEWONDRAFTSITE: 'Draft site'
+    VIEWONLIVESITE: 'Live site'
   GridFieldDetailForm:
-    CANCELDELETE: 'Annuleren'
-    Delete: 'Verwijder'
-    SAVE: 'Opslaan'
+    CANCELDELETE: 'Nee. Niet verwijderen'
+    Delete: Verwijderen
+    PUBLISHANDADD: 'Publiceren en nieuwe aanmaken'
+    PUBLISHANDQUITE: 'Publiceren en sluiten'
+    SAVE: Opslaan
     SAVEANDCLOSE: 'Opslaan en sluiten'
+    SAVEANDNEXT: 'Opslaan en ga naar volgende item'
+    SAVEANDPREV: 'Opslaan en ga naar vorige item'
