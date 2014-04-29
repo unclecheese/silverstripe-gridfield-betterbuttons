@@ -1,4 +1,7 @@
 nl:
+  CMSMain:
+    ROLLEDBACKPUBv2: 'Terugzetten naar gepubliceerde versie'
+    SAVEDRAFT: 'Concept opslaan'
   GridFieldBetterButtons:
     AREYOUSURE: 'Ja, verwijder dit item.'
     CANCEL: Annuluren
@@ -15,5 +18,12 @@ nl:
     PUBLISHANDQUITE: 'Publiceren en sluiten'
     SAVE: Opslaan
     SAVEANDCLOSE: 'Opslaan en sluiten'
-    SAVEANDNEXT: 'Opslaan en ga naar volgende item'
-    SAVEANDPREV: 'Opslaan en ga naar vorige item'
+    SAVEANDNEXT: 'Opslaan en ga naar de volgende'
+    SAVEANDPREV: 'Opslaan en ga naar de vorige'
+  SiteTree:
+    BUTTONCANCELDRAFT: 'Annuleer concept veranderingen'
+    BUTTONCANCELDRAFTDESC: 'Verwijder concept en zet terug naar de gepubliceerde versie.'
+    BUTTONPUBLISHED: Gepubliceerd
+    BUTTONSAVED: Opgeslagen
+    BUTTONSAVEPUBLISH: 'Opslaan en publiceren'
+    BUTTONUNPUBLISH: 'Publicatie intrekken'
