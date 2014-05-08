@@ -1,0 +1,15 @@
+fi:
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Kyllä. Poista tämä tietue.'
+    CANCEL: Peruuta
+    NEXTRECORD: 'Siirry seuraavaan tietueeseen'
+    PREVIOUSRECORD: 'Palaa edelliseen tietueeseen'
+    SAVEANDADD: 'Tallenna ja lisää toinen'
+    SAVEANDADDFILES: 'Tallenna ja lisää uusi(a)'
+    SAVEANDCLOSE: 'Tallenna ja sulje'
+    SAVEANDPUBLISH: 'Tallenna ja julkaise'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Ei. Älä poista'
+    Delete: Poista
+    SAVE: Tallenna
+    SAVEANDCLOSE: 'Tallenna ja sulje'

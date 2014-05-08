@@ -4,6 +4,7 @@ class BetterButtonAction extends LiteralField
 {
     protected $form;
 
+
     protected $gridFieldRequest;
 
     public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request)
@@ -15,7 +16,6 @@ class BetterButtonAction extends LiteralField
             $this->getButtonName(), 
             $this->getButtonHTML()
         );        
-
     }
 
 
@@ -84,11 +84,13 @@ class BetterButtonAction_FrontendLinks extends BetterButtonAction
 
     public function getButtonLink()
     {
+
         return $this->gridFieldRequest->record->hasMethod('Link') ? $this->gridFieldRequest->record->Link() : "";        
     }
 
     public function shouldDisplay() 
     {
+
         return $this->gridFieldRequest->record && $this->gridFieldRequest->record->hasMethod('Link');
     }
 
@@ -117,6 +119,7 @@ class BetterButtonAction_PrevNext extends BetterButtonAction
         $html = "";
 
         // Prev/next links. Todo: This doesn't scale well.
+
         $previousRecordID = $this->gridFieldRequest->getPreviousRecordID();
         $cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
         $prevLink = $previousRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $previousRecordID) : "javascript:void(0);";
@@ -131,9 +134,11 @@ class BetterButtonAction_PrevNext extends BetterButtonAction
                 $linkText
         );
 
+
         $nextRecordID = $this->gridFieldRequest->getNextRecordID();
         $cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
         $prevLink = $nextRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $nextRecordID) : "javascript:void(0);";
+
         $linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
         $linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT','Next') : "";
 
