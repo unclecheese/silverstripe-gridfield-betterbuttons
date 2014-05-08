@@ -3,7 +3,10 @@
 class BetterButtonAction extends LiteralField
 {
     protected $form;
-
+    
+    protected $buttonText;
+    
+    protected $buttonName;
 
     protected $gridFieldRequest;
 
