@@ -1,0 +1,33 @@
+de:
+  GridFieldDetailForm:
+    SAVE: 'Speichern'
+    Delete: 'Löschen'
+    CANCELDELETE: 'Nein, nicht löschen'
+    SAVEANDCLOSE: 'Speichern & Schließen'
+    SAVEANDNEXT: 'Speichern & zum nächsten Eintrag'
+    SAVEANDPREV: 'Speichern & zum vorherigen Eintrag'
+    PUBLISHANDADD: 'Veröffentlichen & neuer Eintrag'
+    PUBLISHANDQUITE: 'Veröffentlichen & Schließen'
+  GridFieldBetterButtons:
+    CANCEL: 'Abbrechen'
+    NEWRECORD: 'Neuer Eintrag'
+    AREYOUSURE: 'Ja, löschen'
+    SAVEANDADDNEW: 'Speichern & neuer Eintrag'
+    VIEWONDRAFTSITE: 'Entwurfsseite'
+    VIEWONLIVESITE: 'Veröffentlichte Seite'
+    PREVIOUSRECORD: 'Vorheriger Eintrag'
+    NEXTRECORD: 'Nächster Eintrag'
+    NEXT: 'Weiter'
+    PREVIOUS: 'Zurück'
+  SiteTree:
+    BUTTONSAVED: 'Gespeichert'
+    BUTTONSAVEPUBLISH: 'Speichern & Veröffentlichen'
+    BUTTONPUBLISHED: 'Veröffentlicht'
+    BUTTONCANCELDRAFT: 'Entwurf verwerfen'
+    BUTTONCANCELDRAFTDESC: 'Entwurf verwerfen und zurück auf die aktuell veröffentlichte Seite'
+    BUTTONUNPUBLISH: 'Veröffentlichung löschen'
+  CMSMain:
+    SAVEDRAFT: 'Entwurf speichern'
+    ROLLEDBACKPUBv2: 'Entwurf verwerfen & veröffentlichte Version wiederherstellen'
+  LeftAndMain:
+    PreviewButton: 'Vorschau'

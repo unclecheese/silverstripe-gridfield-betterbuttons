@@ -1,0 +1,15 @@
+en:
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Yes. Delete this item.'
+    CANCEL: Cancel
+    NEXTRECORD: 'Go to the next record'
+    PREVIOUSRECORD: 'Go to the previous record'
+    SAVEANDADD: 'Save and add another'
+    SAVEANDADDFILES: 'Save and add file(s)'
+    SAVEANDCLOSE: 'Save and close'
+    SAVEANDPUBLISH: 'Save and publish'
+  GridFieldDetailForm:
+    CANCELDELETE: 'No. Don''t delete'
+    Delete: Delete
+    SAVE: Save
+    SAVEANDCLOSE: 'Save and close'
