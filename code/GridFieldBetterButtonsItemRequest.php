@@ -77,11 +77,13 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 				}
 			}
 
-            if($actions) {
-                $form->Actions()->push($button);
-            }
-            else {
-                $this->utils[$button->class] = $button;
+            if ($button->children->exists()) {
+                if($actions) {
+                    $form->Actions()->push($button);
+                }
+                else {
+                    $this->utils[$button->class] = $button;
+                }
             }
 		}
 		elseif(class_exists($buttonType)) {            
