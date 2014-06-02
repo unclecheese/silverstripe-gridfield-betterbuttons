@@ -305,6 +305,13 @@ class BetterButton_Unpublish extends BetterButton implements BetterButton_Versio
 		parent::__construct('unpublish', _t('SiteTree.BUTTONUNPUBLISH', 'Unpublish'), $form, $request);
 		$this->addExtraClass('ss-ui-action-destructive');
 
+        $this->request = $request;
         return $this;
+	}
+
+
+	public function shouldDisplay() 
+	{
+		return $this->request->recordIsPublished();
 	}
 }
