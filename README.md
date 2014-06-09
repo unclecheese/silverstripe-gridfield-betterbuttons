@@ -29,45 +29,46 @@ The default configuration:
 ```
 BetterButtonsUtils:
   edit:
-    Button_PrevNext: true
-    Button_New: true
+    BetterButtonAction_PrevNext: true
+    BetterButton_New: true
+  versioned_edit:
+    BetterButtonAction_PrevNext: true
+    BetterButton_New: true
 
 BetterButtonsActions:
   create:
-    Button_Save: true
-    Button_SaveAndClose: true
+    BetterButton_Save: true
+    BetterButton_SaveAndClose: true
 
   edit:
-    Button_Save: true
-    Button_SaveAndClose: true
-    Button_Delete: true
-    Button_FrontendLinks: true
+    BetterButton_Save: true
+    BetterButton_SaveAndClose: true
+    BetterButton_Delete: true
+    BetterButtonAction_FrontendLinks: true
 
   versioned_create:
-    Button_SaveDraft: true
-    Button_Publish: true
+    BetterButton_SaveDraft: true
+    BetterButton_Publish: true
   versioned_edit:
-    Button_SaveDraft: true
-    Button_Publish: true
+    BetterButton_SaveDraft: true
+    BetterButton_Publish: true
     Group_Versioning: true
-    Button_FrontendLinks: true
-    Button_Delete: true
-    Button_FrontendLinks: true
+    BetterButton_Delete: true
+    BetterButtonAction_FrontendLinks: true
 
 BetterButtonsGroups:
   SaveAnd:
     label: Save and...
     buttons:
-      Button_SaveAndAdd: true
-      Button_SaveAndClose: true
-      Button_SaveAndNext: true
-      Button_SaveAndPrev: true
+      BetterButton_SaveAndAdd: true
+      BetterButton_SaveAndClose: true
+      BetterButton_SaveAndNext: true
+      BetterButton_SaveAndPrev: true
   Versioning:
     label: Versioning...
     buttons:
-      Button_Rollback: true
-      Button_Unpublish: true
-
+      BetterButton_Rollback: true
+      BetterButton_Unpublish: true
 ```
 
 
