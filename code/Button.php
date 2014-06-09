@@ -15,7 +15,6 @@ abstract class Button extends \FormAction {
 	}
 
 
-
 	public function transformToInput() {
 		return $this->setUseButtonTag(true);
 	}
@@ -24,7 +23,6 @@ abstract class Button extends \FormAction {
 	public function shouldDisplay() {
 		return true;
 	}
-
 
 
 	public function __construct($name, $title = null, \Form $form, \GridFieldDetailForm_ItemRequest $request) {
@@ -42,40 +40,24 @@ class Button_Save extends Button {
 	}
 
 
-
-
-
-
 	public function transformToButton() {
 
 		return parent::transformToButton()
 			->addExtraClass('ss-ui-action-constructive')
 			->setAttribute('data-icon','accept')
 		;
-
 	}
-
-
 }
 
 
-
-
-
 class Button_Cancel extends \LiteralField {
-
 
 	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
 		$link = $request->Link("cancel");
 		parent::__construct("doCancel", '<a class="backlink ss-ui-button cms-panel-link" href="'.$link.'">'._t('GridFieldBetterButtons.CANCEL','Cancel').'</a>', $form, $request);
 	}
 
-
-
-
 }
-
-
 
 
 class Button_New extends Button {
@@ -91,7 +73,6 @@ class Button_New extends Button {
 
 	}
 }
-
 
 
 class Button_Delete extends Button {
@@ -118,17 +99,11 @@ class Button_Delete extends Button {
 	public function shouldDisplay() {
 		return !$this->request->recordIsPublished();
 	}
-
-
-
-
-
 }
 
 
 
 class Button_SaveAndAdd extends Button {
-
 
 
 	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
@@ -165,14 +140,12 @@ class Button_SaveAndClose extends Button {
 	}
 
 
-
 	public function transformToInput() {
 		return parent::transformToInput()
 
 			->addExtraClass("saveAndClose")
 		;
 	}
-
 
 
 	public function transformToButton() {
@@ -207,10 +180,7 @@ class Button_SaveAndNext extends Button {
 		;
 	}
 
-
-
 }
-
 
 
 class Button_SaveAndPrev extends Button {
@@ -238,7 +208,6 @@ class Button_SaveAndPrev extends Button {
 
 
 
-
 interface Button_Versioned {}
 
 
@@ -260,30 +229,27 @@ class Button_SaveDraft extends Button implements Button_Versioned {
 class Button_Publish extends Button implements Button_Versioned {
 
 	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-        parent::__construct('publish',_t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'), $form, $request);
-       	$this
-            ->setAttribute('data-icon', 'accept')
-            ->setAttribute('data-icon-alternate', 'disk')
-            ->setAttribute('data-text-alternate', _t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'))
-        ;
-
-
-		$published = $request->recordIsPublished();
-		if($published) {
-
-			$this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));
-		}
-		if($request->record->stagesDiffer('Stage','Live') && $published) {
-			$this->addExtraClass('ss-ui-alternate');
-
-		}
-
-
-        return $this;
+	        parent::__construct('publish',_t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'), $form, $request);
+	       	$this
+	            ->setAttribute('data-icon', 'accept')
+	            ->setAttribute('data-icon-alternate', 'disk')
+	            ->setAttribute('data-text-alternate', _t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'))
+	        ;
+	
+	
+			$published = $request->recordIsPublished();
+			if($published) {
+	
+				$this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));
+			}
+			if($request->record->stagesDiffer('Stage','Live') && $published) {
+				$this->addExtraClass('ss-ui-alternate');
+	
+			}
+	
+	
+	        return $this;
 	}
-
-
-
 }
 
 
@@ -340,84 +306,5 @@ class Button_Unpublish extends Button implements Button_Versioned {
         return $this;
 	}
 
-
-}
-
-class Button_FrontendLinks extends \LiteralField {
-
-
-
-	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-		$link = $request->record->hasMethod('Link') ? $request->record->Link() : "";
-		parent::__construct(
-			"draft_link",
-			'<span class="better-buttons-frontend-links"><a class="better-buttons-frontend-link" target="_blank" href="'.$link.'?stage=Stage">'._t('GridFieldBetterButtons.VIEWONDRAFTSITE','Draft site').'</a> |
-			<a class="better-buttons-frontend-link" target="_blank" href="'.$link.'?stage=Live">'._t('GridFieldBetterButtons.VIEWONLIVESITE','Live site').'</a></span>'
-		);
-		$this->setRequest($request);
-	}
-
-
-
-	public function shouldDisplay() {
-		return $this->request->record->hasMethod('Link');
-	}
-
-
-
-
-}
-
-
-class Button_PrevNext extends \LiteralField {
-
-	public function __construct(\Form $form, \GridFieldDetailForm_ItemRequest $request) {
-	    $html = "";
-        $parameter ='';
-        if(isset($_REQUEST['q'])&&!empty($_REQUEST['q'])){
-            $parameter .= '?';
-            foreach($_REQUEST['q'] as $key=>$val){
-				if(is_array($val)){
-                    foreach($val as $subVal){
-                        $parameter .= 'q['.$key.'][]'.'='.$subVal.'&';
-                    }
-                }
-                else{
-                    $parameter .= 'q['.$key.']'.'='.$val.'&';
-                }               
-            }
-            $parameter .= 'action_search=Apply+Filter';
-        }
-			// Prev/next links. Todo: This doesn't scale well.
-			$previousRecordID = $request->getPreviousRecordID();
-			$cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
-			$prevLink = $previousRecordID ? \Controller::join_links($request->gridField->Link(),"item", $previousRecordID.$parameter) : "javascript:void(0);";
-			$linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
-			$linkText = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUS','Previous') : "";
-
-			$html .= sprintf(
-					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /> %s</a>",
-					$cssClass,
-					$prevLink,
-					$linkTitle,
-					$linkText
-			);
-
-			$nextRecordID = $request->getNextRecordID();
-			$cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
-			$prevLink = $nextRecordID ? \Controller::join_links($request->gridField->Link(),"item", $nextRecordID.$parameter) : "javascript:void(0);";
-			$linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
-			$linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT','Next') : "";
-
-			$html .= sprintf(
-					"<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'>%s <img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
-					$cssClass,
-					$prevLink,
-					$linkTitle,
-					$linkText
-			);
-
-			parent::__construct("prev_next", $html);
-	}
 
 }
