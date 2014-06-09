@@ -263,9 +263,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
             $extraData = null;
         }
 
-        if (!$this->owner->record->canEdit()) {
-            return $controller->httpError(403);
-        }
 
         if (isset($data['ClassName']) && $data['ClassName'] != $this->owner->record->ClassName) {
             $newClassName = $data['ClassName'];
@@ -275,6 +272,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
             $this->owner->record->setClassName($this->owner->record->ClassName);
             // Replace $record with a new instance
             $this->owner->record = $this->owner->record->newClassInstance($newClassName);
+        }
+
+        if (!$this->owner->record->canEdit()) {
+            return $controller->httpError(403);
         }
 
         try {
