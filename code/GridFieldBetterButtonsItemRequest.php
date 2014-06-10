@@ -308,7 +308,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 
         $link = '<a href="' . $this->owner->Link('edit') . '">"'
-            . htmlspecialchars($this->owner->record->Title, ENT_QUOTES)
+            . Convert::raw2xml($this->owner->record->Title)
             . '"</a>';
         $message = sprintf(
             'Published %s %s',
