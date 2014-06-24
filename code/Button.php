@@ -242,7 +242,7 @@ class Button_Publish extends Button implements Button_Versioned {
 	
 				$this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));
 			}
-			if($request->record->stagesDiffer('Stage','Live') && $published) {
+			if($published && $request->record->stagesDiffer('Stage','Live')) {
 				$this->addExtraClass('ss-ui-alternate');
 	
 			}
@@ -290,7 +290,7 @@ class Button_Rollback extends Button implements Button_Versioned {
 
 
 	public function shouldDisplay() {
-		return $this->request->record->stagesDiffer('Stage','Live') && $this->request->recordIsPublished();
+		return $this->request->recordIsPublished() && $this->request->record->stagesDiffer('Stage','Live');
 	}
 }
 
