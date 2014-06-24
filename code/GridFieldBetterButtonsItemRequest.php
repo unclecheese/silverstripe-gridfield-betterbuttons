@@ -488,10 +488,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 	public function checkVersioned() {
-		return $this->owner->record->hasExtension('Versioned');
+		return $this->owner->record->hasExtension('Versioned') &&
+			count($this->owner->record->getVersionedStages()) > 1;
 	}
-
-
 
 	public function recordIsPublished() {
 
