@@ -238,7 +238,7 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
 
 			$this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));
 		}
-		if($request->record->stagesDiffer('Stage','Live') && $published) {
+		if($published && $request->record->stagesDiffer('Stage','Live')) {
 			$this->addExtraClass('ss-ui-alternate');
 
 		}
@@ -292,7 +292,7 @@ class BetterButton_Rollback extends BetterButton implements BetterButton_Version
 
 	public function shouldDisplay() 
 	{
-		return $this->request->record->stagesDiffer('Stage','Live') && $this->request->recordIsPublished();
+		return $this->request->recordIsPublished() && $this->request->record->stagesDiffer('Stage','Live');
 	}
 }
 
