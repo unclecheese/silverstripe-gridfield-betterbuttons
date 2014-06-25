@@ -90,7 +90,7 @@ class BetterButton_Delete extends BetterButton
 
 
 	public function shouldDisplay() {
-		return !$this->request->recordIsPublished();
+		return $this->request->record->canDelete() && !$this->request->recordIsPublished();
 	}
 
 }
