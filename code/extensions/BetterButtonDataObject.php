@@ -70,7 +70,7 @@ class BetterButtonDataObject extends DataExtension
             return $buttonObj;
         }
         else {
-            throw new Exception("The button type $b doesn't exist.");
+            throw new Exception("The button type $className doesn't exist.");
         }        
     }
 
