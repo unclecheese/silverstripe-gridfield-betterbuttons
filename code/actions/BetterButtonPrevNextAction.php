@@ -1,8 +1,20 @@
 <?php
 
-
+/**
+ * Defines a set of buttons that offers prev/next navigation from within a
+ * GridField detail form
+ *
+ * @author  Uncle Cheese <unclecheese@leftandmain.com>
+ * @package  silverstripe-gridfield-betterbuttons
+ */
 class BetterButtonPrevNextAction extends BetterButtonAction {
     
+
+    /**
+     * Builds the button
+     * @param Form                            $form    The form that holds the button
+     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
+     */
     public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
         parent::__construct(
             null,
@@ -11,6 +23,11 @@ class BetterButtonPrevNextAction extends BetterButtonAction {
         );
     }
 
+
+    /**
+     * Gets the HTML for the button
+     * @return string
+     */
     public function getButtonHTML() {        
         $html = "";
 
@@ -29,7 +46,6 @@ class BetterButtonPrevNextAction extends BetterButtonAction {
                 $linkTitle,
                 $linkText
         );
-
 
         $nextRecordID = $this->gridFieldRequest->getNextRecordID();
         $cssClass = $nextRecordID ? "cms-panel-link" : "disabled";

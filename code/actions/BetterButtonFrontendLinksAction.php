@@ -1,8 +1,20 @@
 <?php
 
-
+/**
+ * Defines the button that provides links to the frontend from within a gridfield detail form.
+ * detail form. Only works if your DataObject has a Link() method.
+ *
+ * @author  Uncle Cheese <unclecheese@leftandmain.com>
+ * @package  silverstripe-gridfield-betterbuttons
+ */
 class BetterButtonFrontendLinksAction extends BetterButtonAction {
 
+
+    /**
+     * Builds the button
+     * @param Form                            $form    The form that holds the button
+     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
+     */
     public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
         parent::__construct(
             null,
@@ -12,16 +24,28 @@ class BetterButtonFrontendLinksAction extends BetterButtonAction {
     }
 
 
+    /**
+     * Gets the link for the button
+     * @return string
+     */
     public function getButtonLink() {
         return $this->gridFieldRequest->record->hasMethod('Link') ? $this->gridFieldRequest->record->Link() : "";        
     }
 
 
+    /**
+     * Determines if the button should display
+     * @return bool
+     */
     public function shouldDisplay() {
         return $this->gridFieldRequest->record && $this->gridFieldRequest->record->hasMethod('Link');
     }
 
     
+    /**
+     * Generates the HTML that represents the button
+     * @return string
+     */
     public function getButtonHTML() {
         $link = $this->getButtonLink();
 
