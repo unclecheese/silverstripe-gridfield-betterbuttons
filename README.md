@@ -15,14 +15,15 @@ Modifies the detail form of GridFields to use more user-friendly actions, includ
 * **Frontend Links**: If your DataObject has a Link() method, get links to the draft site and published site to view the record in context in a single click
 * ![Screenshot](http://i.cubeupload.com/7YIYv9.png)
 * **Versioning**: Save, Save & Publish, Rollback, Unpublish
-* ![Screenshot](http://i.cubeupload.com/eaEuJE.png)
+* ![Screenshot](http://i.cubeupload.com/XJnsMq.png)
 * **Configurable UI**: Add buttons to the top (utilities) or bottom (actions).
 * **Disambiguated tabs**: In model admin, the top tabs toggle between the models. On the detail view, they toggle between the groups of fields, creating a confusing user exierience. Better Buttons groups the fields as they are in CMSMain, using a tabset within the main editing area.
 * ![Screenshot](http://i.cubeupload.com/oFMGbX.png)
 * Add your own custom actions!
-* ![Screenshot](http://i.cubeupload.com/QQL8oD.png)
 
-Create custom actions in from the detail view
+
+## Create custom actions in from the detail view
+
 ![Screenshot](http://i.cubeupload.com/QQL8oD.png)
 
 ## Requirements
@@ -90,15 +91,15 @@ Because of the idiosyncracies of the Config layer merging arrays, the buttons mu
 ```
 BetterButtonsActions:
   edit:
-    Button_Save: false
+    BetterButton_Save: false
     Group_SaveAnd: false
     Group_MyGroup: true
 BetterButtonsGroups:
   MyGroup:
     label: This is a group
     buttons:
-      Button_Save: true
-      Button_SaveAndNext: true
+      BetterButton_Save: true
+      BetterButton_SaveAndNext: true
       
 ```
 
@@ -111,6 +112,7 @@ In the example below, we'll create a custom action in the GridField detail form 
 First, we'll overload the model's ```getBetterButtonsActions``` method.
 
 ```php
+<?php
     public function getBetterButtonsActions($form, $request) {
         $fields = parent::getBetterButtonsActions($form, $request);
         if($this->getRecord()->IsApproved) {
@@ -128,6 +130,7 @@ The ```BetterButtonCustomAction``` object takes parameters for the method name (
 Now let's add the methods to the DataObject.
 
 ```php
+<?php
     public function approve() {
         $this->IsApproved = true;
         $this->write();
@@ -149,12 +152,14 @@ Lastly, for security reasons, we need to whitelist these methods as callable by 
 ```
 
 Now we have a new button in the UI!
+
 ![Screenshot](http://i.cubeupload.com/hoU66o.png)
 
 ### Customising the user experience
 Let's ensure that the form refreshes after clicking "approve" or "deny". Additionally, we'll add a success message that will render on completion of the action.
 
 ```php
+<?php
   $fields->push(
     BetterButtonCustomAction::create('deny', 'Deny', $form, $request)
       ->setRedirectType(BetterButtonCustomAction::REFRESH)
@@ -164,4 +169,23 @@ Let's ensure that the form refreshes after clicking "approve" or "deny". Additio
 
 The redirect type can use the constants:
 ```php
-BetterButtonsCustomAction::REFRESH
+BetterButtonCustomAction::REFRESH
+BetterButtonCustomAction::GOBACK
+```
+To refresh the form, or go back to list view, respectively.
+
+### Defining arbitrary links
+Sometimes, you might not want to sent a request to the controller at all. For that, there's the much simpler ```BetterButtonLink``` class.
+
+```php
+<?php
+        $fields->push(
+            new BetterButtonLink(
+                'View on Meetup.com',
+                $this->MeetUpLink
+            )
+        );
+```
+
+![Screenshot](http://i.cubeupload.com/YbbhL7.png)
+
