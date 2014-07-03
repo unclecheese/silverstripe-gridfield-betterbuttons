@@ -109,13 +109,17 @@ When creating groups, be sure not to duplicate any buttons that are outside the 
 
 In the example below, we'll create a custom action in the GridField detail form that updates a DataObject to be "approved" or "denied."
 
-First, we'll overload the model's ```getBetterButtonsActions``` method.
+We can add the action in one of two places:
+* **Actions** at the bottom of the form (e.g. save, cancel)
+* **Utils** at the top right of the form (e.g. new record, prev/next)
+
+
+First, we'll overload the model's ```getBetterButtonsActions``` or ```getBetterButtonsUtils`` method, depending on where we want the button to appear in the UI.
 
 ```php
-<?php
     public function getBetterButtonsActions($form, $request) {
         $fields = parent::getBetterButtonsActions($form, $request);
-        if($this->getRecord()->IsApproved) {
+        if($this->IsApproved) {
             $fields->push(BetterButtonCustomAction::create('deny', 'Deny', $form, $request));
         }
         else {
@@ -130,7 +134,6 @@ The ```BetterButtonCustomAction``` object takes parameters for the method name (
 Now let's add the methods to the DataObject.
 
 ```php
-<?php
     public function approve() {
         $this->IsApproved = true;
         $this->write();
@@ -159,7 +162,6 @@ Now we have a new button in the UI!
 Let's ensure that the form refreshes after clicking "approve" or "deny". Additionally, we'll add a success message that will render on completion of the action.
 
 ```php
-<?php
   $fields->push(
     BetterButtonCustomAction::create('deny', 'Deny', $form, $request)
       ->setRedirectType(BetterButtonCustomAction::REFRESH)
@@ -178,13 +180,12 @@ To refresh the form, or go back to list view, respectively.
 Sometimes, you might not want to sent a request to the controller at all. For that, there's the much simpler ```BetterButtonLink``` class.
 
 ```php
-<?php
-        $fields->push(
-            new BetterButtonLink(
-                'View on Meetup.com',
-                $this->MeetUpLink
-            )
-        );
+    $fields->push(
+        new BetterButtonLink(
+          'View on Meetup.com',
+           $this->MeetUpLink
+        )
+    );
 ```
 
 ![Screenshot](http://i.cubeupload.com/YbbhL7.png)
