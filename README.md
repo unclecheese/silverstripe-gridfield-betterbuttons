@@ -4,7 +4,7 @@ Better Buttons for GridField
 ![Screenshot](http://i.cubeupload.com/J8vWQf.png)
 
 
-Modifies the detail form of GridFields to use more user-friendly actions, including:
+### Modifies the detail form of GridFields to use more user-friendly actions, including:
 
 * **Save and add another**: Create a record, and go right to adding another one, without having to click the back button, and then add again.
 * **Save and close**: Save the record and go back to list view
@@ -22,7 +22,7 @@ Modifies the detail form of GridFields to use more user-friendly actions, includ
 * Add your own custom actions!
 
 
-## Create custom actions in from the detail view
+### Create custom actions the detail view
 
 ![Screenshot](http://i.cubeupload.com/QQL8oD.png)
 
@@ -114,7 +114,7 @@ We can add the action in one of two places:
 * **Utils** at the top right of the form (e.g. new record, prev/next)
 
 
-First, we'll overload the model's ```getBetterButtonsActions``` or ```getBetterButtonsUtils`` method, depending on where we want the button to appear in the UI.
+First, we'll overload the model's ```getBetterButtonsActions``` or ```getBetterButtonsUtils``` method, depending on where we want the button to appear in the UI.
 
 ```php
     public function getBetterButtonsActions($form, $request) {
