@@ -26,7 +26,8 @@ class BetterButton_Rollback extends BetterButton implements BetterButton_Version
      */
     public function baseTransform() {
         parent::baseTransform();
-        $this
+        
+        return $this
             ->setDescription(_t(
                             'SiteTree.BUTTONCANCELDRAFTDESC',
                             'Delete your draft and revert to the currently published page'

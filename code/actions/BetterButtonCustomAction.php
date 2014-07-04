@@ -35,6 +35,13 @@ class BetterButtonCustomAction extends BetterButtonAction {
 
 
     /**
+     * The success message on completion of the action
+     * @var  string
+     */
+    protected $successMessage;
+
+
+    /**
      * Builds the button
      * @param string                          $actionName   The name of the action (method)
      * @param string                          $text         The text for the button
@@ -68,14 +75,43 @@ class BetterButtonCustomAction extends BetterButtonAction {
 
 
     /**
+     * Gets the redirect type
+     * @return int
+     */
+    public function getRedirectType() {
+        return $this->redirectType;
+    }
+
+
+    /**
+     * Sets the success message when action complets
+     * @param string $message
+     * @return  BetterButtonCustomAction
+     */
+    public function setSuccessMessage($message) {
+        $this->successMessage = $message;
+
+        return $this;
+    }
+
+
+    /**
+     * Gets the success message
+     * @return string
+     */
+    public function getSuccessMessage() {
+        return $this->successMessage;
+    }
+
+
+    /**
      * Gets the link for the button
      * @return string
      */
     public function getButtonLink() {
         $link = Controller::join_links(
             'customaction',
-            $this->actionName,
-            "?redirectType=".$this->redirectType
+            $this->actionName
         );
         return $this->gridFieldRequest->Link($link);
     }

@@ -28,7 +28,7 @@ class BetterButton_Delete extends BetterButton {
         parent::baseTransform();
         Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons_delete.js');
 
-        $this
+        return $this
             ->setUseButtonTag(true)
             ->addExtraClass('gridfield-better-buttons-delete')
             ->setAttribute("data-toggletext", _t('GridFieldBetterButtons.AREYOUSURE','Yes. Delete this item.'))

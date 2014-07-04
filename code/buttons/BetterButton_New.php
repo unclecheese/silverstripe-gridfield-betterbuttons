@@ -16,8 +16,17 @@ class BetterButton_New extends BetterButton {
      */
     public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
         parent::__construct("doNew", _t('GridFieldBetterButtons.NEWRECORD','New record'), $form, $request);
+    }
 
-        $this
+
+    /**
+     * Add the necessary classes and icons
+     * @return FormAction
+     */
+    public function baseTransform() {
+        parent::baseTransform();
+        
+        return $this
             ->addExtraClass("ss-ui-action-constructive")
             ->setAttribute('data-icon', 'add');
     }

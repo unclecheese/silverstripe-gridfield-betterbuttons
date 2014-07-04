@@ -48,6 +48,7 @@ abstract class BetterButton extends FormAction {
      */
     public function transformToButton() {           
         $this->baseTransform();
+        
         return $this->setUseButtonTag(true);
     }
 
@@ -58,6 +59,7 @@ abstract class BetterButton extends FormAction {
      */
     public function transformToInput() {        
         $this->baseTransform();
+        
         return $this->setUseButtonTag(false);
     }
 

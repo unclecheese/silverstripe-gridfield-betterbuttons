@@ -26,7 +26,8 @@ class BetterButton_Unpublish extends BetterButton implements BetterButton_Versio
      */
     public function baseTransform() {   
         parent::baseTransform();
-        $this->addExtraClass('ss-ui-action-destructive');       
+        
+        return $this->addExtraClass('ss-ui-action-destructive');       
     }
 
 

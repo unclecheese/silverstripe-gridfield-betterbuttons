@@ -10,43 +10,43 @@ GridFieldDetailForm_ItemRequest:
 BetterButtonsUtils:
   edit:
     BetterButtonPrevNextAction: true
-    BetterButtonNew: true
+    BetterButton_New: true
   versioned_edit:
     BetterButtonPrevNextAction: true
-    BetterButtonNew: true
+    BetterButton_New: true
 
 BetterButtonsActions:
   create:
-    BetterButtonSave: true
-    BetterButtonSaveAndClose: true
+    BetterButton_Save: true
+    BetterButton_SaveAndClose: true
 
   edit:
-    BetterButtonSave: true
-    BetterButtonSaveAndClose: true
-    BetterButtonDelete: true
+    BetterButton_Save: true
+    BetterButton_SaveAndClose: true
+    BetterButton_Delete: true
     BetterButtonFrontendLinksAction: true
 
   versioned_create:
-    BetterButtonSaveDraft: true
-    BetterButtonPublish: true
+    BetterButton_SaveDraft: true
+    BetterButton_Publish: true
   versioned_edit:
-    BetterButtonSaveDraft: true
-    BetterButtonPublish: true
+    BetterButton_SaveDraft: true
+    BetterButton_Publish: true
     Group_Versioning: true
-    BetterButtonDelete: true
+    BetterButton_Delete: true
     BetterButtonFrontendLinksAction: true
 
 BetterButtonsGroups:
   SaveAnd:
     label: Save and...
     buttons:
-      BetterButtonSaveAndAdd: true
-      BetterButtonSaveAndClose: true
-      BetterButtonSaveAndNext: true
-      BetterButtonSaveAndPrev: true
+      BetterButton_SaveAndAdd: true
+      BetterButton_SaveAndClose: true
+      BetterButton_SaveAndNext: true
+      BetterButton_SaveAndPrev: true
   Versioning:
     label: Versioning...
     buttons:
-      BetterButtonRollback: true
+      BetterButton_Rollback: true
       BetterButton_Unpublish: true
 

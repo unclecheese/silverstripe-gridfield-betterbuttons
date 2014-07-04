@@ -46,7 +46,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      * @return BetterButtonsCustomActionRequest
      */
     public function customaction(SS_HTTPRequest $r) {
-        $req = new BetterButtonsCustomActionRequest($this, $this->owner);
+        $req = new BetterButtonsCustomActionRequest($this, $this->owner, $this->owner->ItemEditForm());
 
         return $req->handleRequest($r, DataModel::inst());
     }
@@ -536,15 +536,22 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
     protected $record;
 
     
+    /**
+     * The Form that is editing the record
+     * @var  Form
+     */
+    protected $form;
+
 
     /**
      * Buidls the request
      * @param GridFieldBetterButtonsItemRequest $parent     The extension instance
      * @param GridFieldDetailForm_ItemRequest $controller The request that points to the detail form
      */
-    public function __construct($parent, $controller) {
+    public function __construct($parent, $controller, $form) {
         $this->parent = $parent;
         $this->controller = $controller;
+        $this->form = $form;
         $this->record = $this->controller->record;
         parent::__construct();
     }
@@ -563,11 +570,17 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
             return $this->httpError(403);
         }
 
+        $formAction = $this->record->findActionByName($this->form, $this->controller, $action);
+        if(!$formAction) {
+            return $this->httpError(403, "Action $action doesn't exist");
+        }
+
         $this->record->$action($this->controller, $r);
         
         Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
+        Controller::curr()->getResponse()->addHeader('X-Status', $formAction->getSuccessMessage());                
         
-        if($r->getVar('redirectType') == BetterButtonCustomAction::GOBACK) {
+        if($formAction->getRedirectType() == BetterButtonCustomAction::GOBACK) {
             return Controller::curr()->redirect(preg_replace('/\?.*/', '', $this->parent->getBackLink()));
         }
         

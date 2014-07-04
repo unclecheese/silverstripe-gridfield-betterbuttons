@@ -36,7 +36,9 @@ class BetterButton_SaveDraft extends BetterButton implements BetterButton_Versio
      * @return FormAction
      */
     public function baseTransform() {
-        $this
+        parent::baseTransform();
+        
+        return $this
             ->setAttribute('data-icon', 'accept')
             ->setAttribute('data-icon-alternate', 'addpage')
             ->setAttribute('data-text-alternate', _t('CMSMain.SAVEDRAFT', 'Save draft'));

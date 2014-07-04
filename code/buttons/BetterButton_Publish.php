@@ -37,7 +37,7 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
      */
     public function baseTransform() {
         parent::baseTransform();
-        $this
+        return $this
             ->setAttribute('data-icon', 'accept')
             ->setAttribute('data-icon-alternate', 'disk')
             ->setAttribute('data-text-alternate', _t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'));
@@ -50,13 +50,16 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
      * @return void
      */
     public function transformToButton() {
+        parent::transformToButton();
+        
         $published = $this->gridFieldRequest->recordIsPublished();
         if($published) {
             $this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));
         }
         if($this->gridFieldRequest->record->stagesDiffer('Stage','Live') && $published) {
             $this->addExtraClass('ss-ui-alternate');
-
         }
+
+        return $this;
     }
 }

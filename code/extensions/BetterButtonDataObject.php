@@ -40,6 +40,24 @@ class BetterButtonDataObject extends DataExtension {
     }
 
 
+    /**
+     * Gets a FormAction or BetterButtonCustomAction by name, in utils or actions
+     * @param  Form $form    
+     * @param  GridFieldDetailForm_ItemRequest $request
+     * @param  string $action  The name of the action to find
+     * @return FormAction
+     */
+    public function findActionByName($form, $request, $action) {
+        $actions = $this->owner->getBetterButtonsActions($form, $request);
+        $formAction = $actions->fieldByName($action);
+        if(!$formAction) {
+            $utils = $this->owner->getBetterButtonsUtils($form, $request);
+            $formAction = $utils->fieldByName($action);
+        }
+
+        return $formAction;
+    }    
+
 
     /**
      * Gets the default utils for all DataObjects. Can be overloaded in subclasses.
@@ -95,7 +113,7 @@ class BetterButtonDataObject extends DataExtension {
             if(!$bool || !$buttonType) continue;
             
             if(substr($buttonType, 0, 6) == "Group_") {
-                $group = $this->createButtonGroup(substr($buttonType, 6));
+                $group = $this->createButtonGroup(substr($buttonType, 6), $form, $request);
                 if($group->children->exists()) {
                     $actions->push($group);
                 }
