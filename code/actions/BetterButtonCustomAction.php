@@ -57,7 +57,6 @@ class BetterButtonCustomAction extends BetterButtonAction {
     }
 
 
-
     /**
      * Button name in this case has to be predictable so we can find it in a set
      * to call a custom action
