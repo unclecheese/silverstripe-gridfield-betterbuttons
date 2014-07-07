@@ -11,20 +11,6 @@ class BetterButtonFrontendLinksAction extends BetterButtonAction {
 
 
     /**
-     * Builds the button
-     * @param Form                            $form    The form that holds the button
-     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
-     */
-    public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
-        parent::__construct(
-            null,
-            $form, 
-            $request
-        );
-    }
-
-
-    /**
      * Gets the link for the button
      * @return string
      */

@@ -6,7 +6,7 @@
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-abstract class BetterButton extends FormAction {
+abstract class BetterButton extends FormAction implements BetterButtonInterface {
 
 
     /**
@@ -17,17 +17,23 @@ abstract class BetterButton extends FormAction {
 
 
     /**
-     * Builds the button
-     * @param string                          $name    The name of the form action. Must be a method on the controller 
-     * @param string                          $title   The text for the button
-     * @param Form                            $form    The form that holds the button
-     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
+     * Is the button part of a compsite field, e.g. DropdownFormAction
+     * @var boolean
      */
-    public function __construct($name, $title = null, Form $form, GridFieldDetailForm_ItemRequest $request) {
-        $this->gridFieldRequest = $request;
-        $this->form = $form;
+    protected $isGrouped = false;
 
-        return parent::__construct($name, $title, $form);
+
+
+    /**
+     * Bind to the GridField request
+     * @param Form $form
+     * @param GridFieldDetailForm_ItemRequest $request
+     */
+    public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request) {
+        $this->setForm($form);
+        $this->gridFieldRequest = $request;
+
+        return $this;
     }
 
 
@@ -60,7 +66,7 @@ abstract class BetterButton extends FormAction {
     public function transformToInput() {        
         $this->baseTransform();
         
-        return $this->setUseButtonTag(false);
+        return $this;
     }
 
 
@@ -70,5 +76,36 @@ abstract class BetterButton extends FormAction {
      */
     public function shouldDisplay() {
         return true;
-    }   
+    }
+
+
+    /**
+     * Set true if the button is part of a group
+     * @param bool $bool
+     * @return  FormAction
+     */
+    public function setIsGrouped($bool) {
+        $this->isGrouped = $bool;
+
+        return $this;
+    }
+
+
+    /**
+     * Render the field with the correct attributes
+     * @param array $properties
+     * @return  FormAction
+     */
+    public function Field($properties = array ()) {
+        if($this->isGrouped) {
+            $this->transformToInput();
+        }
+        else {
+            $this->transformToButton();
+        }
+
+        return parent::Field($properties);
+    }
+
+
 }

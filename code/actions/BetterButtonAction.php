@@ -7,7 +7,7 @@
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonAction extends LiteralField {
+class BetterButtonAction extends LiteralField implements BetterButtonInterface {
 
     /**
      * The form that this action is associated with
@@ -40,15 +40,23 @@ class BetterButtonAction extends LiteralField {
     /**
      * Builds the action
      * @param string                          $text    The text to appear on the button
-     * @param Form                            $form    The form that the button appears on
-     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
      */
-    public function __construct($text, Form $form, GridFieldDetailForm_ItemRequest $request) {
+    public function __construct($text = null) {
         $this->buttonText = $text;
-        $this->gridFieldRequest = $request;
-        $this->form = $form;
-
         parent::__construct($this->getButtonName(), "");        
+    }
+
+
+    /**
+     * Bind the button to the GridField request
+     * @param Form $form
+     * @param GridFieldDetailForm_ItemRequest $request
+     */
+    public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request) {
+        $this->setForm($form);
+        $this->gridFieldRequest = $request;
+
+        return $this;
     }
 
 

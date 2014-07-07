@@ -45,15 +45,13 @@ class BetterButtonCustomAction extends BetterButtonAction {
      * Builds the button
      * @param string                          $actionName   The name of the action (method)
      * @param string                          $text         The text for the button
-     * @param Form                            $form         The form that holds the button
-     * @param GridFieldDetailForm_ItemRequest $request      The request that builds the form
-     * @param int                          $redirectType The type of redirection on completion of the action
+     * @param int                             $redirectType The type of redirection on completion of the action
      */
-    public function __construct($actionName, $text, Form $form, GridFieldDetailForm_ItemRequest $request, $redirectType = null) {
+    public function __construct($actionName, $text, $redirectType = null) {
         $this->actionName = $actionName;
         $this->redirectType = $redirectType ?: self::REFRESH;
 
-        parent::__construct($text, $form, $request);
+        parent::__construct($text);
     }
 
 

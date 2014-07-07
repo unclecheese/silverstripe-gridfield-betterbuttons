@@ -18,23 +18,21 @@ class BetterButtonDataObject extends DataExtension {
     /**
      * Gets the default actions for all DataObjects. Can be overloaded in subclasses
      * <code>
-     *  public function getBetterButtonsActions($form, $request) {
-     *      $actions = parent::getBetterButtonsActions($form, $request);
+     *  public function getBetterButtonsActions() {
+     *      $actions = parent::getBetterButtonsActions();
      *      $actions->push(BetterButtonCustomAction::create('myaction','Do something to this record'));
      *
      *      return $actions;
      *  }
      * </code>
      * 
-     * @param  Form                            $form    The form that contains this button
-     * @param  GridFieldDetailForm_ItemRequest $request The request that points to the form
      * @return FieldList
      */
-    public function getBetterButtonsActions($form, $request) {
+    public function getBetterButtonsActions() {
         $buttons = $this->getDefaultButtonList("BetterButtonsActions");                
-        $actions = $this->createFieldList($buttons, $form, $request);
+        $actions = $this->createFieldList($buttons);
 
-        $this->owner->extend('updateBetterButtonsActions', $actions, $form, $request);
+        $this->owner->extend('updateBetterButtonsActions', $actions);
 
         return $actions;
     }
@@ -42,16 +40,14 @@ class BetterButtonDataObject extends DataExtension {
 
     /**
      * Gets a FormAction or BetterButtonCustomAction by name, in utils or actions
-     * @param  Form $form    
-     * @param  GridFieldDetailForm_ItemRequest $request
      * @param  string $action  The name of the action to find
      * @return FormAction
      */
-    public function findActionByName($form, $request, $action) {
-        $actions = $this->owner->getBetterButtonsActions($form, $request);
+    public function findActionByName($action) {
+        $actions = $this->owner->getBetterButtonsActions();
         $formAction = $actions->fieldByName($action);
         if(!$formAction) {
-            $utils = $this->owner->getBetterButtonsUtils($form, $request);
+            $utils = $this->owner->getBetterButtonsUtils();
             $formAction = $utils->fieldByName($action);
         }
 
@@ -63,23 +59,21 @@ class BetterButtonDataObject extends DataExtension {
      * Gets the default utils for all DataObjects. Can be overloaded in subclasses.
      * Utils are actions that appear in the top of the GridFieldDetailForm
      * <code>
-     *  public function getBetterButtonsUtils($form, $request) {
-     *      $utils = parent::getBetterButtonsUtils($form, $request);
+     *  public function getBetterButtonsUtils() {
+     *      $utils = parent::getBetterButtonsUtils();
      *      $utils->push(BetterButtonCustomAction::create('myaction','Do something to this record'));
      *
      *      return $utils;
      *  }
      * </code>
      * 
-     * @param  Form                            $form    The form that contains this button
-     * @param  GridFieldDetailForm_ItemRequest $request The request that points to the form
      * @return FieldList
      */
-    public function getBetterButtonsUtils($form, $request) {
+    public function getBetterButtonsUtils() {
         $buttons = $this->getDefaultButtonList("BetterButtonsUtils");
-        $utils = $this->createFieldList($buttons, $form, $request);
+        $utils = $this->createFieldList($buttons);
 
-        $this->owner->extend('updateBetterButtonsUtils', $utils, $form, $request);
+        $this->owner->extend('updateBetterButtonsUtils', $utils);
 
         return $utils;
     }
@@ -87,8 +81,8 @@ class BetterButtonDataObject extends DataExtension {
 
     /**
      * Gets an array of all the default buttons as defined in the config
-     * @param  [type] $config [description]
-     * @return [type]         [description]
+     * @param  array $config
+     * @return array
      */
     protected function getDefaultButtonList($config) {
         $new = ($this->owner->ID == 0);
@@ -103,22 +97,20 @@ class BetterButtonDataObject extends DataExtension {
     /**
      * Transforms a list of configured buttons into a usable FieldList
      * @param  array                            $buttons An array of class names
-     * @param  Form                             $form    The form that will contain the buttons
-     * @param  GridFieldDetailForm_ItemRequest $request The request that points to the form
      * @return FieldList
      */
-    protected function createFieldList($buttons, $form, $request) {
+    protected function createFieldList($buttons) {
         $actions = FieldList::create();        
         foreach($buttons as $buttonType => $bool) {
             if(!$bool || !$buttonType) continue;
             
             if(substr($buttonType, 0, 6) == "Group_") {
-                $group = $this->createButtonGroup(substr($buttonType, 6), $form, $request);
+                $group = $this->createButtonGroup(substr($buttonType, 6));
                 if($group->children->exists()) {
                     $actions->push($group);
                 }
             }
-            else if($b = $this->instantiateButton($buttonType, $form, $request)) {
+            else if($b = $this->instantiateButton($buttonType)) {
                 $actions->push($b);
             }            
         }
@@ -129,26 +121,15 @@ class BetterButtonDataObject extends DataExtension {
 
     /**
      * Transforms a given button class name into an actual object.
-     * Invokes any necessary methods that need to be called per the configuration
      * @param  string                           $className The class of the button
      * @param  Form                             $form      The form that will contain the button
      * @param  GridFieldDetailForm_ItemRequest  $request   The request that points to the form
      * @param  boolean                          $button    If the button should display as an input tag or a button
      * @return FormField             
      */
-    protected function instantiateButton($className, $form, $request, $button = true) {
+    protected function instantiateButton($className) {
         if(class_exists($className)) {                    
-            $buttonObj = Injector::inst()->create($className, $form, $request);
-
-            if($buttonObj->hasMethod('shouldDisplay') && !$buttonObj->shouldDisplay()) return false;
-
-            if($buttonObj instanceof BetterButton) {
-                if(($buttonObj instanceof BetterButton_Versioned) && !$this->checkVersioned()) {
-                    return false;
-                }                
-                return $button ? $buttonObj->transformToButton() : $buttonObj->transformToInput();                
-            }
-
+            $buttonObj = Injector::inst()->create($className);
             return $buttonObj;
         }
         else {
@@ -160,18 +141,16 @@ class BetterButtonDataObject extends DataExtension {
     /**
      * Creates a button group {@link DropdownFormAction}
      * @param  string                           $groupName The name of the group
-     * @param  Form                             $form      The form that will contain the group
-     * @param  GridFieldDetailForm_ItemRequest $request   The request that points to the form
      * @return DropdownFormAction
      */
-    protected function createButtonGroup($groupName, $form, $request) {        
+    protected function createButtonGroup($groupName) {        
         $groupConfig = Config::inst()->get("BetterButtonsGroups", $groupName);
         $label = (isset($groupConfig['label'])) ? $groupConfig['label'] : $groupName;
         $buttons = (isset($groupConfig['buttons'])) ? $groupConfig['buttons'] : array ();
         $button = DropdownFormAction::create(_t('GridFieldBetterButtons.'.$groupName, $label));
         foreach($buttons as $b => $bool) {              
             if($bool) {
-                if($child = $this->instantiateButton($b, $form, $request)) {
+                if($child = $this->instantiateButton($b)) {
                     $button->push($child);
                 }
             }

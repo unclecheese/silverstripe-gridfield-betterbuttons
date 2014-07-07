@@ -11,15 +11,9 @@ class BetterButtonCancelAction extends BetterButtonAction {
 
     /**
      * Builds the button
-     * @param Form                            $form    The form that holds the button
-     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
      */
-    public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
-        parent::__construct(
-            _t('GridFieldBetterButtons.CANCEL','Cancel'),
-            $form, 
-            $request
-        );
+    public function __construct() {
+        parent::__construct(_t('GridFieldBetterButtons.CANCEL','Cancel'));
     }
 
 

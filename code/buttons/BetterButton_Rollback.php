@@ -12,11 +12,9 @@ class BetterButton_Rollback extends BetterButton implements BetterButton_Version
 
     /**
      * Builds the button
-     * @param Form                            $form    The form that holds the button
-     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
      */
-    public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
-        parent::__construct('rollback', _t('SiteTree.BUTTONCANCELDRAFT','Cancel draft changes'), $form, $request);
+    public function __construct() {
+        parent::__construct('rollback', _t('SiteTree.BUTTONCANCELDRAFT','Cancel draft changes'));
     }
 
 
@@ -27,11 +25,10 @@ class BetterButton_Rollback extends BetterButton implements BetterButton_Version
     public function baseTransform() {
         parent::baseTransform();
         
-        return $this
-            ->setDescription(_t(
-                            'SiteTree.BUTTONCANCELDRAFTDESC',
-                            'Delete your draft and revert to the currently published page'
-            ));
+        return $this->setDescription(_t(
+            'SiteTree.BUTTONCANCELDRAFTDESC',
+            'Delete your draft and revert to the currently published page'
+        ));
     }
 
     

@@ -11,11 +11,9 @@ class BetterButton_SaveAndClose extends BetterButton {
 
     /**
      * Builds the button
-     * @param Form                            $form    The form that holds the button
-     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
      */
-    public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
-        parent::__construct("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'), $form, $request);
+    public function __construct() {
+        parent::__construct("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'));
 
     }
 

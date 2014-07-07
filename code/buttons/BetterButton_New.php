@@ -14,8 +14,8 @@ class BetterButton_New extends BetterButton {
      * @param Form                            $form    The form that holds the button
      * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
      */
-    public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
-        parent::__construct("doNew", _t('GridFieldBetterButtons.NEWRECORD','New record'), $form, $request);
+    public function __construct() {
+        parent::__construct("doNew", _t('GridFieldBetterButtons.NEWRECORD','New record'));
     }
 
 

@@ -72,16 +72,52 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	public function updateItemEditForm($form) {
 		Requirements::css(BETTER_BUTTONS_DIR.'/css/gridfield_betterbuttons.css');
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
-        $form->setActions(FieldList::create());
-		$form->setActions($this->owner->record->getBetterButtonsActions($form, $this->owner));        
+        
+        
+		$actions = $this->owner->record->getBetterButtonsActions();
+        $form->setActions($this->filterFieldList($form, $actions));        
+
 		if($form->Fields()->hasTabset()) {
 			$form->Fields()->findOrMakeTab('Root')->setTemplate('TabSet');
 			$form->addExtraClass('cms-tabset');
 		}
-		$form->Utils = $this->owner->record->getBetterButtonsUtils($form, $this->owner);
+        
+        $utils = $this->owner->record->getBetterButtonsUtils();
+		$form->Utils = $this->filterFieldList($form, $utils);
 		$form->setTemplate('BetterButtons_EditForm');
-
 	}
+
+
+    /**
+     * Given a list of actions, remove anything that doesn't belong.
+     * @param  Form      $form    
+     * @param  FieldList $actions 
+     * @return FieldList
+     */
+    protected function filterFieldList(Form $form, FieldList $actions) {
+        $list = FieldList::create();
+
+        foreach($actions as $a) {
+
+            if(!$a instanceof BetterButtonInterface) {
+                throw new Exception("{$buttonObj->class} must implement BetterButtonInterface");
+            }
+
+            $a->bindGridField($form, $this->owner);
+
+            if(!$a->shouldDisplay()) {
+                continue;
+            }
+            
+            if(($a instanceof BetterButton_Versioned) && !$this->owner->record->checkVersioned()) {
+                continue;
+            }                
+            
+            $list->push($a);
+        }
+
+        return $list;
+    }
 
 
 	/**
@@ -570,7 +606,7 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
             return $this->httpError(403);
         }
 
-        $formAction = $this->record->findActionByName($this->form, $this->controller, $action);
+        $formAction = $this->record->findActionByName($action);
         if(!$formAction) {
             return $this->httpError(403, "Action $action doesn't exist");
         }

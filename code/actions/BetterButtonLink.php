@@ -22,7 +22,7 @@ class BetterButtonLink extends BetterButtonAction {
      * @param string $link
      */
     public function __construct($text, $link) {
-        parent::__construct($text, null, null);
+        parent::__construct($text);
         $this->link = $link;
     }
 

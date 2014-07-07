@@ -6,7 +6,7 @@
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class DropdownFormAction extends CompositeField {
+class DropdownFormAction extends CompositeField implements BetterButtonInterface {
 
 	
 	/**
@@ -46,7 +46,8 @@ class DropdownFormAction extends CompositeField {
 	public function Field($properties = array ()) {		
 		Requirements::css(BETTER_BUTTONS_DIR.'/css/dropdown_form_action.css');
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/dropdown_form_action.js');
-		$this->setAttribute('data-form-action-dropdown','#'.$this->DropdownID());		
+		$this->setAttribute('data-form-action-dropdown','#'.$this->DropdownID());
+
 		return parent::Field();
 	}
 
@@ -60,5 +61,41 @@ class DropdownFormAction extends CompositeField {
 		return 'form-action-dropdown-'.$this->identifier;
 	}
 
+
+	/**
+	 * Determines if the button should displsy
+	 * @return boolean
+	 */
+	public function shouldDisplay() {		
+		foreach($this->children as $child) {
+			if($child->shouldDisplay()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+	/**
+	 * Binds to the GridField request, and transforms the buttons
+	 * @param Form $form
+	 * @param GridFieldDetailForm_ItemRequest $request
+	 */
+	public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request) {
+		$this->setForm($form);
+		$this->gridFieldRequest = $request;
+
+		foreach($this->children as $child) {
+			if(!$child instanceof BetterButton) {
+				throw new Exception("DropdownFormAction must be passed instances of BetterButton");
+			}
+			$child->bindGridField($form, $request);
+			$child->setIsGrouped(true);			
+			$child->setUseButtonTag(true);
+		}
+
+		return $this;
+	}
 
 }

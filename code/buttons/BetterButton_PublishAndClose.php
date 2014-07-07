@@ -1,4 +1,4 @@
-<?php
+g<?php
 
 
 /**
@@ -12,11 +12,9 @@ class BetterButton_PublishAndClose extends BetterButton_SaveAndClose implements 
 
     /**
      * Builds the button
-     * @param Form                            $form    The form that holds the button
-     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
      */
-    public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request) {
-        return parent::__construct('doPublishAndQuit', _t('GridFieldDetailForm.PUBLISHANDQUITE','Publish and close'), $form, $request);
+    public function __construct() {
+        return parent::__construct('doPublishAndQuit', _t('GridFieldDetailForm.PUBLISHANDQUITE','Publish and close'));
     }
 
 
