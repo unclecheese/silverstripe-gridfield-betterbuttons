@@ -269,7 +269,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
             $form->saveInto($this->owner->record);
             $this->owner->record->write();
             $list->add($this->owner->record, $extraData);
+            $this->owner->record->invokeWithExtensions('onBeforePublish', $this->owner->record);
             $this->owner->record->publish('Stage', 'Live');
+            $this->owner->record->invokeWithExtensions('onAfterPublish', $this->owner->record);
         } catch (ValidationException $e) {
             $form->sessionMessage($e->getResult()->message(), 'bad');
             $responseNegotiator = new PjaxResponseNegotiator(array(
