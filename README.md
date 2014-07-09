@@ -117,19 +117,19 @@ We can add the action in one of two places:
 First, we'll overload the model's ```getBetterButtonsActions``` or ```getBetterButtonsUtils``` method, depending on where we want the button to appear in the UI.
 
 ```php
-    public function getBetterButtonsActions($form, $request) {
-        $fields = parent::getBetterButtonsActions($form, $request);
+    public function getBetterButtonsActions() {
+        $fields = parent::getBetterButtonsActions();
         if($this->IsApproved) {
-            $fields->push(BetterButtonCustomAction::create('deny', 'Deny', $form, $request));
+            $fields->push(BetterButtonCustomAction::create('deny', 'Deny'));
         }
         else {
-            $fields->push(BetterButtonCustomAction::create('approve', 'Approve', $form, $request));
+            $fields->push(BetterButtonCustomAction::create('approve', 'Approve'));
         }
         return $fields;
     }
 ```
 
-The ```BetterButtonCustomAction``` object takes parameters for the method name ("deny" or "approve") to invoke on the model, as well as a label for the button, and requisite ```$form``` and ```$request``` references.
+The ```BetterButtonCustomAction``` object takes parameters for the method name ("deny" or "approve") to invoke on the model, as well as a label for the button.
 
 Now let's add the methods to the DataObject.
 
@@ -163,7 +163,7 @@ Let's ensure that the form refreshes after clicking "approve" or "deny". Additio
 
 ```php
   $fields->push(
-    BetterButtonCustomAction::create('deny', 'Deny', $form, $request)
+    BetterButtonCustomAction::create('deny', 'Deny')
       ->setRedirectType(BetterButtonCustomAction::REFRESH)
       ->setSuccessMessage('Denied for publication')
   );
