@@ -166,7 +166,7 @@ class BetterButtonDataObject extends DataExtension {
      */
     public function checkVersioned() {
         return $this->owner->hasExtension('Versioned') &&
-               count($this->owner->record->getVersionedStages()) > 1;
+               count($this->owner->getVersionedStages()) > 1;
     }
 
 
