@@ -296,14 +296,12 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         }
 
 
-        $link = '<a href="' . $this->owner->Link('edit') . '">"'
-            . Convert::raw2xml($this->owner->record->Title)
-            . '"</a>';
-        $message = sprintf(
-            'Published %s %s',
-            $this->owner->record->i18n_singular_name(),
-            $link
-        );
+		$title = '"' . Convert::raw2xml($this->owner->record->Title) . '"';
+		$message = sprintf(
+			'Published %s %s',
+			$this->owner->record->i18n_singular_name(),
+			$title
+		);
 
         $form->sessionMessage($message, 'good');
 
