@@ -457,7 +457,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			}
 			return $responseNegotiator->respond($controller->getRequest());
 		}
-        Controller::curr()->getResponse()->addHeader('X-Reload', true);
             
 		return Controller::curr()->redirect($redirectLink);
 	}
