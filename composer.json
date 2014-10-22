@@ -5,15 +5,14 @@
     "keywords": ["silverstripe", "gridfield", "buttons"],
 	"license": "BSD-3-Clause",
     "authors": [
-	    {
-	        "name": "Uncle Cheese",
-	        "email": "unclecheese@leftandmain.com"
-	    },
-		{
-			"name": "Shrike",
-			"email": "shrike@iki.fi"
-		}
-    ],
+    {
+        "name": "Uncle Cheese",
+        "email": "unclecheese@leftandmain.com"
+    },
+    {
+        "name": "Shrike",
+        "email": "shrike@iki.fi"
+    }],
     "require": {
         "silverstripe/framework": "~3.1"
     }
