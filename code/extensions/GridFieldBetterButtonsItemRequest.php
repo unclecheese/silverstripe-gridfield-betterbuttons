@@ -614,6 +614,10 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
         
         Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
         Controller::curr()->getResponse()->addHeader('X-Status', $formAction->getSuccessMessage());                
+
+        if($formAction->getRedirectURL()) {
+            return Controller::curr()->redirect($formAction->getRedirectURL());
+        }
         
         if($formAction->getRedirectType() == BetterButtonCustomAction::GOBACK) {
             return Controller::curr()->redirect(preg_replace('/\?.*/', '', $this->parent->getBackLink()));
