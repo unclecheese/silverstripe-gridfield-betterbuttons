@@ -190,3 +190,11 @@ Sometimes, you might not want to sent a request to the controller at all. For th
 
 ![Screenshot](http://i.cubeupload.com/YbbhL7.png)
 
+### Disabling Better Buttons
+
+Sometimes you might find it necessary to disable better buttons on certain classes. You can do this by changing the static `better_buttons_enabled` to be false via YML configuration.
+
+```yml
+MyBetterButtonLessClass
+  better_buttons_enabled: false
+```
