@@ -34,12 +34,15 @@ class BetterButtonFrontendLinksAction extends BetterButtonAction {
      */
     public function getButtonHTML() {
         $link = $this->getButtonLink();
+        
+        $stageLink = Controller::join_links($link, '?stage=Stage');
+        $liveLink = Controller::join_links($link, '?stage=Live');
 
         return '<span class="better-buttons-frontend-links">
-                    <a class="better-buttons-frontend-link" target="_blank" href="'.$link.'?stage=Stage">'
+                    <a class="better-buttons-frontend-link" target="_blank" href="' . $stageLink . '">'
                         ._t('GridFieldBetterButtons.VIEWONDRAFTSITE','Draft site').
                     '</a> |
-                    <a class="better-buttons-frontend-link" target="_blank" href="'.$link.'?stage=Live">'.
+                    <a class="better-buttons-frontend-link" target="_blank" href="' . $liveLink . '">'.
                         _t('GridFieldBetterButtons.VIEWONLIVESITE','Live site').
                     '</a></span>';
 
