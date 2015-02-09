@@ -269,8 +269,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         }
 
         try {
-            $form->saveInto($this->owner->record);
-            $this->owner->record->write();
+            $this->save($data, $form);
             $list->add($this->owner->record, $extraData);
             $this->owner->record->invokeWithExtensions('onBeforePublish', $this->owner->record);
             $this->owner->record->publish('Stage', 'Live');
