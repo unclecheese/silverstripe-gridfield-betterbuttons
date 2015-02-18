@@ -8,6 +8,7 @@
 	left: 0;
 	bottom: 120%;
 	display:none;
+	width: 300px;
 }
 
 .dropdown-form-action-container {
@@ -108,7 +109,7 @@
 
 
 .dropdown-form-action .dropdown-form-action-menu li > button{
-	padding-left:32px;
+	padding-left:17px;
 	position: relative;
 }
 .dropdown-form-action .dropdown-form-action-menu li > button:after{
