@@ -230,8 +230,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      * @return SS_HTTPResponse
      */
 	public function save($data, $form) {
-            if(Session::get('readingMode') != "Stage.Stage") {
-                Session::set('readingMode', 'Stage.Stage');
+            if(Versioned::current_stage() != "Stage.Stage") {
+                Versioned::reading_stage('Stage');
             }
 
             return $this->owner->doSave($data, $form);
