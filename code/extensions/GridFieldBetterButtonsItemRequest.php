@@ -230,8 +230,13 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      * @return SS_HTTPResponse
      */
 	public function save($data, $form) {
-		return $this->owner->doSave($data, $form);
-	}
+            $origStage = Versioned::current_stage();
+            Versioned::reading_stage('Stage');
+            $action = $this->owner->doSave($data, $form);
+            Versioned::reading_stage($origStage);
+            
+            return $action;
+       	}
 
 
     /**
