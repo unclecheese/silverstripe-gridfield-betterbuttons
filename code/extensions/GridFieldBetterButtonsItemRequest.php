@@ -70,6 +70,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	 * @param Form The ItemEditForm object
 	 */
 	public function updateItemEditForm($form) {
+        if ($this->owner->record->stat('better_buttons_enabled') !== true) {
+			return false;
+		}
 		Requirements::css(BETTER_BUTTONS_DIR.'/css/gridfield_betterbuttons.css');
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
         
@@ -227,8 +230,13 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      * @return SS_HTTPResponse
      */
 	public function save($data, $form) {
-		return $this->owner->doSave($data, $form);
-	}
+            $origStage = Versioned::current_stage();
+            Versioned::reading_stage('Stage');
+            $action = $this->owner->doSave($data, $form);
+            Versioned::reading_stage($origStage);
+            
+            return $action;
+       	}
 
 
     /**
@@ -266,8 +274,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         }
 
         try {
-            $form->saveInto($this->owner->record);
-            $this->owner->record->write();
+            $this->save($data, $form);
             $list->add($this->owner->record, $extraData);
             $this->owner->record->invokeWithExtensions('onBeforePublish', $this->owner->record);
             $this->owner->record->publish('Stage', 'Live');
@@ -614,6 +621,10 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
         
         Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
         Controller::curr()->getResponse()->addHeader('X-Status', $formAction->getSuccessMessage());                
+
+        if($formAction->getRedirectURL()) {
+            return Controller::curr()->redirect($formAction->getRedirectURL());
+        }
         
         if($formAction->getRedirectType() == BetterButtonCustomAction::GOBACK) {
             return Controller::curr()->redirect(preg_replace('/\?.*/', '', $this->parent->getBackLink()));

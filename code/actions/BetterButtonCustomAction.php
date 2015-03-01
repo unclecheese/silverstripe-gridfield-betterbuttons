@@ -35,6 +35,14 @@ class BetterButtonCustomAction extends BetterButtonAction {
 
 
     /**
+     * The redirect URL. Overrides $redirectType
+     * 
+     * @var string
+     */
+    protected $redirectURL;
+
+
+    /**
      * The success message on completion of the action
      * @var  string
      */
@@ -89,6 +97,27 @@ class BetterButtonCustomAction extends BetterButtonAction {
      */
     public function getRedirectType() {
         return $this->redirectType;
+    }
+
+
+    /**
+     * Sets the redirect URL. Overrides $redirectType;     
+     *    
+     * @param string $url
+     */
+    public function setRedirectURL($url) {
+        $this->redirectURL = $url;
+
+        return $this;
+    }
+
+
+    /**
+     * Gets the redirect URL
+     * @return string
+     */
+    public function getRedirectURL() {
+        return $this->redirectURL;
     }
 
 

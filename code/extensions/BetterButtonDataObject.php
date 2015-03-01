@@ -14,6 +14,13 @@
  */
 class BetterButtonDataObject extends DataExtension {
 
+    /**
+     * Enable better buttons for this DataObject
+     *
+     * @config
+     * @var bool
+     */
+    private static $better_buttons_enabled = true;
     
     /**
      * Gets the default actions for all DataObjects. Can be overloaded in subclasses

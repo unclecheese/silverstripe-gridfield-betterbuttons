@@ -1,5 +1,5 @@
 {
-    "name": "mediaclinic/betterbuttons",
+    "name": "unclecheese/betterbuttons",
     "description": "Adds new form actions and buttons to GridField detail form for usability enhancements.",
     "type": "silverstripe-module",
     "keywords": ["silverstripe", "gridfield", "buttons"],
@@ -8,10 +8,6 @@
     {
         "name": "Uncle Cheese",
         "email": "unclecheese@leftandmain.com"
-    },
-    {
-        "name": "Shrike",
-        "email": "shrike@iki.fi"
     }],
     "require": {
         "silverstripe/framework": "~3.1"
