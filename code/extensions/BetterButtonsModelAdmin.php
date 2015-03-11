@@ -13,7 +13,6 @@ class BetterButtonsModelAdmin extends Extension {
     public function updateEditForm(&$form) {
         $origStage = Versioned::current_stage();
         if($origStage != "Stage") {
-            Versioned::reading_stage('Stage');
             $fields = $form->Fields();
             foreach($fields as &$field) {
                 if($field->class == "GridField") {
@@ -21,7 +20,6 @@ class BetterButtonsModelAdmin extends Extension {
                     $field->setList($stage_data);
                 }
             }
-            Versioned::reading_stage($origStage);
         }
     }
 }
