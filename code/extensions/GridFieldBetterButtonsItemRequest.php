@@ -246,6 +246,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      */
     public function publish($data, $form, $request = null, $redirectURL = null)
     {
+        $origStage = Versioned::current_stage();
+        Versioned::reading_stage('Stage');
 
         $new_record = $this->owner->record->ID == 0;
         $controller = Controller::curr();
@@ -279,6 +281,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
             $this->owner->record->invokeWithExtensions('onBeforePublish', $this->owner->record);
             $this->owner->record->publish('Stage', 'Live');
             $this->owner->record->invokeWithExtensions('onAfterPublish', $this->owner->record);
+            Versioned::reading_stage($origStage);
         } catch (ValidationException $e) {
             $form->sessionMessage($e->getResult()->message(), 'bad');
             $responseNegotiator = new PjaxResponseNegotiator(array(
@@ -430,6 +433,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	 * @todo  GridFieldDetailForm_ItemRequest::doSave is too monolithic, making overloading impossible. Most of this code is a direct copy.
 	 * */
 	protected function saveAndRedirect($data, $form, $redirectLink) {
+		$origStage = Versioned::current_stage();
+		Versioned::reading_stage('Stage');
 		$new_record = $this->owner->record->ID == 0;
 		$controller = Controller::curr();
 		$list = $this->owner->gridField->getList();
@@ -449,6 +454,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$form->saveInto($this->owner->record);
 			$this->owner->record->write();
 			$list->add($this->owner->record, $extraData);
+			Versioned::reading_stage($origStage);
 		} catch(ValidationException $e) {
 			$form->sessionMessage($e->getResult()->message(), 'bad');
 			$responseNegotiator = new PjaxResponseNegotiator(array(
