@@ -7,9 +7,6 @@ DataObject:
 GridFieldDetailForm_ItemRequest:
   extensions:
     - GridFieldBetterButtonsItemRequest
-ModelAdmin:
-  extensions:
-    - BetterButtonsModelAdmin
 BetterButtonsUtils:
   edit:
     BetterButtonPrevNextAction: true
