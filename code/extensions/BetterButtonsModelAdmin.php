@@ -14,7 +14,7 @@ class BetterButtonsModelAdmin extends Extension {
         $origStage = Versioned::current_stage();
         if($origStage != "Stage") {
             $fields = $form->Fields();
-            foreach($fields as &$field) {
+            foreach($fields as $field) {
                 if($field->class == "GridField") {
                     $stage_data = Versioned::get_by_stage($this->owner->modelClass, "Stage");
                     $field->setList($stage_data);
