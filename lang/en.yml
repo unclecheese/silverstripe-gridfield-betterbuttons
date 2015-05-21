@@ -6,11 +6,15 @@ en:
     AREYOUSURE: 'Yes. Delete this item.'
     CANCEL: Cancel
     NEWRECORD: 'New record'
+    NEXT: Next
     NEXTRECORD: 'Go to the next record'
+    PREVIOUS: Previous
     PREVIOUSRECORD: 'Go to the previous record'
     SAVEANDADDNEW: 'Save and add new'
+    VIEWONDRAFTSITE: 'Draft site'
+    VIEWONLIVESITE: 'Live site'
   GridFieldDetailForm:
-    CANCELDELETE: 'No. Don''t delete'
+    CANCELDELETE: 'No. Don''t delete.'
     Delete: Delete
     PUBLISHANDADD: 'Publish and add new'
     PUBLISHANDQUITE: 'Publish and close'
