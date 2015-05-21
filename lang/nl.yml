@@ -6,7 +6,9 @@ nl:
     AREYOUSURE: 'Ja, verwijder dit item.'
     CANCEL: Annuluren
     NEWRECORD: 'Nieuw item'
+    NEXT: 'Volgende'
     NEXTRECORD: 'Ga naar volgende item'
+    PREVIOUS: 'Vorige'
     PREVIOUSRECORD: 'Ga naar vorige item'
     SAVEANDADDNEW: 'Opslaan en nieuwe aanmaken'
     VIEWONDRAFTSITE: 'Draft site'
