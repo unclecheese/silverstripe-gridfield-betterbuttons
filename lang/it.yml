@@ -1,0 +1,31 @@
+it:
+  CMSMain:
+    ROLLEDBACKPUBv2: 'Ripristinata la versione pubblicata.'
+    SAVEDRAFT: 'Salva bozza'
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Sì. Elimina questo elemento.'
+    CANCEL: 'Annulla'
+    NEWRECORD: 'Nuova voce'
+    NEXT: 'Successivo'
+    NEXTRECORD: 'Vai alla voce successiva'
+    PREVIOUS: 'Precedente'
+    PREVIOUSRECORD: 'Vai alla voce precedente'
+    SAVEANDADDNEW: 'Salva e aggiungi'
+    VIEWONDRAFTSITE: 'Sito bozza'
+    VIEWONLIVESITE: 'Sito live'
+  GridFieldDetailForm:
+    CANCELDELETE: 'No. Non eliminare.'
+    Delete: 'Elimina'
+    PUBLISHANDADD: 'Pubblica e aggiungi'
+    PUBLISHANDQUITE: 'Pubblica e chiudi'
+    SAVE: 'Salva'
+    SAVEANDCLOSE: 'Salva e chiudi'
+    SAVEANDNEXT: 'Salva e vai al successivo'
+    SAVEANDPREV: 'Salva e vai al precedente'
+  SiteTree:
+    BUTTONCANCELDRAFT: 'Cancella le modifiche salvate in bozza'
+    BUTTONCANCELDRAFTDESC: 'Cancella la tua bozza e ritorna alla versione corrente della pagina pubblicata'
+    BUTTONPUBLISHED: 'Pubblicato'
+    BUTTONSAVED: 'Salvato'
+    BUTTONSAVEPUBLISH: 'Salva e pubblica'
+    BUTTONUNPUBLISH: 'Non pubblicare'

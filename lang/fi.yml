@@ -6,13 +6,15 @@ fi:
     AREYOUSURE: 'Kyllä. Poista tämä tietue.'
     CANCEL: Peruuta
     NEWRECORD: 'Uusi tietue'
+    NEXT: 'Seuraava'
     NEXTRECORD: 'Siirry seuraavaan tietueeseen'
+    PREVIOUS: 'Seuraava'
     PREVIOUSRECORD: 'Palaa edelliseen tietueeseen'
     SAVEANDADDNEW: 'Tallenna ja lisää uusi'
     VIEWONDRAFTSITE: 'Vedos'
     VIEWONLIVESITE: 'Julkaistu sivusto'
   GridFieldDetailForm:
-    CANCELDELETE: 'Ei. Älä poista'
+    CANCELDELETE: 'Ei. Älä poista.'
     DELETE: 'Poista'
     PUBLISHANDADD: 'Julkaise ja lisää uusi'
     PUBLISHANDQUITE: 'Julkaise ja sulje'

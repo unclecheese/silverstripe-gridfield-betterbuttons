@@ -20,11 +20,6 @@
 		<% else %>
 		<p id="{$FormName}_error" class="message $MessageType" style="display: none"></p>
 		<% end_if %>
-		<div class="better-buttons-utils">
-			<% loop $Utils %>
-				$FieldHolder
-			<% end_loop %>
-		</div>
 
 		<fieldset>
 			<% if $Legend %><legend>$Legend</legend><% end_if %>
@@ -49,6 +44,12 @@
 		</div>
 		<% end_if %>
 	</div>
+	<div class="better-buttons-utils">
+		<% loop $Utils %>
+			$FieldHolder
+		<% end_loop %>
+	</div>
+
 <% if $IncludeFormTag %>
 </form>
 <% end_if %>

@@ -31,9 +31,11 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         'doSaveAndNext',
         'doSaveAndPrev',
         'doDelete',
-        'customaction'
+        'customaction',
+        'nestedform',
 	);
 
+	
 
     /**
      * Handles all custom action from DataObjects and hands them off to a sub-controller.
@@ -47,6 +49,19 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      */
     public function customaction(SS_HTTPRequest $r) {
         $req = new BetterButtonsCustomActionRequest($this, $this->owner, $this->owner->ItemEditForm());
+
+        return $req->handleRequest($r, DataModel::inst());
+    }
+
+    /**
+     * Handles all custom action from DataObjects and hands them off to a sub-controller.
+     * e.g. /nestedform?action=myDataObjectAction
+     * 
+     * @param  SS_HTTPRequest $r
+     * @return BetterButtonsNestedFormRequest
+     */
+    public function nestedform(SS_HTTPRequest $r) {
+        $req = new BetterButtonsNestedFormRequest($this, $this->owner, $this->owner->ItemEditForm());
 
         return $req->handleRequest($r, DataModel::inst());
     }
@@ -190,7 +205,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      */
 	public function doSaveAndNext($data, $form) {
 		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
-		$link = Controller::join_links($this->owner->gridField->Link(),"item", $this->getNextRecordID());
+		$link = $this->getEditLink($this->getNextRecordID());
 
 		return $this->saveAndRedirect($data, $form, $link);
 	}
@@ -204,9 +219,19 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      */
 	public function doSaveAndPrev($data, $form) {
 		Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
-		$link = Controller::join_links($this->owner->gridField->Link(),"item", $this->getPreviousRecordID());
+		$link = $this->getEditLink($this->getPreviousRecordID());
 
 		return $this->saveAndRedirect($data, $form, $link);
+	}
+
+
+	/**
+	 * Gets the edit link for a record
+	 * @param  int $id The ID of the record in the GridField
+	 * @return string
+	 */
+	public function getEditLink($id) {
+		return Controller::join_links($this->owner->gridField->Link(),"item", $id);		
 	}
 
 
@@ -617,10 +642,10 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
             return $this->httpError(403, "Action $action doesn't exist");
         }
 
-        $this->record->$action($this->controller, $r);
+        $message = $this->record->$action($formAction, $this->controller, $r);
         
         Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
-        Controller::curr()->getResponse()->addHeader('X-Status', $formAction->getSuccessMessage());                
+        Controller::curr()->getResponse()->addHeader('X-Status', $message);
 
         if($formAction->getRedirectURL()) {
             return Controller::curr()->redirect($formAction->getRedirectURL());
@@ -631,7 +656,113 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
         }
         
         return Controller::curr()->redirect(
-            Controller::join_links($this->controller->gridField->Link("item"),$this->record->ID,"edit")
+            $this->controller->getEditLink($this->record->ID)
         );
+    }
+}
+
+
+/**
+ * Request handler that deals with nested forms
+ *
+ * @author  Uncle Cheese <unclecheese@leftandmain.com>
+ * @package  silverstripe-gridfield-betterbuttons
+ */
+class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest {
+
+	/**
+	 * Define the allowed controller actions
+	 * @var array
+	 */
+	private static $allowed_actions = array (
+		'Form'
+	);
+
+	/**
+	 * Define URL routes
+	 * @var array
+	 */
+	private static $url_handlers = array (
+		'Form' => 'Form'
+	);
+
+	/**
+	 * Gets a link to this RequestHandler
+	 */
+	public function Link() {
+		return $this->controller->Link('nestedform');
+	}
+
+	/**
+	 * Create the nested form
+	 *
+	 * @return  Form
+	 */
+	public function Form() {		
+		$formAction = $this->getFormActionFromRequest($this->request);
+        $fields = $formAction->getFields();
+        $fields->push(HiddenField::create('action','', $formAction->getButtonName()));
+
+        $form = Form::create(
+        	$this,
+        	'Form',
+        	$fields,
+        	FieldList::create(
+        		FormAction::create('nestedFormSave','Save')
+        	)
+        );
+		
+		return $form;		
+	}
+
+	/**
+	 * Render the form to the template
+	 * @param  SS_HTTPRequest $r
+	 * @return SSViewer
+	 */
+    public function index(SS_HTTPRequest $r) {
+    	Requirements::css(BETTER_BUTTONS_DIR.'/css/betterbuttons_nested_form.css');
+
+        return $this->customise(array(
+        	'Form' => $this->Form()
+        ))->renderWith('BetterButtonNestedForm');
+
+    }
+
+    /**
+     * Handles the saving of the nested form. This is essentially a proxy method
+     * for the method that the BetterButtonNestedForm button has been configured
+     * to use
+     * 
+     * @param  array $data    The form data
+     * @param  Form $form     The nested form object
+     * @param  SS_HTTPRequest $request
+     * @return SS_HTTPResponse
+     */
+    public function nestedFormSave($data, $form, $request) {
+    	$formAction = $this->getFormActionFromRequest($request);
+    	$actionName = $formAction->getButtonName();
+
+    	$this->record->$actionName($data, $form, $request);
+
+    	return Controller::curr()->redirectBack();
+    }
+
+    /**
+     * Get the action from the request, whether it's part of the form data
+     * or in the query string
+     * 
+     * @param  SS_HTTPRequest $r [description]
+     * @return BetterButtonNestedForm
+     */
+    protected function getFormActionFromRequest(SS_HTTPRequest $r) {
+    	$action = $r->requestVar('action');
+        $formAction = $this->record->findActionByName($action);
+
+        if(!$formAction instanceof BetterButtonNestedForm) {
+            throw new Exception("Action $action doesn't exist or is not a BetterButtonNestedForm");
+        }
+
+        return $formAction;
     }
 }
