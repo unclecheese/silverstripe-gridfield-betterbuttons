@@ -14,16 +14,24 @@ class BetterButtonLink extends BetterButtonAction {
      * @var string
      */
     protected $link;
+    
+    /**
+     * Should the link open in a new window?
+     * @var bool
+     */
+    protected $newWindow = false;
 
 
     /**
      * Builds the button
      * @param string $text
      * @param string $link
+     * @param bool $newWindow
      */
-    public function __construct($text, $link) {
+    public function __construct($text, $link, $newWindow = false) {
         parent::__construct($text);
         $this->link = $link;
+        $this->newWindow = $newWindow;
     }
 
 
@@ -33,5 +41,20 @@ class BetterButtonLink extends BetterButtonAction {
      */
     public function getButtonLink() {
         return $this->link;
+    }
+
+    /**
+     * Gets the HTML representing the button
+     * @return string
+     */
+    public function getButtonHTML()
+    {
+        if($this->newWindow) {
+            return sprintf(
+                '<a class="ss-ui-button %s" href="%s" target="_blank">%s</a>',
+                $this->extraClass(), $this->getButtonLink(), $this->getButtonText()
+            );
+        }
+        return parent::getButtonHTML();
     }
 }
