@@ -93,9 +93,10 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface {
      */
     public function getButtonHTML() {
         return sprintf(
-            '<a class="ss-ui-button cms-panel-link %s" href="%s">%s</a>',
+            '<a class="ss-ui-button cms-panel-link %s" href="%s" %s>%s</a>',
             $this->extraClass(),
             $this->getButtonLink(),
+            $this->getAttributesHTML(),
             $this->getButtonText()
         );
     }
