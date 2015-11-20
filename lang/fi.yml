@@ -1,15 +1,31 @@
 fi:
+  CMSMain:
+    ROLLEDBACKPUBv2: 'Palautettiin julkaistuun versioon.'
+    SAVEDRAFT: 'Tallenna vedos'
   GridFieldBetterButtons:
     AREYOUSURE: 'Kyllä. Poista tämä tietue.'
     CANCEL: Peruuta
+    NEWRECORD: 'Uusi tietue'
+    NEXT: 'Seuraava'
     NEXTRECORD: 'Siirry seuraavaan tietueeseen'
+    PREVIOUS: 'Seuraava'
     PREVIOUSRECORD: 'Palaa edelliseen tietueeseen'
-    SAVEANDADD: 'Tallenna ja lisää toinen'
-    SAVEANDADDFILES: 'Tallenna ja lisää uusi(a)'
-    SAVEANDCLOSE: 'Tallenna ja sulje'
-    SAVEANDPUBLISH: 'Tallenna ja julkaise'
+    SAVEANDADDNEW: 'Tallenna ja lisää uusi'
+    VIEWONDRAFTSITE: 'Vedos'
+    VIEWONLIVESITE: 'Julkaistu sivusto'
   GridFieldDetailForm:
-    CANCELDELETE: 'Ei. Älä poista'
-    Delete: Poista
-    SAVE: Tallenna
+    CANCELDELETE: 'Ei. Älä poista.'
+    DELETE: 'Poista'
+    PUBLISHANDADD: 'Julkaise ja lisää uusi'
+    PUBLISHANDQUITE: 'Julkaise ja sulje'
+    SAVE: 'Tallenna'
     SAVEANDCLOSE: 'Tallenna ja sulje'
+    SAVEANDNEXT: 'Tallenna ja siirry seuraavaan'
+    SAVEANDPREV: 'Tallenna ja palaa edelliseen'
+  SiteTree:
+    BUTTONCANCELDRAFT: 'Peruuta vedoksen muutokset'
+    BUTTONCANCELDRAFTDESC: 'Poista vedos ja palauta julkaistu versio'
+    BUTTONPUBLISHED: 'Julkaistu'
+    BUTTONSAVED: 'Tallennettu'
+    BUTTONSAVEPUBLISH: 'Tallenna & julkaise'
+    BUTTONUNPUBLISH: 'Piilota julkaisu'
