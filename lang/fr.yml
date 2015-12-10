@@ -1,6 +1,6 @@
 fr:
   CMSMain:
-    ROLLEDBACKPUBv2: 'Revenir à la version publiée. Roll back to published version.'
+    ROLLEDBACKPUBv2: 'Revenir à la version publiée.'
     SAVEDRAFT: 'Sauver brouillon'
   GridFieldBetterButtons:
     AREYOUSURE: 'Oui. Effacez cet item.'
