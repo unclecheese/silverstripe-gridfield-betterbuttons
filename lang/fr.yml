@@ -1,0 +1,28 @@
+fr:
+  CMSMain:
+    ROLLEDBACKPUBv2: 'Revenir à la version publiée. Roll back to published version.'
+    SAVEDRAFT: 'Sauver brouillon'
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Oui. Effacez cet item.'
+    CANCEL: Cancel
+    NEWRECORD: 'Nouveau'
+    NEXT: 'Suivant'
+    PREVIOUS: 'Précédent'
+    SAVEANDADDNEW: 'Sauver et ajouter un nouveau'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Non. Ne pas effacer'
+    Delete: 'Effacer'
+    PUBLISHANDADD: 'Publier et ajouter un nouveau'
+    PUBLISHANDQUITE: 'Publier et fermer'
+    SAVE: 'Sauver'
+    SAVEAND: 'Sauver et...'
+    SAVEANDCLOSE: 'Sauver et fermer'
+    SAVEANDNEXT: 'Sauver & aller au prochain'
+    SAVEANDPREV: 'Sauver & aller au précédent'
+  SiteTree:
+    BUTTONCANCELDRAFT: 'Annuler les changements au brouillon'
+    BUTTONCANCELDRAFTDESC: 'Effacer le brouillon et revenir à la version actuelle publiée'
+    BUTTONPUBLISHED: 'Publié'
+    BUTTONSAVED: 'Sauvé'
+    BUTTONSAVEPUBLISH: 'Sauver & publier'
+    BUTTONUNPUBLISH: 'Ne pas publier'
