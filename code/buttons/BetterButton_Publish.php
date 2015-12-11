@@ -24,7 +24,7 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
      */
     public function shouldDisplay() {
         $record = $this->gridFieldRequest->record;
-        
+
         return $record->canEdit();
     }
 
@@ -49,12 +49,12 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
      */
     public function transformToButton() {
         parent::transformToButton();
-        
-        $published = $this->gridFieldRequest->recordIsPublished();
-        if($published) {
+
+        if($this->gridFieldRequest->recordIsPublished()) {
             $this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));
         }
-        if($this->gridFieldRequest->record->stagesDiffer('Stage','Live') && $published) {
+
+        if($this->gridFieldRequest->record->stagesDiffer('Stage','Live') && $this->gridFieldRequest->recordIsDeletedFromStage()) {
             $this->addExtraClass('ss-ui-alternate');
         }
 
