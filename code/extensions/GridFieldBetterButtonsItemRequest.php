@@ -35,15 +35,15 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         'nestedform',
 	);
 
-	
+
 
     /**
      * Handles all custom action from DataObjects and hands them off to a sub-controller.
      * e.g. /customaction/mymethodname
-     * 
+     *
      * Can't handle the actions here because the url_param '$Action!' gets matched, and we don't
      * get to read anything after /customaction/
-     * 
+     *
      * @param  SS_HTTPRequest $r
      * @return BetterButtonsCustomActionRequest
      */
@@ -56,7 +56,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
     /**
      * Handles all custom action from DataObjects and hands them off to a sub-controller.
      * e.g. /nestedform?action=myDataObjectAction
-     * 
+     *
      * @param  SS_HTTPRequest $r
      * @return BetterButtonsNestedFormRequest
      */
@@ -90,16 +90,16 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		}
 		Requirements::css(BETTER_BUTTONS_DIR.'/css/gridfield_betterbuttons.css');
 		Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
-        
-        
+
+
 		$actions = $this->owner->record->getBetterButtonsActions();
-        $form->setActions($this->filterFieldList($form, $actions));        
+        $form->setActions($this->filterFieldList($form, $actions));
 
 		if($form->Fields()->hasTabset()) {
 			$form->Fields()->findOrMakeTab('Root')->setTemplate('TabSet');
 			$form->addExtraClass('cms-tabset');
 		}
-        
+
         $utils = $this->owner->record->getBetterButtonsUtils();
 		$form->Utils = $this->filterFieldList($form, $utils);
 		$form->setTemplate('BetterButtons_EditForm');
@@ -108,8 +108,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
     /**
      * Given a list of actions, remove anything that doesn't belong.
-     * @param  Form      $form    
-     * @param  FieldList $actions 
+     * @param  Form      $form
+     * @param  FieldList $actions
      * @return FieldList
      */
     protected function filterFieldList(Form $form, FieldList $actions) {
@@ -126,11 +126,11 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
             if(!$a->shouldDisplay()) {
                 continue;
             }
-            
+
             if(($a instanceof BetterButton_Versioned) && !$this->owner->record->checkVersioned()) {
                 continue;
-            }                
-            
+            }
+
             $list->push($a);
         }
 
@@ -231,14 +231,14 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	 * @return string
 	 */
 	public function getEditLink($id) {
-		return Controller::join_links($this->owner->gridField->Link(),"item", $id);		
+		return Controller::join_links($this->owner->gridField->Link(),"item", $id);
 	}
 
 
     /**
      * Creates a new record. If you're already creating a new record,
      * this forces the URL to change. Hacky UI workaround.
-     * 
+     *
      * @param  arary $data The form data
      * @param  Form $form The Form object
      * @return SS_HTTPResponse
@@ -259,7 +259,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
             Versioned::reading_stage('Stage');
             $action = $this->owner->doSave($data, $form);
             Versioned::reading_stage($origStage);
-            
+
             return $action;
        	}
 
@@ -357,7 +357,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
     /**
      * Unpublishes the record
-     * 
+     *
      * @return HTMLText|ViewableData_Customised
      */
     public function unPublish()
@@ -407,7 +407,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	 * Gets the top level controller.
 	 *
 	 * @return Controller
-	 * @todo  This had to be directly copied from {@link GridFieldDetailForm_ItemRequest} 
+	 * @todo  This had to be directly copied from {@link GridFieldDetailForm_ItemRequest}
      * because it is a protected method and not visible to a decorator!
 	 */
 	protected function getToplevelController() {
@@ -424,7 +424,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	 * Gets the back link
 	 *
 	 * @return  string
-	 * @todo  This had to be directly copied from {@link GridFieldDetailForm_ItemRequest} 
+	 * @todo  This had to be directly copied from {@link GridFieldDetailForm_ItemRequest}
      * because it is a protected method and not visible to a decorator!
 	 */
 	public function getBackLink(){
@@ -489,7 +489,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			}
 			return $responseNegotiator->respond($controller->getRequest());
 		}
-            
+
 		return Controller::curr()->redirect($redirectLink);
 	}
 
@@ -532,8 +532,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      * @return boolean
      */
 	public function recordIsPublished() {
+        if (!$this->owner->record->checkVersioned()) {
+            return false;
+        }
 
-        if(!$this->owner->record->checkVersioned()) return false;
         if (!$this->owner->record->isInDB()) {
             return false;
         }
@@ -548,11 +550,37 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 
 	}
 
+	/**
+	 * Determines if the current record is deleted from stage
+	 * @returns boolean
+	 */
+	public function recordIsDeletedFromStage() {
+		// for SiteTree records
+		if ($this->owner->hasMethod('getIsDeletedFromStage')) {
+			return $this->owner->IsDeletedFromStage;
+		}
+
+		if (!$this->owner->record->checkVersioned()) {
+			return false;
+		}
+
+		if (!$this->owner->record->isInDB()) {
+			return true;
+		}
+
+		$class = $this->owner->record->class;
+
+		$stageVersion = Versioned::get_versionnumber_by_stage($class, 'Stage', $this->owner->record->ID);
+
+		// Return true for both completely deleted pages and for pages just deleted from stage
+		return !($stageVersion);
+	}
+
 }
 
 
 /**
- * A subcontroller that handles custom actions. The parent controller matches 
+ * A subcontroller that handles custom actions. The parent controller matches
  * the url_param '$Action!' and doesn't hand off any trailing params. This subcontoller
  * is aware of them
  *
@@ -564,7 +592,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 class BetterButtonsCustomActionRequest extends RequestHandler {
 
 
-    /**     
+    /**
      * @var array
      */
     private static $url_handlers = array (
@@ -572,7 +600,7 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
     );
 
 
-    /**     
+    /**
      * @var array
      */
     private static $allowed_actions = array (
@@ -583,7 +611,7 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
     /**
      * The parent extension. There are actually some useful methods in the extension
      * itself, so we need access to that object
-     * 
+     *
      * @var GridFieldBetterButtonsItemRequest
      */
     protected $parent;
@@ -602,7 +630,7 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
      */
     protected $record;
 
-    
+
     /**
      * The Form that is editing the record
      * @var  Form
@@ -627,7 +655,7 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
     /**
      * Takes the action at /customaction/my-action-name and feeds it to the DataObject.
      * Checks to see if the method is allowed to be invoked first.
-     * 
+     *
      * @param  SS_HTTPRequest $r
      * @return SS_HTTPResponse
      */
@@ -643,18 +671,18 @@ class BetterButtonsCustomActionRequest extends RequestHandler {
         }
 
         $message = $this->record->$action($formAction, $this->controller, $r);
-        
+
         Controller::curr()->getResponse()->addHeader("X-Pjax","Content");
         Controller::curr()->getResponse()->addHeader('X-Status', $message);
 
         if($formAction->getRedirectURL()) {
             return Controller::curr()->redirect($formAction->getRedirectURL());
         }
-        
+
         if($formAction->getRedirectType() == BetterButtonCustomAction::GOBACK) {
             return Controller::curr()->redirect(preg_replace('/\?.*/', '', $this->parent->getBackLink()));
         }
-        
+
         return Controller::curr()->redirect(
             $this->controller->getEditLink($this->record->ID)
         );
@@ -698,7 +726,7 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest {
 	 *
 	 * @return  Form
 	 */
-	public function Form() {		
+	public function Form() {
 		$formAction = $this->getFormActionFromRequest($this->request);
         $fields = $formAction->getFields();
         $fields->push(HiddenField::create('action','', $formAction->getButtonName()));
@@ -711,8 +739,8 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest {
         		FormAction::create('nestedFormSave','Save')
         	)
         );
-		
-		return $form;		
+
+		return $form;
 	}
 
 	/**
@@ -733,7 +761,7 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest {
      * Handles the saving of the nested form. This is essentially a proxy method
      * for the method that the BetterButtonNestedForm button has been configured
      * to use
-     * 
+     *
      * @param  array $data    The form data
      * @param  Form $form     The nested form object
      * @param  SS_HTTPRequest $request
@@ -751,7 +779,7 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest {
     /**
      * Get the action from the request, whether it's part of the form data
      * or in the query string
-     * 
+     *
      * @param  SS_HTTPRequest $r [description]
      * @return BetterButtonNestedForm
      */
