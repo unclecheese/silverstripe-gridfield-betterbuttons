@@ -43,6 +43,13 @@ class BetterButtonCustomAction extends BetterButtonAction {
 
 
     /**
+     * The success message on completion of the action
+     * @var  string
+     */
+    protected $successMessage;
+
+
+    /**
      * Builds the button
      * @param string                          $actionName   The name of the action (method)
      * @param string                          $text         The text for the button
@@ -111,6 +118,27 @@ class BetterButtonCustomAction extends BetterButtonAction {
      */
     public function getRedirectURL() {
         return $this->redirectURL;
+    }
+
+
+    /**
+     * Sets the success message when action complets
+     * @param string $message
+     * @return  BetterButtonCustomAction
+     */
+    public function setSuccessMessage($message) {
+        $this->successMessage = $message;
+
+        return $this;
+    }
+
+
+    /**
+     * Gets the success message
+     * @return string
+     */
+    public function getSuccessMessage() {
+        return $this->successMessage;
     }
 
 
