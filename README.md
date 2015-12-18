@@ -159,12 +159,13 @@ Now we have a new button in the UI!
 ![Screenshot](http://i.cubeupload.com/hoU66o.png)
 
 ### Customising the user experience
-Let's ensure that the form refreshes after clicking "approve" or "deny".
+Let's ensure that the form refreshes after clicking "approve" or "deny". Additionally, we'll add a success message that will render on completion of the action.
 
 ```php
   $fields->push(
     BetterButtonCustomAction::create('deny', 'Deny')
       ->setRedirectType(BetterButtonCustomAction::REFRESH)
+      ->setSuccessMessage('Denied for publication')
   );
 ```
 
@@ -174,17 +175,6 @@ BetterButtonCustomAction::REFRESH
 BetterButtonCustomAction::GOBACK
 ```
 To refresh the form, or go back to list view, respectively.
-
-Additionally, we can add a success message that will render on completion of the action by returning a message in our method.
-
-```php
-    public function deny() {
-        $this->IsApproved = false;
-        $this->write();
-
-        return 'Denied for publication';
-    }
-```
 
 ### Defining arbitrary links
 Sometimes, you might not want to sent a request to the controller at all. For that, there's the much simpler ```BetterButtonLink``` class.
