@@ -190,6 +190,37 @@ Sometimes, you might not want to sent a request to the controller at all. For th
 
 ![Screenshot](http://i.cubeupload.com/YbbhL7.png)
 
+
+### Creating nested forms
+
+You may have an action that needs to prompt for user input, for example "Send this customer message" on an Order record. For complex actions like these, you can use `BetterButtonNestedForm`.
+
+```php
+	public function getBetterButtonsActions() {
+		$f = parent::getBetterButtonsActions();
+		$f->push(BetterButtonNestedForm::create('sendmessage','Send this customer a message', FieldList::create(
+			TextareaField::create('Content')
+		)));
+
+		return $f;
+	}
+```
+
+In this case, your action handler receives `$data` and `$form`, just like a controller would.
+
+```php
+    public function sendmessage ($data, $form) {
+    	$message = Message::create(array (
+    		'OrderID' => $this->ID,
+    		'Content' => $data['Content']
+    	));
+
+    	$message->write();
+    	$form->sessionMessage('Message sent','good');
+    }
+```
+
+
 ### Disabling Better Buttons
 
 Sometimes you might find it necessary to disable better buttons on certain classes. You can do this by changing the static `better_buttons_enabled` to be false via YML configuration.
