@@ -1,0 +1,31 @@
+en:
+  CMSMain:
+    ROLLEDBACKPUBv2: 'Rolled back to published version.'
+    SAVEDRAFT: 'Save draft'
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Yes. Delete this item.'
+    CANCEL: Cancel
+    NEWRECORD: 'New record'
+    NEXT: Next
+    NEXTRECORD: 'Go to the next record'
+    PREVIOUS: Previous
+    PREVIOUSRECORD: 'Go to the previous record'
+    SAVEANDADDNEW: 'Save and add new'
+    VIEWONDRAFTSITE: 'Draft site'
+    VIEWONLIVESITE: 'Live site'
+  GridFieldDetailForm:
+    CANCELDELETE: 'No. Don''t delete.'
+    Delete: Delete
+    PUBLISHANDADD: 'Publish and add new'
+    PUBLISHANDQUITE: 'Publish and close'
+    SAVE: Save
+    SAVEANDCLOSE: 'Save and close'
+    SAVEANDNEXT: 'Save and go to next record'
+    SAVEANDPREV: 'Save and go to previous record'
+  SiteTree:
+    BUTTONCANCELDRAFT: 'Cancel draft changes'
+    BUTTONCANCELDRAFTDESC: 'Delete your draft and revert to the currently published page'
+    BUTTONPUBLISHED: Published
+    BUTTONSAVED: Saved
+    BUTTONSAVEPUBLISH: 'Save & publish'
+    BUTTONUNPUBLISH: Unpublish

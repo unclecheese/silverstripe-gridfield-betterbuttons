@@ -1,0 +1,21 @@
+sk:
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Áno, vymazať túto položku'
+    CANCEL: Zrušiť
+    NEWRECORD: 'Nový záznam'
+    NEXT: 'Ďalší'
+    NEXTRECORD: 'Prejsť na ďalší záznam'
+    PREVIOUS: 'Predch.'
+    PREVIOUSRECORD: 'Prejsť na predchádzajúci záznam'
+    SAVEANDADDNEW: 'Uložiť a pridať nový záznam'
+    VIEWONDRAFTSITE: 'Zobraziť koncept'
+    VIEWONLIVESITE: 'Zobraziť naživo'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Nie, nevymazať túto položku'
+    Delete: Vymazať
+    PUBLISHANDADD: 'Zverejniť a pridať nový'
+    PUBLISHANDQUITE: 'Zverejniť a zavrieť'
+    SAVE: Uložiť
+    SAVEANDCLOSE: 'Uložiť a zavrieť'
+    SAVEANDNEXT: 'Uložiť a prejsť na ďalší záznam'
+    SAVEANDPREV: 'Uložiť a prejsť na predchádzajúci záznam'
