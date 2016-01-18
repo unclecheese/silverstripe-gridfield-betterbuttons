@@ -1,0 +1,13 @@
+.betterbuttons-nested-form form label.left {float:none;}
+.betterbuttons-nested-form form .middleColumn {margin-left:0;}
+.betterbuttons-nested-form form input.action {  
+	display: block;
+	width: 50%;
+	background: #15659C;
+	border: 0;
+	padding: 10px;
+	color: #fff;
+	margin: 0 auto;
+	cursor:pointer;
+}
+.betterbuttons-nested-form form input.action:hover { background:#4080AC }
