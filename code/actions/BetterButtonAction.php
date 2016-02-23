@@ -120,6 +120,16 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface {
 
 
     /**
+     * Sets the confirm text
+     * @param  $str
+     * @return  BetterButtonAction
+     */
+    public function setConfirmation($str) {
+    	return $this->setAttribute('data-confirm', Convert::raw2att($str));
+    }
+
+
+    /**
      * Generates the button. Updates the literal field with the correct HTML
      * based on any post-contruct updates
      *    
