@@ -19,9 +19,23 @@ class BetterButtonPrevNextAction extends BetterButtonAction {
 
         // Prev/next links. Todo: This doesn't scale well.
 
+        // Check if the gridfield as been filtered
+        $currentParams = Controller::curr()->request->getVars();
+
+        $filterParams = null;
+        if(isset($currentParams['q'])) {
+            $filterParams = "/edit";
+
+            $index = 0;
+            foreach($currentParams['q'] as $key => $value) {
+                ($index === 0) ? $filterParams .= "?q[".$key."]=".$value : $filterParams .= "&q[".$key."]=".$value;
+                $index++;
+            }
+        }
+
         $previousRecordID = $this->gridFieldRequest->getPreviousRecordID();
         $cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
-        $prevLink = $previousRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $previousRecordID) : "javascript:void(0);";
+        $prevLink = $previousRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $previousRecordID).$filterParams : "javascript:void(0);";
         $linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
         $linkText = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUS','Previous') : "";
 
@@ -35,7 +49,7 @@ class BetterButtonPrevNextAction extends BetterButtonAction {
 
         $nextRecordID = $this->gridFieldRequest->getNextRecordID();
         $cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
-        $prevLink = $nextRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $nextRecordID) : "javascript:void(0);";
+        $prevLink = $nextRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $nextRecordID).$filterParams : "javascript:void(0);";
 
         $linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
         $linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT','Next') : "";
