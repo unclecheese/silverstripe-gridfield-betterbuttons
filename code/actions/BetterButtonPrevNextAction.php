@@ -19,9 +19,15 @@ class BetterButtonPrevNextAction extends BetterButtonAction {
 
         // Prev/next links. Todo: This doesn't scale well.
 
+        $params = array(
+            'q' => (array)$this->gridFieldRequest->request->getVar('q')
+        );
+
+        $searchVars = array_filter(array_values($params)) ? '?' . http_build_query($params) : null;
+
         $previousRecordID = $this->gridFieldRequest->getPreviousRecordID();
         $cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
-        $prevLink = $previousRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $previousRecordID) : "javascript:void(0);";
+        $prevLink = $previousRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $previousRecordID.$searchVars) : "javascript:void(0);";
         $linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD','Go to the previous record') : "";
         $linkText = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUS','Previous') : "";
 
@@ -35,7 +41,7 @@ class BetterButtonPrevNextAction extends BetterButtonAction {
 
         $nextRecordID = $this->gridFieldRequest->getNextRecordID();
         $cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
-        $prevLink = $nextRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $nextRecordID) : "javascript:void(0);";
+        $prevLink = $nextRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(),"item", $nextRecordID.$searchVars) : "javascript:void(0);";
 
         $linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD','Go to the next record') : "";
         $linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT','Next') : "";
