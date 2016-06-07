@@ -51,4 +51,15 @@ BetterButtonsGroups:
     buttons:
       BetterButton_Rollback: true
       BetterButton_Unpublish: true
-
+---
+Only:
+  classexists: EditableFormField
+---
+EditableFormField:
+  better_buttons_versioned_enabled: false
+---
+Only:
+  classexists: EditableOption
+---
+EditableOption:
+  better_buttons_versioned_enabled: false
