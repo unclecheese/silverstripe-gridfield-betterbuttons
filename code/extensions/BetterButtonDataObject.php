@@ -21,6 +21,18 @@ class BetterButtonDataObject extends DataExtension {
      * @var bool
      */
     private static $better_buttons_enabled = true;
+
+    /**
+     * Enable versioned controls like 'Save & Publish' for DataObjects
+     * with 'Versioned' extension.
+     *
+     * Disable this for records where you want a parent DataObject to control the
+     * published/unpublished state of its children. ie. User Defined Forms 3.0+.
+     *
+     * @config
+     * @var bool
+     */
+    private static $better_buttons_versioned_enabled = true;
     
     /**
      * Gets the default actions for all DataObjects. Can be overloaded in subclasses
@@ -184,7 +196,8 @@ class BetterButtonDataObject extends DataExtension {
      * @return boolean
      */
     public function checkVersioned() {
-        return $this->owner->hasExtension('Versioned') &&
+        return $this->owner->config()->better_buttons_versioned_enabled &&
+               $this->owner->hasExtension('Versioned') &&
                count($this->owner->getVersionedStages()) > 1;
     }
 
