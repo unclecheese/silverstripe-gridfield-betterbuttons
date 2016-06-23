@@ -1,0 +1,31 @@
+en:
+  CMSMain:
+    ROLLEDBACKPUBv2: 'Возвращено к опубликованной версии'
+    SAVEDRAFT: 'Сохранить черновик'
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Да. Удалить этзапись.'
+    CANCEL: Отмена
+    NEWRECORD: 'Новая запись'
+    NEXT: Следующая
+    NEXTRECORD: 'Перейти к следующей записи'
+    PREVIOUS: 'Предыдущая'
+    PREVIOUSRECORD: 'Перейти к предыдущей записи'
+    SAVEANDADDNEW: 'Сохранить и добавить новую запись'
+    VIEWONDRAFTSITE: 'Черновик'
+    VIEWONLIVESITE: 'Опубликовано'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Нет. Не удалять.'
+    Delete: Удалить
+    PUBLISHANDADD: 'Опубликовать и добавить новую запись'
+    PUBLISHANDQUITE: 'Опубликовать и закрыть'
+    SAVE: Сохранить
+    SAVEANDCLOSE: 'Сохранить и закрыть'
+    SAVEANDNEXT: 'Сохранить и перейти к следующей записи'
+    SAVEANDPREV: 'Сохранить и перейти к предидущей записи'
+  SiteTree:
+    BUTTONCANCELDRAFT: 'Отменить черновые изменения'
+    BUTTONCANCELDRAFTDESC: 'Удалить Ваш черновик и вернуть к текущей опубликованной странице'
+    BUTTONPUBLISHED: Опубликовано
+    BUTTONSAVED: Сохранено
+    BUTTONSAVEPUBLISH: 'Сохранить и опубликовать'
+    BUTTONUNPUBLISH: Отмена публикации
