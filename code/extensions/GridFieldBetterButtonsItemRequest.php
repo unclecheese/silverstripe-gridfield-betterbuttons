@@ -504,9 +504,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
      * @return int
      */
     public function getPreviousRecordID() {
-		$map = $this->owner->gridField->getManipulatedList()->column('ID');
+		$map = $this->owner->gridField->getManipulatedList()->limit(PHP_INT_MAX, 0)->column('ID');
 		$offset = array_search($this->owner->record->ID, $map);
-		return ($offset > 0) ? $map[$offset-1] : false;
+		return isset($map[$offset-1]) ? $map[$offset-1] : false;
 	}
 
 
