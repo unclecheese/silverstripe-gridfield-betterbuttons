@@ -1,0 +1,31 @@
+hr:
+  CMSMain:
+    ROLLEDBACKPUBv2: 'Vrati na objavljenu verziju.'
+    SAVEDRAFT: 'Spremi nacrt'
+  GridFieldBetterButtons:
+    AREYOUSURE: 'Da. Obriši ovu stavku.'
+    CANCEL: Odustani
+    NEWRECORD: 'Novi zapis'
+    NEXT: Sljedeći
+    NEXTRECORD: 'Idi na sljedeći zapis'
+    PREVIOUS: Prethodni
+    PREVIOUSRECORD: 'Idi na prethodni zapis'
+    SAVEANDADDNEW: 'Spremi i dodaj novi'
+    VIEWONDRAFTSITE: 'Nacrtna stranica'
+    VIEWONLIVESITE: 'Objavljena stranica'
+  GridFieldDetailForm:
+    CANCELDELETE: 'Ne. Nemoj obrisati.'
+    Delete: Obriši
+    PUBLISHANDADD: 'Objavi i dodaj novi'
+    PUBLISHANDQUITE: 'Objavi i zatvori'
+    SAVE: Spremi
+    SAVEANDCLOSE: 'Spremi i zatvori'
+    SAVEANDNEXT: 'Spremi i idi na sljedeći zapis'
+    SAVEANDPREV: 'Spremi i idi na prethodni zapis'
+  SiteTree:
+    BUTTONCANCELDRAFT: 'Odustani s nacrtnim promjenama'
+    BUTTONCANCELDRAFTDESC: 'Obriši nacrt i vrati na trenutno objavljenu stranicu'
+    BUTTONPUBLISHED: Objavljeno
+    BUTTONSAVED: Spremljeno
+    BUTTONSAVEPUBLISH: 'Spremi i objavi'
+    BUTTONUNPUBLISH: Odjavi
