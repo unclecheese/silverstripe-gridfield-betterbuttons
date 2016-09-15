@@ -41,4 +41,20 @@ class BetterButton_SaveDraft extends BetterButton implements BetterButton_Versio
             ->setAttribute('data-icon-alternate', 'addpage')
             ->setAttribute('data-text-alternate', _t('CMSMain.SAVEDRAFT', 'Save draft'));
     }
+
+
+    /** 
+     * Update the UI to reflect unsaved state
+     * @return void
+     */
+    public function transformToButton() {
+        parent::transformToButton();
+
+        if($this->gridFieldRequest->recordIsDeletedFromStage()) {
+            $this->addExtraClass('ss-ui-alternate');
+        }
+
+        return $this;
+    }
+
 }
