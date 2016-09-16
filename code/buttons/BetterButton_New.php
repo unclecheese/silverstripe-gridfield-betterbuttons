@@ -37,6 +37,10 @@ class BetterButton_New extends BetterButton {
      * @return boolean
      */
     public function shouldDisplay() {
+         // Do not show create new within create new
+        if($this->gridFieldRequest->getRequest()->param('ID') == 'new') {
+            return false;
+        }
         return $this->gridFieldRequest->record->canCreate();
     }
 }
