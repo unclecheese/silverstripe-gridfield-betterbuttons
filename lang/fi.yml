@@ -8,7 +8,7 @@ fi:
     NEWRECORD: 'Uusi tietue'
     NEXT: 'Seuraava'
     NEXTRECORD: 'Siirry seuraavaan tietueeseen'
-    PREVIOUS: 'Seuraava'
+    PREVIOUS: 'Edellinen'
     PREVIOUSRECORD: 'Palaa edelliseen tietueeseen'
     SAVEANDADDNEW: 'Tallenna ja lisää uusi'
     VIEWONDRAFTSITE: 'Vedos'
