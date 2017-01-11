@@ -90,7 +90,7 @@ class BetterButtonDataObject extends DataExtension {
      * Gets the default utils for all DataObjects. Can be overloaded in subclasses.
      * Utils are actions that appear in the top of the GridFieldDetailForm
      * <code>
-     *  public function getBetterButtonsUtils() {
+     *  public function getBetterButtonsUtils(GridField $grid) {
      *      $utils = parent::getBetterButtonsUtils();
      *      $utils->push(BetterButtonCustomAction::create('myaction','Do something to this record'));
      *
@@ -100,13 +100,33 @@ class BetterButtonDataObject extends DataExtension {
      * 
      * @return FieldList
      */
-    public function getBetterButtonsUtils() {
-        $buttons = $this->getDefaultButtonList("BetterButtonsUtils");
-        $utils = $this->createFieldList($buttons);
+    public function getBetterButtonsUtils(GridField $grid = null) {
+		$buttons = $this->getDefaultButtonList("BetterButtonsUtils");
+
+		$multiClassConfig = null;
+		if($grid && isset($buttons['BetterButton_New']) && ClassInfo::exists('GridFieldAddNewMultiClass')){
+			$config = $grid->getConfig();
+			if($multiClassConfig = $config->getComponentByType('GridFieldAddNewMultiClass')){
+				$buttons['BetterButton_NewMultiClass'] = 1;
+				unset($buttons['BetterButton_New']);
+			}
+		}
+
+
+		$utils = $this->createFieldList($buttons);
+
+		if($multiClassConfig){
+			foreach($utils as $button){
+				if(is_a($button, 'BetterButton_NewMultiClass')){
+					$button->setClasses($multiClassConfig->getClasses($grid));
+				}
+			}
+		}
 
         $this->owner->extend('updateBetterButtonsUtils', $utils);
 
         return $utils;
+
     }
 
 

@@ -24,6 +24,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         'unpublish',
 		'ItemEditForm',
         'doNew',
+		'doNewClass',
         'doSaveAndAdd',
         'doSaveAndQuit',
         'doPublishAndAdd',
@@ -100,7 +101,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 			$form->addExtraClass('cms-tabset');
 		}
 
-        $utils = $this->owner->record->getBetterButtonsUtils();
+        $utils = $this->owner->record->getBetterButtonsUtils($this->owner->gridField);
 		$form->Utils = $this->filterFieldList($form, $utils);
 		$form->setTemplate('BetterButtons_EditForm');
 		$form->addExtraClass('better-buttons-form');
@@ -249,7 +250,16 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 	}
 
 
-    /**
+	/**
+	 *
+	 */
+	public function doNewClass($data, $form){
+		$class = $data['BetterButton_NewMultiClass']['ClassName'];
+		return Controller::curr()->redirect(Controller::join_links($this->owner->gridField->Link(), 'add-multi-class', $class));
+	}
+
+
+	/**
      * Allows us to have our own configurable save button
      * @param  arary $data The form data
      * @param  Form $form The Form object
