@@ -35,21 +35,14 @@ class BetterButtonLink extends BetterButtonAction {
         return $this->link;
     }
 	
-	/**
-	 * Makes the link to open to a new tab. If not used, the CMS will try to load the link via an AJAX request, which
-	 * can cause problems if the link target is not a page inside the CMS.
-	 *
-	 * @param bool $enable True if omitted
-	 */
-	public function newWindow($enable = true)
-	{
-		if ($enable)
-		{
-			$this->setAttribute('target', '_blank');
-		}
-		else
-		{
-			$this->setAttribute('target', '');
-		}
-	}
+    /**
+     * Makes the link to open to a new tab. If not used, the CMS will try to load the link via an AJAX request, which
+     * can cause problems if the link target is not a page inside the CMS.
+     *
+     * @param bool $enable True if omitted
+     */
+    public function newWindow($enable = true)
+    {
+        $this->setAttribute('target', $enable ? '_blank' : '');
+    }
 }

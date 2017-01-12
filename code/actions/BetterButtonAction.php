@@ -116,8 +116,7 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface {
         $classes = $this->extraClass();
         if ($this->isGrouped()) return $classes; //Do not return the below additional classes
         $classes .= ' ss-ui-button';
-        if ($this->getAttribute('target') != '_blank')
-        {
+        if ($this->getAttribute('target') != '_blank') {
             //Only add this class if this link is targeted inside the CMS. Any links targeted to a new browser window/tab should not have this as the CMS JavaScript would hook to the 'onclick' event and load the content via AJAX to the CMS, which could cause problems.
             $classes .= ' cms-panel-link';
         }
