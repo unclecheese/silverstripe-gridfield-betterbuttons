@@ -33,6 +33,6 @@ class BetterButtonCancelAction extends BetterButtonAction {
     public function getButtonHTML() {
         $this->addExtraClass("backlink");
 
-        return parent::getButtonHTML($form, $request);
+        return parent::getButtonHTML();
     }
 }
