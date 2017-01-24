@@ -6,10 +6,12 @@
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-better-buttons
  */
-class BetterButtonNestedForm extends BetterButtonCustomAction {
-
-	protected $fields;
-
+class BetterButtonNestedForm extends BetterButtonCustomAction
+{
+    /**
+     * @var FieldList
+     */
+    protected $fields;
 
     /**
      * Builds the button
@@ -17,7 +19,8 @@ class BetterButtonNestedForm extends BetterButtonCustomAction {
      * @param string                          $text         The text for the button
      * @param FieldList                       $fields
      */
-    public function __construct($actionName, $text, FieldList $fields) {        
+    public function __construct($actionName, $text, FieldList $fields)
+    {
         $this->fields = $fields;
         $this->addExtraClass('better-button-nested-form');
         parent::__construct($actionName, $text);
@@ -27,7 +30,8 @@ class BetterButtonNestedForm extends BetterButtonCustomAction {
      * Gets the link for the button
      * @return string
      */
-    public function getButtonLink() {
+    public function getButtonLink()
+    {
         $link = 'nestedform?action='.$this->actionName;
 
         return $this->gridFieldRequest->Link($link);
@@ -37,7 +41,8 @@ class BetterButtonNestedForm extends BetterButtonCustomAction {
      * Gets the field list
      * @return FieldList
      */
-    public function getFields() {
-    	return $this->fields;
+    public function getFields()
+    {
+        return $this->fields;
     }
 }
