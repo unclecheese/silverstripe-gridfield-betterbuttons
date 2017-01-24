@@ -1,5 +1,9 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Actions;
+
+use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+
 /**
  * Defines a button that cancels out of the form
  *

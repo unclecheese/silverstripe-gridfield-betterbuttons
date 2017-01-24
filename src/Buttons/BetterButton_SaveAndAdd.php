@@ -1,5 +1,9 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use UncleCheese\BetterButtons\Buttons\BetterButton;
+
 /**
  * Defines the button that save a record and redirects to creating a new one
  *

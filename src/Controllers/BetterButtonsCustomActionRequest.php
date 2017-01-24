@@ -1,5 +1,12 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Controllers;
+
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\RequestHandler;
+use UncleCheese\BetterButtons\Actions\BetterButtonCustomAction;
+
 /**
  * A subcontroller that handles custom actions. The parent controller matches
  * the url_param '$Action!' and doesn't hand off any trailing params. This subcontoller
@@ -70,10 +77,10 @@ class BetterButtonsCustomActionRequest extends RequestHandler
      * Takes the action at /customaction/my-action-name and feeds it to the DataObject.
      * Checks to see if the method is allowed to be invoked first.
      *
-     * @param  SS_HTTPRequest $r
-     * @return SS_HTTPResponse
+     * @param  HTTPRequest $r
+     * @return HTTPResponse
      */
-    public function handleCustomAction(SS_HTTPRequest $r)
+    public function handleCustomAction(HTTPRequest $r)
     {
         $action = $r->param('Action');
         if (!$this->record->isCustomActionAllowed($action)) {

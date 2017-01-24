@@ -1,5 +1,10 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Actions;
+
+use SilverStripe\Control\Controller;
+use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+
 /**
  * Defines the button that provides links to the frontend from within a gridfield detail form.
  * detail form. Only works if your DataObject has a Link() method.

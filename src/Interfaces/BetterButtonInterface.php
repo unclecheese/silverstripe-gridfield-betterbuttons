@@ -1,5 +1,10 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Interfaces;
+
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+
 /**
  * Core methods and properties that any action or button must offer
  *

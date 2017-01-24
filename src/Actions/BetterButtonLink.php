@@ -1,5 +1,9 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Actions;
+
+use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+
 /**
  * Defines the a button that can contain an arbitrary link, e.g. an external one
  *

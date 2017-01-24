@@ -1,5 +1,12 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndAdd;
+use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+
 /**
  * Defines the button that publishes a record, then proceeds to create a new one
  *

@@ -1,5 +1,31 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Extensions;
+
+use Exception;
+use SilverStripe\Admin\LeftAndMain;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\PjaxResponseNegotiator;
+use SilverStripe\Core\Convert;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use SilverStripe\Forms\TabSet;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\DataModel;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\DB;
+use SilverStripe\ORM\ManyManyList;
+use SilverStripe\ORM\ValidationException;
+use SilverStripe\ORM\Versioning\Versioned;
+use SilverStripe\View\Requirements;
+use UncleCheese\BetterButtons\Controllers\BetterButtonsCustomActionRequest;
+use UncleCheese\BetterButtons\Controllers\BetterButtonsNestedFormRequest;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
+use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+
 /**
  * Decorates {@link GridDetailForm_ItemRequest} to use new form actions and buttons.
  *
@@ -39,10 +65,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * Can't handle the actions here because the url_param '$Action!' gets matched, and we don't
      * get to read anything after /customaction/
      *
-     * @param  SS_HTTPRequest $r
+     * @param  HTTPRequest $r
      * @return BetterButtonsCustomActionRequest
      */
-    public function customaction(SS_HTTPRequest $r)
+    public function customaction(HTTPRequest $r)
     {
         $req = new BetterButtonsCustomActionRequest($this, $this->owner, $this->owner->ItemEditForm());
 
@@ -53,10 +79,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * Handles all custom action from DataObjects and hands them off to a sub-controller.
      * e.g. /nestedform?action=myDataObjectAction
      *
-     * @param  SS_HTTPRequest $r
+     * @param  HTTPRequest $r
      * @return BetterButtonsNestedFormRequest
      */
-    public function nestedform(SS_HTTPRequest $r)
+    public function nestedform(HTTPRequest $r)
     {
         $req = new BetterButtonsNestedFormRequest($this, $this->owner, $this->owner->ItemEditForm());
 
@@ -68,9 +94,9 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * that gives the request somewhere to go in order to force a reload, and then just
      * redirects back to the original link.
      *
-     * @param SS_HTTPRequest The request object
+     * @param HTTPRequest The request object
      */
-    public function addnew(SS_HTTPRequest $r)
+    public function addnew(HTTPRequest $r)
     {
         return Controller::curr()->redirect(Controller::join_links($this->owner->gridField->Link("item"), "new"));
     }
@@ -93,7 +119,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
         $form->setActions($this->filterFieldList($form, $actions));
 
         if ($form->Fields()->hasTabset()) {
-            $form->Fields()->findOrMakeTab('Root')->setTemplate('TabSet');
+            $form->Fields()->findOrMakeTab('Root')->setTemplate(TabSet::class);
             $form->addExtraClass('cms-tabset');
         }
 
@@ -162,7 +188,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * Publishes the record and goes to make a new record
      * @param  array $data The form data
      * @param  Form $form The Form object
-     * @return SS_HTTPResponse
+     * @return HTTPResponse
      */
     public function doPublishAndAdd($data, $form)
     {
@@ -173,7 +199,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * Publishes the record and closes the detail form
      * @param  array $data The form data
      * @param  Form $form The Form object
-     * @return SS_HTTPResponse
+     * @return HTTPResponse
      */
     public function doPublishAndClose($data, $form)
     {
@@ -197,7 +223,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * Saves the record and goes to the next one
      * @param  arary $data The form data
      * @param  Form $form The Form object
-     * @return SS_HTTPResponse
+     * @return HTTPResponse
      */
     public function doSaveAndNext($data, $form)
     {
@@ -211,7 +237,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * Saves the record and goes to the previous one
      * @param  arary $data The form data
      * @param  Form $form The Form object
-     * @return SS_HTTPResponse
+     * @return HTTPResponse
      */
     public function doSaveAndPrev($data, $form)
     {
@@ -237,7 +263,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      *
      * @param  arary $data The form data
      * @param  Form $form The Form object
-     * @return SS_HTTPResponse
+     * @return HTTPResponse
      */
     public function doNew($data, $form)
     {
@@ -248,7 +274,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * Allows us to have our own configurable save button
      * @param  arary $data The form data
      * @param  Form $form The Form object
-     * @return SS_HTTPResponse
+     * @return HTTPResponse
      */
     public function save($data, $form)
     {
@@ -261,9 +287,11 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
     }
 
     /**
-     * @param $data
-     * @param $form
-     * @return HTMLText|SS_HTTPResponse|ViewableData_Customised
+     * @param  array       $data
+     * @param  Form        $form
+     * @param  HTTPRequest $request
+     * @param  string      $redirectURL
+     * @return HTMLText|HTTPResponse|ViewableData_Customised
      */
     public function publish($data, $form, $request = null, $redirectURL = null)
     {
@@ -366,8 +394,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
     }
 
     /**
-     * @param $data
-     * @param $form
+     * @param  array $data
+     * @param  Form  $form
      * @return HTMLText|ViewableData_Customised
      */
     public function rollback($data, $form)
@@ -399,7 +427,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      */
     protected function getToplevelController()
     {
-        $c = $this->owner->getController();
+        $c = $this->popupController;
         while ($c && $c instanceof GridFieldDetailForm_ItemRequest) {
             $c = $c->getController();
         }
@@ -421,8 +449,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
         if ($toplevelController && $toplevelController instanceof LeftAndMain) {
             if ($toplevelController->hasMethod('Backlink')) {
                 $backlink = $toplevelController->Backlink();
-            } elseif ($this->owner->getController()->hasMethod('Breadcrumbs')) {
-                $parents = $this->owner->getController()->Breadcrumbs(false)->items;
+            } elseif ($this->popupController->hasMethod('Breadcrumbs')) {
+                $parents = $this->popupController->Breadcrumbs(false)->items;
                 $backlink = array_pop($parents)->Link;
             }
         }
@@ -437,10 +465,11 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      * Oh, the horror! DRY police be advised. This function is a serious offender.
      * Saves the form data and redirects to a given link
      *
-     * @param array The form data
-     * @param Form The form object
-     * @param string The redirect link
-     * @todo  GridFieldDetailForm_ItemRequest::doSave is too monolithic, making overloading impossible. Most of this code is a direct copy.
+     * @param array  $data         The form data
+     * @param Form   $form         The form object
+     * @param string $redirectLink The redirect link
+     * @todo  GridFieldDetailForm_ItemRequest::doSave is too monolithic, making overloading impossible. Most
+     *        of this code is a direct copy.
      * */
     protected function saveAndRedirect($data, $form, $redirectLink)
     {
@@ -466,10 +495,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
         } catch (ValidationException $e) {
             $form->sessionMessage($e->getResult()->message(), 'bad');
             $responseNegotiator = new PjaxResponseNegotiator(array(
-                'CurrentForm' => function () use (&$form) {
+                'CurrentForm' => function () use ($form) {
                     return $form->forTemplate();
                 },
-                'default' => function () use (&$controller) {
+                'default' => function () use ($controller) {
                     return $controller->redirectBack();
                 }
             ));
@@ -528,11 +557,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
             return false;
         }
 
-        $table = $this->owner->record->class;
-
-        while (($p = get_parent_class($table)) !== 'DataObject') {
-            $table = $p;
-        }
+        $baseClass = DataObject::getSchema()->baseDataClass($this->owner);
+        $stageTable = DataObject::getSchema()->tableName($baseClass) . '_Live';
 
         return (bool) DB::query("SELECT \"ID\" FROM \"{$table}_Live\" WHERE \"ID\" = {$this->owner->record->ID}")
             ->value();

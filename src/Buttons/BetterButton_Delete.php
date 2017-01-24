@@ -1,5 +1,10 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use SilverStripe\View\Requirements;
+use UncleCheese\BetterButtons\Buttons\BetterButton;
+
 /**
  * Defines the button that deletes a record, with confirmation
  *

@@ -1,5 +1,7 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Interfaces;
+
 /**
  * Simply an attribute we can assign to some of the classes to indicate that
  * they work with Versioned records.

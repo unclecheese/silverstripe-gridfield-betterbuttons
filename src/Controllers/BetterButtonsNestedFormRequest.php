@@ -1,5 +1,18 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Controllers;
+
+use Exception;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\HiddenField;
+use SilverStripe\View\Requirements;
+use UncleCheese\BetterButtons\Actions\BetterButtonNestedForm;
+use UncleCheese\BetterButtons\Controllers\BetterButtonsCustomActionRequest;
+
 /**
  * Request handler that deals with nested forms
  *
@@ -57,16 +70,16 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
 
     /**
      * Render the form to the template
-     * @param  SS_HTTPRequest $r
+     * @param  HTTPRequest $r
      * @return SSViewer
      */
-    public function index(SS_HTTPRequest $r)
+    public function index(HTTPRequest $r)
     {
         Requirements::css(BETTER_BUTTONS_DIR.'/css/betterbuttons_nested_form.css');
 
         return $this->customise(array(
             'Form' => $this->Form()
-        ))->renderWith('BetterButtonNestedForm');
+        ))->renderWith(BetterButtonNestedForm::class);
     }
 
     /**
@@ -76,8 +89,8 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
      *
      * @param  array $data    The form data
      * @param  Form $form     The nested form object
-     * @param  SS_HTTPRequest $request
-     * @return SS_HTTPResponse
+     * @param  HTTPRequest $request
+     * @return HTTPResponse
      */
     public function nestedFormSave($data, $form, $request)
     {
@@ -93,10 +106,11 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
      * Get the action from the request, whether it's part of the form data
      * or in the query string
      *
-     * @param  SS_HTTPRequest $r [description]
+     * @param  HTTPRequest $r
      * @return BetterButtonNestedForm
+     * @throws Exception If the action doesn't exist, or isn't a BetterButtonNestedForm
      */
-    protected function getFormActionFromRequest(SS_HTTPRequest $r)
+    protected function getFormActionFromRequest(HTTPRequest $r)
     {
         $action = $r->requestVar('action');
         $formAction = $this->record->findActionByName($action);

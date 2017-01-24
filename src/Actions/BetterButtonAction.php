@@ -1,5 +1,14 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Actions;
+
+use SilverStripe\Core\Convert;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use SilverStripe\Forms\LiteralField;
+use UncleCheese\BetterButtons\Extensions\BetterButtonGroupable;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
+
 /**
  * Defines the base class for all buttons that link to arbitrary endpoints
  * from a {@link GridFieldDetailForm}
@@ -9,8 +18,8 @@
  */
 class BetterButtonAction extends LiteralField implements BetterButtonInterface
 {
-    private static $extensions = array (
-        'BetterButtonGroupable'
+    private static $extensions = array(
+        BetterButtonGroupable::class
     );
 
     /**
@@ -39,7 +48,7 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface
 
     /**
      * Builds the action
-     * @param string                          $text    The text to appear on the button
+     * @param string $text The text to appear on the button
      */
     public function __construct($text = null)
     {

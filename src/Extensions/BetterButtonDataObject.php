@@ -1,12 +1,22 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Extensions;
+
+use Exception;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\Versioning\Versioned;
+use UncleCheese\BetterButtons\FormFields\DropdownFormAction;
+
 /**
  * An extension that offers features to DataObjects that allow them to set their own
  * actions and utilities for {@link GridFieldDetailForm}
  *
  * Default buttons are defined in _config.yml and can be overriden via the Config layer.
  * Due to the way Config merges arrays, set button class names to "false" to remove them from the list.
- *
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
@@ -120,9 +130,9 @@ class BetterButtonDataObject extends DataExtension
     protected function getDefaultButtonList($config)
     {
         $new = ($this->owner->ID == 0);
-        $list = $new ?
-            Config::inst()->get($config, $this->checkVersioned() ? "versioned_create" : "create") :
-            Config::inst()->get($config, $this->checkVersioned() ? "versioned_edit" : "edit");
+        $list = $new
+            ? Config::inst()->get($config, $this->checkVersioned() ? "versioned_create" : "create")
+            : Config::inst()->get($config, $this->checkVersioned() ? "versioned_edit" : "edit");
 
         return $list ?: array ();
     }
@@ -160,6 +170,7 @@ class BetterButtonDataObject extends DataExtension
      * @param  GridFieldDetailForm_ItemRequest  $request   The request that points to the form
      * @param  boolean                          $button    If the button should display as an input tag or a button
      * @return FormField
+     * @throws Exception if the requested button type does not exist
      */
     protected function instantiateButton($className)
     {
@@ -208,9 +219,9 @@ class BetterButtonDataObject extends DataExtension
             }
         }
 
-        return $isVersioned &&
-            $this->owner->config()->better_buttons_versioned_enabled &&
-            count($this->owner->getVersionedStages()) > 1;
+        return $isVersioned
+            && $this->owner->config()->better_buttons_versioned_enabled
+            && count($this->owner->getVersionedStages()) > 1;
     }
 
     /**

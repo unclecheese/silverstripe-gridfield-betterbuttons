@@ -1,5 +1,9 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use UncleCheese\BetterButtons\Buttons\BetterButton;
+use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
 
 /**
  * Defines the button that publishes a record that uses the {@link Versioned} extension

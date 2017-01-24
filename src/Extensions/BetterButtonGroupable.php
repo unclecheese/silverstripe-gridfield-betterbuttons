@@ -1,5 +1,9 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Extensions;
+
+use SilverStripe\ORM\DataExtension;
+
 /**
  * Injects the "isGrouped" flag into Actions and Buttons
  *

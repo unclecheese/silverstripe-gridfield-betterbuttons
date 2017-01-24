@@ -1,5 +1,11 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Actions;
+
+use Exception;
+use SilverStripe\Control\Controller;
+use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+
 /**
  * Defines an arbitrary action that can be taken from a grid field detail form
  *
@@ -39,9 +45,9 @@ class BetterButtonCustomAction extends BetterButtonAction
 
     /**
      * Builds the button
-     * @param string                          $actionName   The name of the action (method)
-     * @param string                          $text         The text for the button
-     * @param int                             $redirectType The type of redirection on completion of the action
+     * @param string $actionName   The name of the action (method)
+     * @param string $text         The text for the button
+     * @param int    $redirectType The type of redirection on completion of the action
      */
     public function __construct($actionName, $text, $redirectType = null)
     {
@@ -67,6 +73,7 @@ class BetterButtonCustomAction extends BetterButtonAction
      * See self::GOBACK and self::REFRESH constants
      *
      * @param int $type
+     * @throws Exception if the redirect type is not supported
      */
     public function setRedirectType($type)
     {

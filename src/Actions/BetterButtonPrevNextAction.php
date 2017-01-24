@@ -1,5 +1,10 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Actions;
+
+use SilverStripe\Control\Controller;
+use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+
 /**
  * Defines a set of buttons that offers prev/next navigation from within a
  * GridField detail form

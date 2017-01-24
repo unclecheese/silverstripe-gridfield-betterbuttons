@@ -1,5 +1,18 @@
 <?php
 
+namespace UncleCheese\BetterButtons\FormFields;
+
+use Exception;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use SilverStripe\View\Requirements;
+use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+use UncleCheese\BetterButtons\Buttons\BetterButton;
+use UncleCheese\BetterButtons\Extensions\BetterButtonGroupable;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
+
 /**
  * Defines the button that holds several form actions and exposes them on click
  *
@@ -9,7 +22,7 @@
 class DropdownFormAction extends CompositeField implements BetterButtonInterface
 {
     private static $extensions = array(
-        'BetterButtonGroupable'
+        BetterButtonGroupable::class
     );
 
     /**

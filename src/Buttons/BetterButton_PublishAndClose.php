@@ -1,5 +1,10 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndClose;
+use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+
 /**
  * Defines the button that publishes a record and closes the detail form
  *

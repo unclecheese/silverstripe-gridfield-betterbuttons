@@ -1,5 +1,13 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use UncleCheese\BetterButtons\Extensions\BetterButtonGroupable;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
+
 /**
  * Defines the base class for all buttons that submit form data through GridField
  *
@@ -9,7 +17,7 @@
 abstract class BetterButton extends FormAction implements BetterButtonInterface
 {
     private static $extensions = array (
-        'BetterButtonGroupable'
+        BetterButtonGroupable::class
     );
 
     /**

@@ -1,5 +1,9 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use UncleCheese\BetterButtons\Buttons\BetterButton;
+
 /**
  * Defines the button that saves a record and goes to the previous one
  *

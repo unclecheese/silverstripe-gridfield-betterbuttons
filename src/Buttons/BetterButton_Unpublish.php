@@ -1,5 +1,10 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use UncleCheese\BetterButtons\Buttons\BetterButton;
+use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+
 /**
  * Defines the button that unpublishes a record
  *
