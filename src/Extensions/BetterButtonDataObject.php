@@ -9,6 +9,7 @@ use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\Versioning\Versioned;
+use UncleCheese\BetterButtons\Buttons\BetterButton;
 use UncleCheese\BetterButtons\FormFields\DropdownFormAction;
 
 /**
@@ -169,8 +170,8 @@ class BetterButtonDataObject extends DataExtension
      * @param  Form                             $form      The form that will contain the button
      * @param  GridFieldDetailForm_ItemRequest  $request   The request that points to the form
      * @param  boolean                          $button    If the button should display as an input tag or a button
-     * @return FormField
-     * @throws Exception if the requested button type does not exist
+     * @return BetterButton
+     * @throws Exception If the requested button type does not exist
      */
     protected function instantiateButton($className)
     {

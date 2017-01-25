@@ -20,7 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "UncleCheese\\BetterButtons\\": "src/"
+            "UncleCheese\\BetterButtons\\": "src/",
+            "UncleCheese\\BetterButtons\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",
