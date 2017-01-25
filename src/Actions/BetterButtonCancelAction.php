@@ -35,7 +35,7 @@ class BetterButtonCancelAction extends BetterButtonAction
      */
     public function getButtonHTML()
     {
-        $this->addExtraClass("backlink");
+        $this->addExtraClass("btn btn-default backlink");
 
         return parent::getButtonHTML();
     }

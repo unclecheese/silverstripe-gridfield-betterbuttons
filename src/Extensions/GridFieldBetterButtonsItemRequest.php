@@ -118,14 +118,17 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
         $actions = $this->owner->record->getBetterButtonsActions();
         $form->setActions($this->filterFieldList($form, $actions));
 
-        if ($form->Fields()->hasTabset()) {
+        if ($form->Fields()->hasTabSet()) {
             $form->Fields()->findOrMakeTab('Root')->setTemplate(TabSet::class);
             $form->addExtraClass('cms-tabset');
         }
 
         $utils = $this->owner->record->getBetterButtonsUtils();
         $form->Utils = $this->filterFieldList($form, $utils);
-        $form->setTemplate('BetterButtons_EditForm');
+        $form->setTemplate([
+            'type' => 'Includes',
+            'BetterButtons_EditForm',
+        ]);
         $form->addExtraClass('better-buttons-form');
     }
 
@@ -278,10 +281,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      */
     public function save($data, $form)
     {
-        $origStage = Versioned::current_stage();
-        Versioned::reading_stage('Stage');
+        $origStage = Versioned::get_stage();
+        Versioned::set_stage('Stage');
         $action = $this->owner->doSave($data, $form);
-        Versioned::reading_stage($origStage);
+        Versioned::set_stage($origStage);
 
         return $action;
     }
@@ -381,14 +384,14 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      */
     public function unPublish()
     {
-        $origStage = Versioned::current_stage();
-        Versioned::reading_stage('Live');
+        $origStage = Versioned::get_stage();
+        Versioned::set_stage('Live');
 
         // This way our ID won't be unset
         $clone = clone $this->owner->record;
         $clone->delete();
 
-        Versioned::reading_stage($origStage);
+        Versioned::set_stage($origStage);
 
         return $this->owner->edit(Controller::curr()->getRequest());
     }
@@ -427,7 +430,7 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
      */
     protected function getToplevelController()
     {
-        $c = $this->popupController;
+        $c = $this->owner->getController();
         while ($c && $c instanceof GridFieldDetailForm_ItemRequest) {
             $c = $c->getController();
         }
@@ -449,8 +452,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
         if ($toplevelController && $toplevelController instanceof LeftAndMain) {
             if ($toplevelController->hasMethod('Backlink')) {
                 $backlink = $toplevelController->Backlink();
-            } elseif ($this->popupController->hasMethod('Breadcrumbs')) {
-                $parents = $this->popupController->Breadcrumbs(false)->items;
+            } elseif ($this->owner->getController()->hasMethod('Breadcrumbs')) {
+                $parents = $this->owner->getController()->Breadcrumbs(false)->items;
                 $backlink = array_pop($parents)->Link;
             }
         }

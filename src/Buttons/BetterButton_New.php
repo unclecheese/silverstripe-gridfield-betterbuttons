@@ -30,9 +30,7 @@ class BetterButton_New extends BetterButton
     {
         parent::baseTransform();
 
-        return $this
-            ->addExtraClass("ss-ui-action-constructive")
-            ->setAttribute('data-icon', 'add');
+        return $this->addExtraClass("btn-primary font-icon-plus ss-ui-action-constructive");
     }
 
     /**

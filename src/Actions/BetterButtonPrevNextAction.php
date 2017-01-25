@@ -20,7 +20,7 @@ class BetterButtonPrevNextAction extends BetterButtonAction
      */
     public function getButtonHTML()
     {
-        $html = "";
+        $html = '<div class="btn-group" role="group">';
 
         // Prev/next links. Todo: This doesn't scale well.
 
@@ -38,7 +38,7 @@ class BetterButtonPrevNextAction extends BetterButtonAction
         $linkText = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUS', 'Previous') : "";
 
         $html .= sprintf(
-            "<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /> %s</a>",
+            "<a class='ss-ui-button btn btn-default gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /> %s</a>",
             $cssClass,
             $prevLink,
             $linkTitle,
@@ -53,12 +53,14 @@ class BetterButtonPrevNextAction extends BetterButtonAction
         $linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT', 'Next') : "";
 
         $html .= sprintf(
-            "<a class='ss-ui-button gridfield-better-buttons-prevnext gridfield-better-buttons-next %s' href='%s' title='%s'>%s <img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
+            "<a class='ss-ui-button btn btn-default gridfield-better-buttons-prevnext gridfield-better-buttons-next %s' href='%s' title='%s'>%s <img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
             $cssClass,
             $nextLink,
             $linkTitle,
             $linkText
         );
+
+        $html .= '</div>';
 
         return $html;
     }

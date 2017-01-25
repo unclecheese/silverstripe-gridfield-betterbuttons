@@ -38,7 +38,7 @@ class BetterButton_Save extends BetterButton
     public function transformToButton()
     {
         return parent::transformToButton()
-            ->addExtraClass('ss-ui-action-constructive')
+            ->addExtraClass('btn-primary font-icon-save')
             ->setAttribute('data-icon', 'accept');
     }
 }
