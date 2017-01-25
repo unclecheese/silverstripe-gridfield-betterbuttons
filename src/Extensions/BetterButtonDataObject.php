@@ -174,10 +174,10 @@ class BetterButtonDataObject extends DataExtension
      */
     protected function instantiateButton($className)
     {
-        if (class_exists($className)) {
-            $buttonObj = Injector::inst()->create($className);
-            return $buttonObj;
-        } else {
+        try {
+            return Injector::inst()->create($className);
+        } catch (Exception $ex) {
+            // Customize the default injector exception
             throw new Exception("The button type $className doesn't exist.");
         }
     }

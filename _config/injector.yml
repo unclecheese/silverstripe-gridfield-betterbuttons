@@ -28,3 +28,18 @@ SilverStripe\Core\Injector\Injector:
     class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveDraft
   BetterButton_Unpublish:
     class: UncleCheese\BetterButtons\Buttons\BetterButton_Unpublish
+
+  BetterButtonAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButton
+  BetterButtonCancelAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonCancelAction
+  BetterButtonCustomAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonCustomAction
+  BetterButtonFrontendLinksAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonFrontendLinksAction
+  BetterButtonLink:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonLink
+  BetterButtonNestedForm:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonNestedForm
+  BetterButtonPrevNextAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonPrevNextAction
