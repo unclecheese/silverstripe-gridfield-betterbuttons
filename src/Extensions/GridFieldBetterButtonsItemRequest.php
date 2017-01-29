@@ -560,10 +560,10 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
             return false;
         }
 
-        $baseClass = DataObject::getSchema()->baseDataClass($this->owner);
+        $baseClass = DataObject::getSchema()->baseDataClass($this->owner->record);
         $stageTable = DataObject::getSchema()->tableName($baseClass) . '_Live';
 
-        return (bool) DB::query("SELECT \"ID\" FROM \"{$table}_Live\" WHERE \"ID\" = {$this->owner->record->ID}")
+        return (bool) DB::query("SELECT \"ID\" FROM \"{$stageTable}\" WHERE \"ID\" = {$this->owner->record->ID}")
             ->value();
     }
 
