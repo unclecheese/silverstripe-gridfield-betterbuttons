@@ -40,8 +40,8 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
     {
         parent::baseTransform();
         return $this
-            ->setAttribute('data-icon', 'accept')
-            ->setAttribute('data-icon-alternate', 'disk')
+            ->addExtraClass('btn-secondary-outline font-icon-check-mark')
+            ->setAttribute('data-btn-alternate', 'btn action btn-primary font-icon-rocket')
             ->setAttribute('data-text-alternate', _t('SiteTree.BUTTONSAVEPUBLISH', 'Save & publish'));
     }
 

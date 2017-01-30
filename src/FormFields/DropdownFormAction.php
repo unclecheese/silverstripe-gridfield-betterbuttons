@@ -61,9 +61,9 @@ class DropdownFormAction extends CompositeField implements BetterButtonInterface
      */
     public function Field($properties = array ())
     {
-        Requirements::css(BETTER_BUTTONS_DIR.'/css/dropdown_form_action.css');
-        Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/dropdown_form_action.js');
-        $this->setAttribute('data-form-action-dropdown', '#'.$this->DropdownID());
+        Requirements::css(BETTER_BUTTONS_DIR . '/css/dropdown_form_action.css');
+        Requirements::javascript(BETTER_BUTTONS_DIR . '/javascript/dropdown_form_action.js');
+        $this->setAttribute('data-form-action-dropdown', '#' . $this->DropdownID());
 
         return parent::Field();
     }
@@ -75,7 +75,7 @@ class DropdownFormAction extends CompositeField implements BetterButtonInterface
      */
     public function DropdownID()
     {
-        return 'form-action-dropdown-'.$this->identifier;
+        return 'form-action-dropdown-' . $this->identifier;
     }
 
     /**
