@@ -2,7 +2,7 @@ language: php
 
 env:
   global:
-    - DB=MYSQL CORE_RELEASE=master
+    - DB=MYSQL CORE_RELEASE=4
 
 matrix:
   include:
