@@ -1,12 +1,13 @@
 ---
 Name: betterbuttons
 ---
-DataObject:
+SilverStripe\ORM\DataObject:
   extensions:
-    - BetterButtonDataObject
-GridFieldDetailForm_ItemRequest:
+    - UncleCheese\BetterButtons\Extensions\BetterButtonDataObject
+SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest:
   extensions:
-    - GridFieldBetterButtonsItemRequest
+    - UncleCheese\BetterButtons\Extensions\GridFieldBetterButtonsItemRequest
+
 BetterButtonsUtils:
   edit:
     BetterButtonPrevNextAction: true

@@ -27,10 +27,13 @@ Better Buttons for GridField
 ![Screenshot](http://i.cubeupload.com/QQL8oD.png)
 
 ## Requirements
-SilverStripe 3.1 or higher
+SilverStripe 4.0 or higher
 
 ## Installation
-```composer require unclecheese/betterbuttons:1.2.*```
+
+```
+composer require unclecheese/betterbuttons 2.x-dev
+```
 
 ## Customising the button collections
 
@@ -100,7 +103,7 @@ BetterButtonsGroups:
     buttons:
       BetterButton_Save: true
       BetterButton_SaveAndNext: true
-      
+
 ```
 
 When creating groups, be sure not to duplicate any buttons that are outside the group, as form fields with the same name cannot appear twice in a form.

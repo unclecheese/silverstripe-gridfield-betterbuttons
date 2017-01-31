@@ -1,0 +1,45 @@
+---
+Name: betterbuttonsinjector
+---
+SilverStripe\Core\Injector\Injector:
+  BetterButton_Delete:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_Delete
+  BetterButton_New:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_New
+  BetterButton_Publish:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_Publish
+  BetterButton_PublishAndAdd:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_PublishAndAdd
+  BetterButton_PublishAndClose:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_PublishAndClose
+  BetterButton_Rollback:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_Rollback
+  BetterButton_Save:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_Save
+  BetterButton_SaveAndAdd:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndAdd
+  BetterButton_SaveAndClose:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndClose
+  BetterButton_SaveAndNext:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndNext
+  BetterButton_SaveAndPrev:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndPrev
+  BetterButton_SaveDraft:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveDraft
+  BetterButton_Unpublish:
+    class: UncleCheese\BetterButtons\Buttons\BetterButton_Unpublish
+
+  BetterButtonAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButton
+  BetterButtonCancelAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonCancelAction
+  BetterButtonCustomAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonCustomAction
+  BetterButtonFrontendLinksAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonFrontendLinksAction
+  BetterButtonLink:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonLink
+  BetterButtonNestedForm:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonNestedForm
+  BetterButtonPrevNextAction:
+    class: UncleCheese\BetterButtons\Actions\BetterButtonPrevNextAction

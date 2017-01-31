@@ -6,7 +6,7 @@
 
 .cms .gridfield-better-buttons-next { margin-right:12px; }
 
-.cms .ui-widget.gridfield-better-buttons-delete {
+.cms .btn.action.gridfield-better-buttons-delete {
 	float:right;
 	color: #fff;
 	text-shadow:none;
@@ -17,7 +17,7 @@
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ed1c24', endColorstr='#aa1317');
 }
 
-.cms .ui-widget.gridfield-better-buttons-delete:hover,
+.cms .btn.action.gridfield-better-buttons-delete:hover,
 .cms .gridfield-better-buttons-delete:active {
 	background: #b61318;
 	background: -webkit-gradient(linear, left top, left bottom, from(#c9151b), to(#a11115));

@@ -1,37 +1,41 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Actions;
+
+use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+
 /**
  * Defines a button that cancels out of the form
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonCancelAction extends BetterButtonAction {
-
-
+class BetterButtonCancelAction extends BetterButtonAction
+{
     /**
      * Builds the button
      */
-    public function __construct() {
-        parent::__construct(_t('GridFieldBetterButtons.CANCEL','Cancel'));
+    public function __construct()
+    {
+        parent::__construct(_t('GridFieldBetterButtons.CANCEL', 'Cancel'));
     }
-
 
     /**
      * Gets the link for the button
      * @return string
      */
-    public function getButtonLink() {
+    public function getButtonLink()
+    {
         return $this->gridFieldRequest->Link("cancel");
     }
-
 
     /**
      * Gets the HTML that represents the button
      * @return string
      */
-    public function getButtonHTML() {
-        $this->addExtraClass("backlink");
+    public function getButtonHTML()
+    {
+        $this->addExtraClass("btn btn-default backlink");
 
         return parent::getButtonHTML();
     }

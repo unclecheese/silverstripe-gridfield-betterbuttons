@@ -1,23 +1,31 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Actions;
+
+use SilverStripe\Forms\FieldList;
+use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+
 /**
  * Defines a button that launches a nested form
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-better-buttons
  */
-class BetterButtonNestedForm extends BetterButtonCustomAction {
-
-	protected $fields;
-
+class BetterButtonNestedForm extends BetterButtonCustomAction
+{
+    /**
+     * @var FieldList
+     */
+    protected $fields;
 
     /**
      * Builds the button
-     * @param string                          $actionName   The name of the action (method)
-     * @param string                          $text         The text for the button
-     * @param FieldList                       $fields
+     * @param string    $actionName The name of the action (method)
+     * @param string    $text       The text for the button
+     * @param FieldList $fields
      */
-    public function __construct($actionName, $text, FieldList $fields) {        
+    public function __construct($actionName, $text, FieldList $fields)
+    {
         $this->fields = $fields;
         $this->addExtraClass('better-button-nested-form');
         parent::__construct($actionName, $text);
@@ -27,7 +35,8 @@ class BetterButtonNestedForm extends BetterButtonCustomAction {
      * Gets the link for the button
      * @return string
      */
-    public function getButtonLink() {
+    public function getButtonLink()
+    {
         $link = 'nestedform?action='.$this->actionName;
 
         return $this->gridFieldRequest->Link($link);
@@ -37,7 +46,8 @@ class BetterButtonNestedForm extends BetterButtonCustomAction {
      * Gets the field list
      * @return FieldList
      */
-    public function getFields() {
-    	return $this->fields;
+    public function getFields()
+    {
+        return $this->fields;
     }
 }

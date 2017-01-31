@@ -1,18 +1,24 @@
 <?php
 
+namespace UncleCheese\BetterButtons\Buttons;
+
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use UncleCheese\BetterButtons\Extensions\BetterButtonGroupable;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
+
 /**
  * Defines the base class for all buttons that submit form data through GridField
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-abstract class BetterButton extends FormAction implements BetterButtonInterface {
-
-	
-	private static $extensions = array (
-		'BetterButtonGroupable'
-	);
-
+abstract class BetterButton extends FormAction implements BetterButtonInterface
+{
+    private static $extensions = array (
+        BetterButtonGroupable::class
+    );
 
     /**
      * The request that points to the GridFieldDetailForm
@@ -20,19 +26,18 @@ abstract class BetterButton extends FormAction implements BetterButtonInterface 
      */
     protected $gridFieldRequest;
 
-
     /**
      * Bind to the GridField request
      * @param Form $form
      * @param GridFieldDetailForm_ItemRequest $request
      */
-    public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request) {
+    public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request)
+    {
         $this->setForm($form);
         $this->gridFieldRequest = $request;
 
         return $this;
     }
-
 
     /**
      * Performs any last-minute transformations to the button in accordance with anything
@@ -40,57 +45,55 @@ abstract class BetterButton extends FormAction implements BetterButtonInterface 
      *
      * @return BetterButton
      */
-    public function baseTransform() {
+    public function baseTransform()
+    {
         return $this;
     }
-
 
     /**
      * Tells the form action to become a standard form submit button
      * @return FormAction
      */
-    public function transformToButton() {           
+    public function transformToButton()
+    {
         $this->baseTransform();
-        
+
         return $this->setUseButtonTag(true);
     }
-
 
     /**
      * Tells the form action to become a standard input tag, e.g. for usage in a button group
      * @return FormAction
      */
-    public function transformToInput() {        
+    public function transformToInput()
+    {
         $this->baseTransform();
-        
+
         return $this;
     }
-
 
     /**
      * Determines if the button should display or not
      * @return bool
      */
-    public function shouldDisplay() {
+    public function shouldDisplay()
+    {
         return true;
     }
-
 
     /**
      * Render the field with the correct attributes
      * @param array $properties
      * @return  FormAction
      */
-    public function Field($properties = array ()) {
-        if($this->isGrouped()) {
+    public function Field($properties = array ())
+    {
+        if ($this->isGrouped()) {
             $this->transformToInput();
-        }
-        else {
+        } else {
             $this->transformToButton();
         }
 
         return parent::Field($properties);
     }
-
-
 }
