@@ -1,6 +1,8 @@
 Better Buttons for GridField
 ====================================
 
+[![Build Status](https://travis-ci.org/unclecheese/silverstripe-gridfield-betterbuttons.svg?branch=master)](https://travis-ci.org/unclecheese/silverstripe-gridfield-betterbuttons)
+
 ![Screenshot](http://i.cubeupload.com/J8vWQf.png)
 
 
