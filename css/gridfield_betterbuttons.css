@@ -6,7 +6,8 @@
 
 .cms .gridfield-better-buttons-next { margin-right:12px; }
 
-.cms .btn.action.gridfield-better-buttons-delete {
+.cms .btn.action.gridfield-better-buttons-delete,
+.cms .ui-widget.gridfield-better-buttons-delete:focus {
 	float:right;
 	color: #fff;
 	text-shadow:none;
