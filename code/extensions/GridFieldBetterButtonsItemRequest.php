@@ -366,9 +366,13 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         $origStage = Versioned::current_stage();
         Versioned::reading_stage('Live');
 
+        $this->owner->record->invokeWithExtensions('onBeforeUnpublish', $this->owner->record);
+
         // This way our ID won't be unset
         $clone = clone $this->owner->record;
         $clone->delete();
+
+        $this->owner->record->invokeWithExtensions('onAfterUnpublish', $this->owner->record);
 
         Versioned::reading_stage($origStage);
 
