@@ -40,7 +40,7 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
     /**
      * Gets a link to this RequestHandler
      */
-    public function Link()
+    public function Link($action = null)
     {
         return $this->controller->Link('nestedform');
     }
