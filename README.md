@@ -230,6 +230,35 @@ In this case, your action handler receives `$data` and `$form`, just like a cont
     }
 ```
 
+### Implementing With DataExtension
+
+In cases where you may need to implement custom buttons with a `DataExtension` use the extension points provided. These include the following:
+
+- `updateBetterButtonsActions` (`getBetterButtonsActions`)
+- `updateBetterButtonsUtils` (`getBetterButtonsUtils`)
+
+The `FieldList` of actions is passed in to these methods. The following example shows how this might work:
+
+```php
+    /**
+     * @param $actions
+     */
+    public function updateBetterButtonsActions($actions)
+    {
+        $actions->push(BetterButtonCustomAction::create('approveRecord', 'Approve Record'));
+        $actions->push(BetterButtonNestedForm::create(
+            'updateRecord',
+            'Update This Record',
+            FieldList::create(
+                TextareaField::create('FooField')
+                    ->setTitle('A Field To Process'),
+                HiddenField::create('AHiddenField')
+                    ->setValue('A Hidden Value)
+            )
+        ));
+    }
+```
+
 
 ### Disabling Better Buttons
 
