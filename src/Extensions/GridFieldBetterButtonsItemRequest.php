@@ -19,7 +19,7 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\ManyManyList;
 use SilverStripe\ORM\ValidationException;
-use SilverStripe\ORM\Versioning\Versioned;
+use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\Requirements;
 use UncleCheese\BetterButtons\Controllers\BetterButtonsCustomActionRequest;
 use UncleCheese\BetterButtons\Controllers\BetterButtonsNestedFormRequest;
