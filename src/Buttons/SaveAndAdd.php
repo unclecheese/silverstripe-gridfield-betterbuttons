@@ -2,7 +2,8 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton;
+use SilverStripe\Forms\FormAction;
+use UncleCheese\BetterButtons\Traits\SaveAndAddTransforms;
 
 /**
  * Defines the button that save a record and redirects to creating a new one
@@ -10,8 +11,10 @@ use UncleCheese\BetterButtons\Buttons\BetterButton;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_SaveAndAdd extends BetterButton
+class SaveAndAdd extends Button
 {
+    use SaveAndAddTransforms;
+
     /**
      * Builds the button
      */
@@ -31,24 +34,4 @@ class BetterButton_SaveAndAdd extends BetterButton
         return $record->canEdit() && $record->canCreate();
     }
 
-    /**
-     * Adds the appropriate style and icon
-     * @return FormAction
-     */
-    public function transformToButton()
-    {
-        return parent::transformToButton()
-            ->addExtraClass("ss-ui-action-constructive")
-            ->setAttribute('data-icon', 'add');
-    }
-
-    /**
-     * Adds a class so the button can be identified in a group
-     * @return FormAction
-     */
-    public function transformToInput()
-    {
-        return parent::transformToInput()
-            ->addExtraClass("saveAndAddNew");
-    }
 }

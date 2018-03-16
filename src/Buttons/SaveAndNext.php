@@ -2,7 +2,9 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use UncleCheese\BetterButtons\Extensions\ItemRequest;
 
 /**
  * Defines the button that saves a record and goes to the next one
@@ -10,7 +12,7 @@ use UncleCheese\BetterButtons\Buttons\BetterButton;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_SaveAndNext extends BetterButton
+class SaveAndNext extends Button
 {
     /**
      * Builds the button
@@ -26,7 +28,7 @@ class BetterButton_SaveAndNext extends BetterButton
      */
     public function shouldDisplay()
     {
-        $record = $this->gridFieldRequest->record;
+        $record = $this->gridFieldRequest->getRecord();
 
         return $record->canEdit();
     }
@@ -38,7 +40,9 @@ class BetterButton_SaveAndNext extends BetterButton
     public function baseTransform()
     {
         parent::baseTransform();
-        $disabled = (!$this->gridFieldRequest->getNextRecordID());
+        /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
+        $gridFieldRequest = $this->gridFieldRequest;
+        $disabled = (!$gridFieldRequest->getNextRecordID());
 
         return $this->setDisabled($disabled);
     }

@@ -2,44 +2,43 @@
 Name: betterbuttonsinjector
 ---
 SilverStripe\Core\Injector\Injector:
-  BetterButton_Delete:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_Delete
-  BetterButton_New:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_New
-  BetterButton_Publish:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_Publish
-  BetterButton_PublishAndAdd:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_PublishAndAdd
-  BetterButton_PublishAndClose:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_PublishAndClose
-  BetterButton_Rollback:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_Rollback
-  BetterButton_Save:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_Save
-  BetterButton_SaveAndAdd:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndAdd
-  BetterButton_SaveAndClose:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndClose
-  BetterButton_SaveAndNext:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndNext
-  BetterButton_SaveAndPrev:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndPrev
-  BetterButton_SaveDraft:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_SaveDraft
-  BetterButton_Unpublish:
-    class: UncleCheese\BetterButtons\Buttons\BetterButton_Unpublish
-
-  BetterButtonAction:
-    class: UncleCheese\BetterButtons\Actions\BetterButton
-  BetterButtonCancelAction:
-    class: UncleCheese\BetterButtons\Actions\BetterButtonCancelAction
-  BetterButtonCustomAction:
-    class: UncleCheese\BetterButtons\Actions\BetterButtonCustomAction
-  BetterButtonFrontendLinksAction:
-    class: UncleCheese\BetterButtons\Actions\BetterButtonFrontendLinksAction
-  BetterButtonLink:
-    class: UncleCheese\BetterButtons\Actions\BetterButtonLink
-  BetterButtonNestedForm:
-    class: UncleCheese\BetterButtons\Actions\BetterButtonNestedForm
-  BetterButtonPrevNextAction:
-    class: UncleCheese\BetterButtons\Actions\BetterButtonPrevNextAction
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.delete:
+    class: UncleCheese\BetterButtons\Buttons\Delete
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.create:
+    class: UncleCheese\BetterButtons\Buttons\Create
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.publish:
+    class: UncleCheese\BetterButtons\Buttons\Publish
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.publishAndAdd:
+    class: UncleCheese\BetterButtons\Buttons\PublishAndAdd
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.publishAndClose:
+    class: UncleCheese\BetterButtons\Buttons\PublishAndClose
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.rollback:
+    class: UncleCheese\BetterButtons\Buttons\Rollback
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.save:
+    class: UncleCheese\BetterButtons\Buttons\Save
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveAndAdd:
+    class: UncleCheese\BetterButtons\Buttons\SaveAndAdd
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveAndClose:
+    class: UncleCheese\BetterButtons\Buttons\SaveAndClose
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveAndNext:
+    class: UncleCheese\BetterButtons\Buttons\SaveAndNext
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveAndPrev:
+    class: UncleCheese\BetterButtons\Buttons\SaveAndPrev
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveDraft:
+    class: UncleCheese\BetterButtons\Buttons\SaveDraft
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.unpublish:
+    class: UncleCheese\BetterButtons\Buttons\Unpublish
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.action:
+    class: UncleCheese\BetterButtons\Actions\Action
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.cancel:
+    class: UncleCheese\BetterButtons\Actions\Cancel
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.customAction:
+    class: UncleCheese\BetterButtons\Actions\CustomAction
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.frontendLinks:
+    class: UncleCheese\BetterButtons\Actions\FrontendLinks
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.link:
+    class: UncleCheese\BetterButtons\Actions\Link
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.nestedForm:
+    class: UncleCheese\BetterButtons\Actions\NestedForm
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.prevNext:
+    class: UncleCheese\BetterButtons\Actions\PrevNext

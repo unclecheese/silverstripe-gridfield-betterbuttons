@@ -3,7 +3,6 @@
 namespace UncleCheese\BetterButtons\Actions;
 
 use SilverStripe\Forms\FieldList;
-use UncleCheese\BetterButtons\Actions\BetterButtonAction;
 
 /**
  * Defines a button that launches a nested form
@@ -11,7 +10,7 @@ use UncleCheese\BetterButtons\Actions\BetterButtonAction;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-better-buttons
  */
-class BetterButtonNestedForm extends BetterButtonCustomAction
+class NestedForm extends CustomAction
 {
     /**
      * @var FieldList

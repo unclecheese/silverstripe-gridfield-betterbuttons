@@ -2,8 +2,11 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton;
-use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use UncleCheese\BetterButtons\Extensions\ItemRequest;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\ORM\DataObject;
 
 /**
  * Defines the button that publishes a record that uses the {@link Versioned} extension
@@ -11,7 +14,7 @@ use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_Publish extends BetterButton implements BetterButton_Versioned
+class Publish extends Button implements BetterButtonVersioned
 {
     /**
      * Builds the button
@@ -27,14 +30,14 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
      */
     public function shouldDisplay()
     {
-        $record = $this->gridFieldRequest->record;
+        $record = $this->gridFieldRequest->getRecord();
 
         return $record->canEdit();
     }
 
     /**
      * Updates the button to use appropriate icons
-     * @return FormAction
+     * @return Publish
      */
     public function baseTransform()
     {
@@ -47,18 +50,22 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
 
     /**
      * Update the UI to reflect published state
-     * @return void
+     * @return Publish
      */
     public function transformToButton()
     {
         parent::transformToButton();
 
-        if ($this->gridFieldRequest->recordIsPublished()) {
+        /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
+        $gridFieldRequest = $this->gridFieldRequest;
+
+        if ($gridFieldRequest->recordIsPublished()) {
             $this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));
         }
-
-        if ($this->gridFieldRequest->record->stagesDiffer('Stage', 'Live')
-            && $this->gridFieldRequest->recordIsDeletedFromStage()
+        /* @var DataObject|Versioned $record */
+        $record = $gridFieldRequest->getRecord();
+        if ($record->stagesDiffer()
+            && $gridFieldRequest->recordIsDeletedFromStage()
         ) {
             $this->addExtraClass('ss-ui-alternate');
         }

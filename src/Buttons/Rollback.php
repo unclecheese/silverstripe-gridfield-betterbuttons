@@ -2,8 +2,8 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton;
-use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+use SilverStripe\Forms\FormAction;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
 
 /**
  * Defines the button that rolls back the version of the record
@@ -11,7 +11,7 @@ use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_Rollback extends BetterButton implements BetterButton_Versioned
+class Rollback extends Button implements BetterButtonVersioned
 {
     /**
      * Builds the button
@@ -23,7 +23,7 @@ class BetterButton_Rollback extends BetterButton implements BetterButton_Version
 
     /**
      * Update the button to show a description
-     * @return [type] [description]
+     * @return FormAction
      */
     public function baseTransform()
     {

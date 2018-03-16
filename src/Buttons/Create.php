@@ -2,35 +2,32 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton;
-
 /**
  * Defines the button that creates a new record
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_New extends BetterButton
+class Create extends Button
 {
     /**
      * Builds the button
-     * @param Form                            $form    The form that holds the button
-     * @param GridFieldDetailForm_ItemRequest $request The request that points to the form
      */
     public function __construct()
     {
-        parent::__construct("doNew", _t('GridFieldBetterButtons.NEWRECORD', 'New record'));
+        parent::__construct("doNew", '+');
     }
 
     /**
      * Add the necessary classes and icons
-     * @return FormAction
+     * @return Create
      */
     public function baseTransform()
     {
         parent::baseTransform();
 
-        return $this->addExtraClass("btn-primary font-icon-plus ss-ui-action-constructive");
+        return $this->addExtraClass("btn-primary ss-ui-action-constructive better-button-add")
+                    ->setAttribute('title', _t('GridFieldBetterButtons.NEWRECORD', 'New record'));
     }
 
     /**
@@ -43,6 +40,6 @@ class BetterButton_New extends BetterButton
         if ($this->gridFieldRequest->getRequest()->param('ID') == 'new') {
             return false;
         }
-        return $this->gridFieldRequest->record->canCreate();
+        return $this->gridFieldRequest->getRecord()->canCreate();
     }
 }

@@ -2,8 +2,10 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton;
-use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+use SilverStripe\Forms\FormAction;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use UncleCheese\BetterButtons\Extensions\ItemRequest;
 
 /**
  * Defines the button that saves a draft
@@ -11,7 +13,7 @@ use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_SaveDraft extends BetterButton implements BetterButton_Versioned
+class SaveDraft extends Button implements BetterButtonVersioned
 {
     /**
      * Builds the button
@@ -27,7 +29,7 @@ class BetterButton_SaveDraft extends BetterButton implements BetterButton_Versio
      */
     public function shouldDisplay()
     {
-        $record = $this->gridFieldRequest->record;
+        $record = $this->gridFieldRequest->getRecord();
 
         return $record->canEdit();
     }
@@ -48,13 +50,14 @@ class BetterButton_SaveDraft extends BetterButton implements BetterButton_Versio
 
     /**
      * Update the UI to reflect unsaved state
-     * @return void
+     * @return FormAction
      */
     public function transformToButton()
     {
         parent::transformToButton();
-
-        if ($this->gridFieldRequest->recordIsDeletedFromStage()) {
+        /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
+        $gridFieldRequest = $this->gridFieldRequest;
+        if ($gridFieldRequest->recordIsDeletedFromStage()) {
             $this->addExtraClass('ss-ui-alternate');
         }
 

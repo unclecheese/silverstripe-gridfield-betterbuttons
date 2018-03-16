@@ -3,7 +3,7 @@
 namespace UncleCheese\BetterButtons\Tests\Actions;
 
 use SilverStripe\Dev\SapphireTest;
-use UncleCheese\BetterButtons\Actions\BetterButtonAction;
+use UncleCheese\BetterButtons\Actions\Action;
 
 class BetterButtonActionTest extends SapphireTest
 {
@@ -16,7 +16,7 @@ class BetterButtonActionTest extends SapphireTest
      */
     public function testGetButtonName($buttonName, $expected)
     {
-        $field = new BetterButtonAction($buttonName);
+        $field = new Action($buttonName);
         $this->assertSame($expected, $field->getButtonName());
     }
 

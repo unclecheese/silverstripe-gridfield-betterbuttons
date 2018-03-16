@@ -3,12 +3,12 @@
 namespace UncleCheese\BetterButtons\Tests\Actions;
 
 use SilverStripe\Dev\SapphireTest;
-use UncleCheese\BetterButtons\Actions\BetterButtonCustomAction;
+use UncleCheese\BetterButtons\Actions\CustomAction;
 
 class BetterButtonCustomActionTest extends SapphireTest
 {
     /**
-     * @var BetterButtonCustomAction
+     * @var CustomAction
      */
     private $button;
 
@@ -20,7 +20,7 @@ class BetterButtonCustomActionTest extends SapphireTest
     public function setUp()
     {
         parent::setUp();
-        $this->button = new BetterButtonCustomAction('foo', 'bar');
+        $this->button = new CustomAction('foo', 'bar');
     }
 
     /**
@@ -40,8 +40,8 @@ class BetterButtonCustomActionTest extends SapphireTest
      */
     public function testSetAndGetRedirectType()
     {
-        $this->button->setRedirectType(BetterButtonCustomAction::REFRESH);
-        $this->assertSame(BetterButtonCustomAction::REFRESH, $this->button->getRedirectType());
+        $this->button->setRedirectType(CustomAction::REFRESH);
+        $this->assertSame(CustomAction::REFRESH, $this->button->getRedirectType());
     }
 
     /**

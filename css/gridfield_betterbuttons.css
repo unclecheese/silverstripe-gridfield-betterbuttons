@@ -1,46 +1,75 @@
-.cms .gridfield-better-buttons-prevnext.disabled { opacity: 0.3; filter: alpha(opacity=30); }
+.gridfield-better-buttons-prevnext.disabled { opacity: 0.3; filter: alpha(opacity=30); }
 
-.cms .gridfield-better-buttons-prevnext img { height:7px; vertical-align:1px; }
+.gridfield-better-buttons-prevnext img { height:7px; vertical-align:1px; }
 
-.cms .gridfield-better-buttons-prevnext .ui-button-text { line-height:1; }
+.gridfield-better-buttons-prevnext .ui-button-text { line-height:1; }
 
-.cms .gridfield-better-buttons-next { margin-right:12px; }
+.gridfield-better-buttons-next { margin-right:12px; border-radius: 0 20px 20px 0; }
+.gridfield-better-buttons-prev { margin-right:12px; border-radius: 20px 0 0 20px; }
 
-.cms .btn.action.gridfield-better-buttons-delete,
-.cms .ui-widget.gridfield-better-buttons-delete:focus {
-	float:right;
-	color: #fff;
-	text-shadow:none;
-	border: solid 1px #980c10;
-	background: #d81b21;
-	background: -webkit-gradient(linear, left top, left bottom, from(#ed1c24), to(#aa1317));
-	background: -moz-linear-gradient(top,  #ed1c24,  #aa1317);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ed1c24', endColorstr='#aa1317');
-}
+//.btn.action.gridfield-better-buttons-delete,
+// .ui-widget.gridfield-better-buttons-delete:focus {
+// 	float:right;
+// 	color: #fff;
+// 	text-shadow:none;
+// 	border: solid 1px #980c10;
+// 	background: #d81b21;
+// 	background: -webkit-gradient(linear, left top, left bottom, from(#ed1c24), to(#aa1317));
+// 	background: -moz-linear-gradient(top,  #ed1c24,  #aa1317);
+// 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ed1c24', endColorstr='#aa1317');
+// }
 
-.cms .btn.action.gridfield-better-buttons-delete:hover,
-.cms .gridfield-better-buttons-delete:active {
-	background: #b61318;
-	background: -webkit-gradient(linear, left top, left bottom, from(#c9151b), to(#a11115));
-	background: -moz-linear-gradient(top,  #c9151b,  #a11115);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9151b', endColorstr='#a11115');
-}
+// .btn.action.gridfield-better-buttons-delete:hover,
+// .gridfield-better-buttons-delete:active {
+// 	background: #b61318;
+// 	background: -webkit-gradient(linear, left top, left bottom, from(#c9151b), to(#a11115));
+// 	background: -moz-linear-gradient(top,  #c9151b,  #a11115);
+// 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9151b', endColorstr='#a11115');
+// }
 
-.cms .gridfield-better-buttons-undodelete {
+.gridfield-better-buttons-undodelete {
 	display:none;
 	float:right;
 	margin-left:10px;
 }
 
-.cms .better-buttons-frontend-links {
+.better-buttons-frontend-links {
 	float:right;
 	margin-top:7px;
 }
 
-.cms .better-buttons-utils {
-	position: fixed;
-	text-align:right;
-	top: 5px;
-	z-index:70;
-	right:10px;
+.better-buttons-utils {	
+	position:fixed;
+	right: 0;
+	width:50%;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 8px;
+}
+
+.better-buttons-utils.form-group:after {
+	border:0;
+}
+
+.better-buttons-utils .form__fieldgroup {
+	display:flex;
+	flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;	
+	justify-content: flex-end;	
+}
+
+.better-button-add {
+	border-radius: 99px;
+	padding:0;
+	width:30px;
+	height:30px;
+	text-align:center;
+	margin:0 8px;
+	
+}
+.better-button-add .btn__title {
+	font-size:20px;
+	vertical-align: 0;
+	line-height:0;
+
 }

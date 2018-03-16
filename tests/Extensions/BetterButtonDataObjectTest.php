@@ -5,7 +5,7 @@ namespace UncleCheese\BetterButtons\Tests\Actions;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\FieldList;
-use UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndClose;
+use UncleCheese\BetterButtons\Buttons\SaveAndClose;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
 use UncleCheese\BetterButtons\Tests\Extensions\Stubs\ButtonDataObject;
 
@@ -47,7 +47,7 @@ class BetterButtonDataObjectTest extends SapphireTest
 
         $this->assertInstanceOf(FieldList::class, $result);
 
-        $this->assertInstanceOf(BetterButton_SaveAndClose::class, $result->fieldByName('action_doSaveAndQuit'));
+        $this->assertInstanceOf(SaveAndClose::class, $result->fieldByName('action_doSaveAndQuit'));
         $this->assertNull($result->fieldByName('action_doDelete'));
     }
 

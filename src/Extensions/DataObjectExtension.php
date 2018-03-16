@@ -8,9 +8,10 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
-use SilverStripe\ORM\Versioning\Versioned;
-use UncleCheese\BetterButtons\Buttons\BetterButton;
+use SilverStripe\Versioned\Versioned;
+use UncleCheese\BetterButtons\Buttons\Button;
 use UncleCheese\BetterButtons\FormFields\DropdownFormAction;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
 
 /**
  * An extension that offers features to DataObjects that allow them to set their own
@@ -22,7 +23,7 @@ use UncleCheese\BetterButtons\FormFields\DropdownFormAction;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonDataObject extends DataExtension
+class DataObjectExtension extends DataExtension
 {
     /**
      * Enable better buttons for this DataObject
@@ -166,20 +167,20 @@ class BetterButtonDataObject extends DataExtension
 
     /**
      * Transforms a given button class name into an actual object.
-     * @param  string                           $className The class of the button
+     * @param  string                           $buttonName The name of the button
      * @param  Form                             $form      The form that will contain the button
      * @param  GridFieldDetailForm_ItemRequest  $request   The request that points to the form
      * @param  boolean                          $button    If the button should display as an input tag or a button
-     * @return BetterButton
+     * @return Button
      * @throws Exception If the requested button type does not exist
      */
-    protected function instantiateButton($className)
+    protected function instantiateButton($buttonName)
     {
         try {
-            return Injector::inst()->create($className);
+            return Injector::inst()->create(BetterButtonInterface::class . '.' . $buttonName);
         } catch (Exception $ex) {
             // Customize the default injector exception
-            throw new Exception("The button type $className doesn't exist.");
+            throw new Exception("The button type $buttonName doesn't exist.");
         }
     }
 

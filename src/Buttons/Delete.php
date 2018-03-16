@@ -3,7 +3,8 @@
 namespace UncleCheese\BetterButtons\Buttons;
 
 use SilverStripe\View\Requirements;
-use UncleCheese\BetterButtons\Buttons\BetterButton;
+use UncleCheese\BetterButtons\Extensions\ItemRequest;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 
 /**
  * Defines the button that deletes a record, with confirmation
@@ -11,7 +12,7 @@ use UncleCheese\BetterButtons\Buttons\BetterButton;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_Delete extends BetterButton
+class Delete extends Button
 {
     /**
      * Builds the button
@@ -23,12 +24,12 @@ class BetterButton_Delete extends BetterButton
 
     /**
      * Adds the JS, sets up necessary HTML attributes
-     * @return FormAction
+     * @return Delete
      */
     public function baseTransform()
     {
         parent::baseTransform();
-        Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons_delete.js');
+        Requirements::javascript('unclecheese/betterbuttons:javascript/gridfield_betterbuttons_delete.js');
 
         return $this
             ->setUseButtonTag(true)
@@ -43,6 +44,8 @@ class BetterButton_Delete extends BetterButton
      */
     public function shouldDisplay()
     {
-        return !$this->gridFieldRequest->recordIsPublished() && $this->gridFieldRequest->record->canDelete();
+        /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
+        $gridFieldRequest = $this->gridFieldRequest;
+        return !$gridFieldRequest->recordIsPublished() && $gridFieldRequest->getRecord()->canDelete();
     }
 }

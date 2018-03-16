@@ -5,7 +5,13 @@ namespace UncleCheese\BetterButtons\Controllers;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\RequestHandler;
-use UncleCheese\BetterButtons\Actions\BetterButtonCustomAction;
+use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use SilverStripe\ORM\DataObject;
+use UncleCheese\BetterButtons\Actions\CustomAction;
+use UncleCheese\BetterButtons\Extensions\DataObjectExtension;
+use UncleCheese\BetterButtons\Extensions\ItemRequest;
+use SilverStripe\Control\HTTPResponse;
 
 /**
  * A subcontroller that handles custom actions. The parent controller matches
@@ -17,7 +23,7 @@ use UncleCheese\BetterButtons\Actions\BetterButtonCustomAction;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonsCustomActionRequest extends RequestHandler
+class CustomActionRequest extends RequestHandler
 {
     /**
      * @var array
@@ -37,19 +43,19 @@ class BetterButtonsCustomActionRequest extends RequestHandler
      * The parent extension. There are actually some useful methods in the extension
      * itself, so we need access to that object
      *
-     * @var GridFieldBetterButtonsItemRequest
+     * @var ItemRequest
      */
     protected $parent;
 
     /**
      * The parent controller
-     * @var GridFieldDetailForm_ItemRequest
+     * @var GridFieldDetailForm_ItemRequest|ItemRequest
      */
     protected $controller;
 
     /**
      * The record we're editing
-     * @var DataObject
+     * @var DataObject|DataObjectExtension
      */
     protected $record;
 
@@ -60,16 +66,17 @@ class BetterButtonsCustomActionRequest extends RequestHandler
     protected $form;
 
     /**
-     * Buidls the request
-     * @param GridFieldBetterButtonsItemRequest $parent     The extension instance
-     * @param GridFieldDetailForm_ItemRequest $controller The request that points to the detail form
+     * Builds the request
+     * @param GridFieldDetailForm_ItemRequest|ItemRequest $parent     The extension instance
+     * @param GridFieldDetailForm_ItemRequest|ItemRequest $controller The request that points to the detail form
+     * @param Form $form
      */
-    public function __construct($parent, $controller, $form)
+    public function __construct(ItemRequest $parent, ItemRequest $controller, Form $form)
     {
         $this->parent = $parent;
         $this->controller = $controller;
         $this->form = $form;
-        $this->record = $this->controller->record;
+        $this->record = $this->controller->getRecord();
         parent::__construct();
     }
 
@@ -83,11 +90,14 @@ class BetterButtonsCustomActionRequest extends RequestHandler
     public function handleCustomAction(HTTPRequest $r)
     {
         $action = $r->param('Action');
-        if (!$this->record->isCustomActionAllowed($action)) {
+        /* @var DataObject|DataObjectExtension $record */
+        $record = $this->record;
+        if (!$record->isCustomActionAllowed($action)) {
             return $this->httpError(403);
         }
 
-        $formAction = $this->record->findActionByName($action);
+        /* @var CustomAction $formAction */
+        $formAction = $record->findActionByName($action);
         if (!$formAction) {
             return $this->httpError(403, "Action $action doesn't exist");
         }
@@ -101,7 +111,7 @@ class BetterButtonsCustomActionRequest extends RequestHandler
             return Controller::curr()->redirect($formAction->getRedirectURL());
         }
 
-        if ($formAction->getRedirectType() == BetterButtonCustomAction::GOBACK) {
+        if ($formAction->getRedirectType() == CustomAction::GOBACK) {
             return Controller::curr()->redirect(preg_replace('/\?.*/', '', $this->parent->getBackLink()));
         }
 

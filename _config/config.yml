@@ -3,64 +3,58 @@ Name: betterbuttons
 ---
 SilverStripe\ORM\DataObject:
   extensions:
-    - UncleCheese\BetterButtons\Extensions\BetterButtonDataObject
+    - UncleCheese\BetterButtons\Extensions\DataObjectExtension
 SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest:
   extensions:
-    - UncleCheese\BetterButtons\Extensions\GridFieldBetterButtonsItemRequest
+    - UncleCheese\BetterButtons\Extensions\ItemRequest
 
 BetterButtonsUtils:
   edit:
-    BetterButtonPrevNextAction: true
-    BetterButton_New: true
+    prevNext: true
+    create: true
   versioned_edit:
-    BetterButtonPrevNextAction: true
-    BetterButton_New: true
+    prevNext: true
+    create: true
   create:
-    BetterButton_New: true
+    create: true
 
 BetterButtonsActions:
   create:
-    BetterButton_Save: true
-    BetterButton_SaveAndClose: true
+    save: true
+    saveAndClose: true
 
   edit:
-    BetterButton_Save: true
-    BetterButton_SaveAndClose: true
-    BetterButton_Delete: true
-    BetterButtonFrontendLinksAction: true
+    save: true
+    saveAndClose: true
+    delete: true
+    frontendLinks: true
 
-  versioned_create:
-    BetterButton_SaveDraft: true
-    BetterButton_Publish: true
   versioned_edit:
-    BetterButton_SaveDraft: true
-    BetterButton_Publish: true
     Group_Versioning: true
-    BetterButton_Delete: true
-    BetterButtonFrontendLinksAction: true
+    frontendLinks: true
 
 BetterButtonsGroups:
   SaveAnd:
     label: Save and...
     buttons:
-      BetterButton_SaveAndAdd: true
-      BetterButton_SaveAndClose: true
-      BetterButton_SaveAndNext: true
-      BetterButton_SaveAndPrev: true
+      saveAndAdd: true
+      saveAndClose: true
+      saveAndNext: true
+      saveAndPrev: true
   Versioning:
     label: Versioning...
     buttons:
-      BetterButton_Rollback: true
-      BetterButton_Unpublish: true
+      rollback: true
+      unpublish: true
 ---
 Only:
-  classexists: EditableFormField
+  classexists: SilverStripe\UserForms\Model\EditableFormField
 ---
-EditableFormField:
+SilverStripe\UserForms\Model\EditableFormField:
   better_buttons_versioned_enabled: false
 ---
 Only:
-  classexists: EditableOption
+  classexists: SilverStripe\UserForms\Model\EditableFormField\EditableOption
 ---
-EditableOption:
+SilverStripe\UserForms\Model\EditableFormField\EditableOption:
   better_buttons_versioned_enabled: false

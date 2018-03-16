@@ -12,7 +12,7 @@ namespace UncleCheese\BetterButtons\Interfaces;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-interface BetterButton_Versioned
+interface BetterButtonVersioned
 {
 
 }

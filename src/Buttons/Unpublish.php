@@ -2,8 +2,10 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton;
-use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+use SilverStripe\Forms\FormAction;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use UncleCheese\BetterButtons\Extensions\ItemRequest;
 
 /**
  * Defines the button that unpublishes a record
@@ -11,7 +13,7 @@ use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_Unpublish extends BetterButton implements BetterButton_Versioned
+class Unpublish extends Button implements BetterButtonVersioned
 {
     /**
      * Builds the button
@@ -23,7 +25,7 @@ class BetterButton_Unpublish extends BetterButton implements BetterButton_Versio
 
     /**
      * Adds a class to identify this as a destructive action
-     * @return void
+     * @return FormAction
      */
     public function baseTransform()
     {
@@ -38,6 +40,9 @@ class BetterButton_Unpublish extends BetterButton implements BetterButton_Versio
      */
     public function shouldDisplay()
     {
-        return $this->gridFieldRequest->recordIsPublished() && $this->gridFieldRequest->record->canEdit();
+        /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
+        $gridFieldRequest = $this->gridFieldRequest;
+
+        return $gridFieldRequest->recordIsPublished() && $gridFieldRequest->getRecord()->canEdit();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton;
+use SilverStripe\Forms\FormAction;
 
 /**
  * Defines the button that saves a record
@@ -10,7 +10,7 @@ use UncleCheese\BetterButtons\Buttons\BetterButton;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_Save extends BetterButton
+class Save extends Button
 {
     /**
      * Builds the button

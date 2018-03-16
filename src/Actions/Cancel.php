@@ -2,15 +2,13 @@
 
 namespace UncleCheese\BetterButtons\Actions;
 
-use UncleCheese\BetterButtons\Actions\BetterButtonAction;
-
 /**
  * Defines a button that cancels out of the form
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonCancelAction extends BetterButtonAction
+class Cancel extends Action
 {
     /**
      * Builds the button

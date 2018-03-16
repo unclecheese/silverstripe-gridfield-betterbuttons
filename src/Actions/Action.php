@@ -6,7 +6,7 @@ use SilverStripe\Core\Convert;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use SilverStripe\Forms\LiteralField;
-use UncleCheese\BetterButtons\Extensions\BetterButtonGroupable;
+use UncleCheese\BetterButtons\Traits\Groupable;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
 
 /**
@@ -16,11 +16,9 @@ use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonAction extends LiteralField implements BetterButtonInterface
+class Action extends LiteralField implements BetterButtonInterface
 {
-    private static $extensions = array(
-        BetterButtonGroupable::class
-    );
+    use Groupable;
 
     /**
      * The form that this action is associated with
@@ -60,6 +58,7 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface
      * Bind the button to the GridField request
      * @param Form $form
      * @param GridFieldDetailForm_ItemRequest $request
+     * @return $this
      */
     public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request)
     {
@@ -75,8 +74,6 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface
      */
     public function getButtonName()
     {
-        $raw = $this->buttonName ?: $this->getButtonText();
-
         return preg_replace('/[^a-z0-9-_]/', '', strtolower($this->getButtonText()));
     }
 
@@ -147,7 +144,7 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface
     /**
      * Sets the confirm text
      * @param  $str
-     * @return  BetterButtonAction
+     * @return  Action
      */
     public function setConfirmation($str)
     {
@@ -159,7 +156,7 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface
      * based on any post-contruct updates
      *
      * @param array $attributes
-     * @return SSViewer
+     * @return string
      */
     public function FieldHolder($attributes = array ())
     {

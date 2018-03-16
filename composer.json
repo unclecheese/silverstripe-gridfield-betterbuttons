@@ -16,7 +16,8 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.x-dev"
-        }
+        },
+        "expose": ["css", "images", "javascript"]
     },
     "autoload": {
         "psr-4": {

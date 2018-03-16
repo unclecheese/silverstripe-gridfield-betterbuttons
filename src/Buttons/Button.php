@@ -5,7 +5,7 @@ namespace UncleCheese\BetterButtons\Buttons;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
-use UncleCheese\BetterButtons\Extensions\BetterButtonGroupable;
+use UncleCheese\BetterButtons\Traits\Groupable;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
 
 /**
@@ -14,11 +14,9 @@ use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-abstract class BetterButton extends FormAction implements BetterButtonInterface
+abstract class Button extends FormAction implements BetterButtonInterface
 {
-    private static $extensions = array (
-        BetterButtonGroupable::class
-    );
+    use Groupable;
 
     /**
      * The request that points to the GridFieldDetailForm
@@ -30,6 +28,7 @@ abstract class BetterButton extends FormAction implements BetterButtonInterface
      * Bind to the GridField request
      * @param Form $form
      * @param GridFieldDetailForm_ItemRequest $request
+     * @return Button
      */
     public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request)
     {
@@ -43,7 +42,7 @@ abstract class BetterButton extends FormAction implements BetterButtonInterface
      * Performs any last-minute transformations to the button in accordance with anything
      * the user may have done after instantiating the button
      *
-     * @return BetterButton
+     * @return Button
      */
     public function baseTransform()
     {
@@ -84,7 +83,7 @@ abstract class BetterButton extends FormAction implements BetterButtonInterface
     /**
      * Render the field with the correct attributes
      * @param array $properties
-     * @return  FormAction
+     * @return  string
      */
     public function Field($properties = array ())
     {

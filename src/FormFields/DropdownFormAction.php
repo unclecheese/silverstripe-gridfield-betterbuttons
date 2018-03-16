@@ -7,10 +7,11 @@ use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
-use UncleCheese\BetterButtons\Actions\BetterButtonAction;
-use UncleCheese\BetterButtons\Buttons\BetterButton;
-use UncleCheese\BetterButtons\Extensions\BetterButtonGroupable;
+use UncleCheese\BetterButtons\Actions\Action;
+use UncleCheese\BetterButtons\Buttons\Button;
+use UncleCheese\BetterButtons\Traits\Groupable;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
 
 /**
@@ -21,9 +22,7 @@ use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
  */
 class DropdownFormAction extends CompositeField implements BetterButtonInterface
 {
-    private static $extensions = array(
-        BetterButtonGroupable::class
-    );
+    use Groupable;
 
     /**
      * To ensure the buttons get unique ids, keep track of the instances
@@ -58,11 +57,12 @@ class DropdownFormAction extends CompositeField implements BetterButtonInterface
     /**
      * Renders the button, includes the JS and CSS
      * @param array $properties
+     * @return DBHTMLText
      */
-    public function Field($properties = array ())
+    public function Field($properties = [])
     {
-        Requirements::css(BETTER_BUTTONS_DIR . '/css/dropdown_form_action.css');
-        Requirements::javascript(BETTER_BUTTONS_DIR . '/javascript/dropdown_form_action.js');
+        Requirements::css('unclecheese/betterbuttons:css/dropdown_form_action.css');
+        Requirements::javascript('unclecheese/betterbuttons:javascript/dropdown_form_action.js');
         $this->setAttribute('data-form-action-dropdown', '#' . $this->DropdownID());
 
         return parent::Field();
@@ -79,12 +79,13 @@ class DropdownFormAction extends CompositeField implements BetterButtonInterface
     }
 
     /**
-     * Determines if the button should displsy
+     * Determines if the button should display
      * @return boolean
      */
     public function shouldDisplay()
     {
         foreach ($this->children as $child) {
+            /* @var BetterButtonInterface $child */
             if ($child->shouldDisplay()) {
                 return true;
             }
@@ -106,7 +107,7 @@ class DropdownFormAction extends CompositeField implements BetterButtonInterface
         $this->gridFieldRequest = $request;
 
         foreach ($this->children as $child) {
-            if (!$child instanceof BetterButton && !$child instanceof BetterButtonAction) {
+            if (!$child instanceof Button && !$child instanceof Action) {
                 throw new Exception("DropdownFormAction must be passed instances of BetterButton");
             }
 

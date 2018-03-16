@@ -1,15 +1,16 @@
 <?php
 
-namespace UncleCheese\BetterButtons\Extensions;
+namespace UncleCheese\BetterButtons\Traits;
 
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\View\ViewableData;
 
 /**
  * Injects the "isGrouped" flag into Actions and Buttons
  *
  * @author Uncle Cheese <unclecheese@leftandmain.com>
+ * @property ViewableData $owner
  */
-class BetterButtonGroupable extends DataExtension
+trait Groupable
 {
     /**
      * Is the button part of a group, e.g. DropdownFormAction
@@ -29,6 +30,7 @@ class BetterButtonGroupable extends DataExtension
     /**
      * Sets the $isGrouped flag
      * @param bool $bool
+     * @return ViewableData
      */
     public function setIsGrouped($bool)
     {

@@ -2,8 +2,8 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use UncleCheese\BetterButtons\Buttons\BetterButton_SaveAndClose;
-use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
+use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
+use UncleCheese\BetterButtons\Traits\SaveAndCloseTransforms;
 
 /**
  * Defines the button that publishes a record and closes the detail form
@@ -11,8 +11,10 @@ use UncleCheese\BetterButtons\Interfaces\BetterButton_Versioned;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButton_PublishAndClose extends BetterButton_SaveAndClose implements BetterButton_Versioned
+class PublishAndClose extends Button implements BetterButtonVersioned
 {
+    use SaveAndCloseTransforms;
+
     /**
      * Builds the button
      */

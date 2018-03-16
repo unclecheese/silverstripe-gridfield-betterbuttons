@@ -3,7 +3,6 @@
 namespace UncleCheese\BetterButtons\Actions;
 
 use SilverStripe\Control\Controller;
-use UncleCheese\BetterButtons\Actions\BetterButtonAction;
 
 /**
  * Defines the button that provides links to the frontend from within a gridfield detail form.
@@ -12,7 +11,7 @@ use UncleCheese\BetterButtons\Actions\BetterButtonAction;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonFrontendLinksAction extends BetterButtonAction
+class FrontendLinks extends Action
 {
     /**
      * Gets the link for the button
@@ -20,7 +19,7 @@ class BetterButtonFrontendLinksAction extends BetterButtonAction
      */
     public function getButtonLink()
     {
-        return $this->gridFieldRequest->record->hasMethod('Link') ? $this->gridFieldRequest->record->Link() : "";
+        return $this->gridFieldRequest->getRecord()->hasMethod('Link') ? $this->gridFieldRequest->getRecord()->Link() : "";
     }
 
     /**
@@ -29,7 +28,7 @@ class BetterButtonFrontendLinksAction extends BetterButtonAction
      */
     public function shouldDisplay()
     {
-        return $this->gridFieldRequest->record && $this->gridFieldRequest->record->hasMethod('Link');
+        return $this->gridFieldRequest->getRecord() && $this->gridFieldRequest->getRecord()->hasMethod('Link');
     }
 
     /**

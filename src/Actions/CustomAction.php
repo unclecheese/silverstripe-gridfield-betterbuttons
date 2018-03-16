@@ -4,7 +4,6 @@ namespace UncleCheese\BetterButtons\Actions;
 
 use Exception;
 use SilverStripe\Control\Controller;
-use UncleCheese\BetterButtons\Actions\BetterButtonAction;
 
 /**
  * Defines an arbitrary action that can be taken from a grid field detail form
@@ -12,7 +11,7 @@ use UncleCheese\BetterButtons\Actions\BetterButtonAction;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-better-buttons
  */
-class BetterButtonCustomAction extends BetterButtonAction
+class CustomAction extends Action
 {
     /**
      * @constant A symbol representing the "go back" behaviour

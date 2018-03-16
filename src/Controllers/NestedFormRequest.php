@@ -5,13 +5,14 @@ namespace UncleCheese\BetterButtons\Controllers;
 use Exception;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\HiddenField;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
-use UncleCheese\BetterButtons\Actions\BetterButtonNestedForm;
-use UncleCheese\BetterButtons\Controllers\BetterButtonsCustomActionRequest;
+use UncleCheese\BetterButtons\Actions\NestedForm;
 
 /**
  * Request handler that deals with nested forms
@@ -19,7 +20,7 @@ use UncleCheese\BetterButtons\Controllers\BetterButtonsCustomActionRequest;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
+class NestedFormRequest extends CustomActionRequest
 {
     /**
      * Define the allowed controller actions
@@ -39,6 +40,8 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
 
     /**
      * Gets a link to this RequestHandler
+     * @param string $action
+     * @return string
      */
     public function Link($action = null)
     {
@@ -71,15 +74,15 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
     /**
      * Render the form to the template
      * @param  HTTPRequest $r
-     * @return SSViewer
+     * @return DBHTMLText
      */
     public function index(HTTPRequest $r)
     {
-        Requirements::css(BETTER_BUTTONS_DIR.'/css/betterbuttons_nested_form.css');
+        Requirements::css('unclecheese/betterbuttons:css/betterbuttons_nested_form.css');
 
         return $this->customise(array(
             'Form' => $this->Form()
-        ))->renderWith(BetterButtonNestedForm::class);
+        ))->renderWith(NestedForm::class);
     }
 
     /**
@@ -107,7 +110,7 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
      * or in the query string
      *
      * @param  HTTPRequest $r
-     * @return BetterButtonNestedForm
+     * @return NestedForm
      * @throws Exception If the action doesn't exist, or isn't a BetterButtonNestedForm
      */
     protected function getFormActionFromRequest(HTTPRequest $r)
@@ -115,7 +118,7 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
         $action = $r->requestVar('action');
         $formAction = $this->record->findActionByName($action);
 
-        if (!$formAction instanceof BetterButtonNestedForm) {
+        if (!$formAction instanceof NestedForm) {
             throw new Exception("Action $action doesn't exist or is not a BetterButtonNestedForm");
         }
 

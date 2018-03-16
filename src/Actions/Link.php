@@ -2,15 +2,13 @@
 
 namespace UncleCheese\BetterButtons\Actions;
 
-use UncleCheese\BetterButtons\Actions\BetterButtonAction;
-
 /**
  * Defines the a button that can contain an arbitrary link, e.g. an external one
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonLink extends BetterButtonAction
+class Link extends Action
 {
     /**
      * The link, absolute or relative

@@ -2,9 +2,10 @@
 
 namespace UncleCheese\BetterButtons\Actions;
 
+use SilverStripe\Core\Manifest\ModuleResourceLoader;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use UncleCheese\BetterButtons\Extensions\ItemRequest;
 use SilverStripe\Control\Controller;
-use UncleCheese\BetterButtons\Actions\BetterButtonAction;
-
 /**
  * Defines a set of buttons that offers prev/next navigation from within a
  * GridField detail form
@@ -12,7 +13,7 @@ use UncleCheese\BetterButtons\Actions\BetterButtonAction;
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class BetterButtonPrevNextAction extends BetterButtonAction
+class PrevNext extends Action
 {
     /**
      * Gets the HTML for the button
@@ -25,24 +26,31 @@ class BetterButtonPrevNextAction extends BetterButtonAction
         // Prev/next links. Todo: This doesn't scale well.
 
         // Check if the gridfield as been filtered
-        $params = array(
+        $params = [
             'q' => (array)$this->gridFieldRequest->getRequest()->getVar('q')
-        );
+        ];
 
         $searchVars = (bool)$params ? '?' . http_build_query($params) : '';
-
-        $previousRecordID = $this->gridFieldRequest->getPreviousRecordID();
+        /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
+        $gridFieldRequest = $this->gridFieldRequest;
+        $previousRecordID = $gridFieldRequest->getPreviousRecordID();
         $cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
-        $prevLink = $previousRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(), "item", $previousRecordID . $searchVars) : "javascript:void(0);";
+        $prevLink = $previousRecordID
+            ? Controller::join_links(
+                $gridFieldRequest->gridField->Link(),
+                "item",
+                $previousRecordID . $searchVars
+            )
+            : 'javascript:void(0);';
         $linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD', 'Go to the previous record') : "";
         $linkText = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUS', 'Previous') : "";
 
         $html .= sprintf(
-            "<a class='ss-ui-button btn btn-default gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='".BETTER_BUTTONS_DIR."/images/prev.png' alt='previous'  /> %s</a>",
+            "<a class='ss-ui-button btn btn-default gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='%s' alt='previous'></a>",
             $cssClass,
             $prevLink,
             $linkTitle,
-            $linkText
+            ModuleResourceLoader::singleton()->resolveURL('unclecheese/betterbuttons:images/prev.png')
         );
 
         $nextRecordID = $this->gridFieldRequest->getNextRecordID();
@@ -53,11 +61,11 @@ class BetterButtonPrevNextAction extends BetterButtonAction
         $linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT', 'Next') : "";
 
         $html .= sprintf(
-            "<a class='ss-ui-button btn btn-default gridfield-better-buttons-prevnext gridfield-better-buttons-next %s' href='%s' title='%s'>%s <img src='".BETTER_BUTTONS_DIR."/images/next.png' alt='next'  /></a>",
+            "<a class='ss-ui-button btn btn-default gridfield-better-buttons-prevnext gridfield-better-buttons-next %s' href='%s' title='%s'><img src='%s' alt='next'></a>",
             $cssClass,
             $nextLink,
             $linkTitle,
-            $linkText
+            ModuleResourceLoader::singleton()->resolveURL('unclecheese/betterbuttons:images/next.png')
         );
 
         $html .= '</div>';
