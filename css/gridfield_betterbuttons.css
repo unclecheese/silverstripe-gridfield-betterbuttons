@@ -1,6 +1,16 @@
 .cms .gridfield-better-buttons-prevnext.disabled { opacity: 0.3; filter: alpha(opacity=30); }
 
-.cms .gridfield-better-buttons-prevnext img { height:7px; vertical-align:1px; }
+.cms .gridfield-better-buttons-prev {
+	background: url('../images/prev.png') no-repeat center center;
+	background-position-x: 2px;
+	padding-left: 22px;
+}
+
+.cms .gridfield-better-buttons-next {
+	background: url('../images/next.png') no-repeat center center;
+	background-position-x: 100%;
+	padding-right: 22px;
+}
 
 .cms .gridfield-better-buttons-prevnext .ui-button-text { line-height:1; }
 

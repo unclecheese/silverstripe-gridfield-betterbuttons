@@ -75,7 +75,7 @@ class BetterButtonsNestedFormRequest extends BetterButtonsCustomActionRequest
      */
     public function index(HTTPRequest $r)
     {
-        Requirements::css(BETTER_BUTTONS_DIR.'/css/betterbuttons_nested_form.css');
+        Requirements::css('unclecheese/betterbuttons:css/betterbuttons_nested_form.css');
 
         return $this->customise(array(
             'Form' => $this->Form()

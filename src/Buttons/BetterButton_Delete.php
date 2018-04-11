@@ -28,7 +28,7 @@ class BetterButton_Delete extends BetterButton
     public function baseTransform()
     {
         parent::baseTransform();
-        Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons_delete.js');
+        Requirements::javascript('unclecheese/betterbuttons:javascript/gridfield_betterbuttons_delete.js');
 
         return $this
             ->setUseButtonTag(true)
