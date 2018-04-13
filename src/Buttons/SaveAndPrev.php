@@ -4,7 +4,7 @@ namespace UncleCheese\BetterButtons\Buttons;
 
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
-use UncleCheese\BetterButtons\Extensions\ItemRequest;
+use UncleCheese\BetterButtons\Controllers\ItemRequest;
 
 /**
  * Defines the button that saves a record and goes to the previous one
@@ -28,7 +28,7 @@ class SaveAndPrev extends Button
      */
     public function shouldDisplay()
     {
-        $record = $this->gridFieldRequest->getRecord();
+        $record = $this->getGridFieldRequest()->getRecord();
 
         return $record->canEdit();
     }
@@ -41,9 +41,9 @@ class SaveAndPrev extends Button
     {
         parent::baseTransform();
         /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
-        $gridFieldRequest = $this->gridFieldRequest;
+        $gridFieldRequest = $this->getGridFieldRequest();
 
-        $disabled = (!$gridFieldRequest->getPreviousRecordID());
+        $disabled = (!$gridFieldRequest->getPreviousRecord());
 
         return $this->setDisabled($disabled);
     }

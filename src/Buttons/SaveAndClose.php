@@ -28,7 +28,7 @@ class SaveAndClose extends Button
      */
     public function shouldDisplay()
     {
-        $record = $this->gridFieldRequest->getRecord();
+        $record = $this->getGridFieldRequest()->getRecord();
 
         return $record->canEdit();
     }

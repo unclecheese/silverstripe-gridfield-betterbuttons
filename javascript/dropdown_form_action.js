@@ -42,9 +42,11 @@ $.entwine('ss', function($) {
 
 	$('.dropdown-form-action').entwine({
 
-		onadd: function() {
+		onmatch: function() {
 			this.find("li > button").each(function() {
-				$(this).button('destroy');
+        // setTimeout(function() {
+        //   $(this).button('destroy');
+        // },0);
 			});
 
 			this._super();

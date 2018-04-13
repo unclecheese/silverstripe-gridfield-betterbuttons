@@ -29,7 +29,7 @@ class PublishAndClose extends Button implements BetterButtonVersioned
      */
     public function shouldDisplay()
     {
-        $record = $this->gridFieldRequest->record;
+        $record = $this->getGridFieldRequest()->record;
 
         return $record->canEdit();
     }

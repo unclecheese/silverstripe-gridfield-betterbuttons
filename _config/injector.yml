@@ -6,8 +6,6 @@ SilverStripe\Core\Injector\Injector:
     class: UncleCheese\BetterButtons\Buttons\Delete
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.create:
     class: UncleCheese\BetterButtons\Buttons\Create
-  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.publish:
-    class: UncleCheese\BetterButtons\Buttons\Publish
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.publishAndAdd:
     class: UncleCheese\BetterButtons\Buttons\PublishAndAdd
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.publishAndClose:
@@ -16,6 +14,8 @@ SilverStripe\Core\Injector\Injector:
     class: UncleCheese\BetterButtons\Buttons\Rollback
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.save:
     class: UncleCheese\BetterButtons\Buttons\Save
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.unpublish:
+    class: UncleCheese\BetterButtons\Buttons\Unpublish
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveAndAdd:
     class: UncleCheese\BetterButtons\Buttons\SaveAndAdd
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveAndClose:
@@ -24,10 +24,6 @@ SilverStripe\Core\Injector\Injector:
     class: UncleCheese\BetterButtons\Buttons\SaveAndNext
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveAndPrev:
     class: UncleCheese\BetterButtons\Buttons\SaveAndPrev
-  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveDraft:
-    class: UncleCheese\BetterButtons\Buttons\SaveDraft
-  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.unpublish:
-    class: UncleCheese\BetterButtons\Buttons\Unpublish
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.action:
     class: UncleCheese\BetterButtons\Actions\Action
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.cancel:
@@ -42,3 +38,7 @@ SilverStripe\Core\Injector\Injector:
     class: UncleCheese\BetterButtons\Actions\NestedForm
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.prevNext:
     class: UncleCheese\BetterButtons\Actions\PrevNext
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.group:
+    class: UncleCheese\BetterButtons\FormFields\DropdownFormAction
+  SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest.betterbuttons:
+    factory: UncleCheese\BetterButtons\Factories\ItemRequestFactory

@@ -2,7 +2,6 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use SilverStripe\Forms\FormAction;
 use UncleCheese\BetterButtons\Traits\SaveAndAddTransforms;
 
 /**
@@ -29,7 +28,7 @@ class SaveAndAdd extends Button
      */
     public function shouldDisplay()
     {
-        $record = $this->gridFieldRequest->record;
+        $record = $this->getGridFieldRequest()->getRecord();
 
         return $record->canEdit() && $record->canCreate();
     }

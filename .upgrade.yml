@@ -2,10 +2,10 @@ mappings:
   BetterButtonAction: UncleCheese\BetterButtons\Actions\Action
   BetterButtonCancelAction: UncleCheese\BetterButtons\Actions\CancelAction
   BetterButtonCustomAction: UncleCheese\BetterButtons\Actions\CustomAction
-  BetterButtonFrontendLinksAction: UncleCheese\BetterButtons\Actions\FrontendLinksAction
+  BetterButtonFrontendLinksAction: UncleCheese\BetterButtons\Actions\FrontendLinks
   BetterButtonLink: UncleCheese\BetterButtons\Actions\Link
   BetterButtonNestedForm: UncleCheese\BetterButtons\Actions\NestedForm
-  BetterButtonPrevNextAction: UncleCheese\BetterButtons\Actions\PrevNextAction
+  BetterButtonPrevNextAction: UncleCheese\BetterButtons\Actions\PrevNext
   BetterButton: UncleCheese\BetterButtons\Buttons\Button
   BetterButton_Delete: UncleCheese\BetterButtons\Buttons\Delete
   BetterButton_New: UncleCheese\BetterButtons\Buttons\Create
@@ -22,9 +22,9 @@ mappings:
   BetterButton_Unpublish: UncleCheese\BetterButtons\Buttons\Unpublish
   BetterButtonsCustomActionRequest: UncleCheese\BetterButtons\Controllers\CustomActionRequest
   BetterButtonsNestedFormRequest: UncleCheese\BetterButtons\Controllers\NestedFormRequest
-  BetterButtonDataObject: UncleCheese\BetterButtons\Extensions\DataObjectExtension
+  BetterButtonDataObject: UncleCheese\BetterButtons\Extensions\BetterButtons
   BetterButtonGroupable: UncleCheese\BetterButtons\Traits\Groupable
-  GridFieldBetterButtonsItemRequest: UncleCheese\BetterButtons\Extensions\ItemRequest
+  GridFieldBetterButtonsItemRequest: UncleCheese\BetterButtons\Controllers\ItemRequest
   DropdownFormAction: UncleCheese\BetterButtons\FormFields\DropdownFormAction
   BetterButton_Versioned: UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned
   BetterButtonInterface: UncleCheese\BetterButtons\Interfaces\BetterButtonInterface

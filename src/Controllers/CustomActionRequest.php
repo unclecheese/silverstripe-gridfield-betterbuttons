@@ -9,8 +9,7 @@ use SilverStripe\Forms\Form;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use SilverStripe\ORM\DataObject;
 use UncleCheese\BetterButtons\Actions\CustomAction;
-use UncleCheese\BetterButtons\Extensions\DataObjectExtension;
-use UncleCheese\BetterButtons\Extensions\ItemRequest;
+use UncleCheese\BetterButtons\Extensions\BetterButtons;
 use SilverStripe\Control\HTTPResponse;
 
 /**
@@ -48,14 +47,8 @@ class CustomActionRequest extends RequestHandler
     protected $parent;
 
     /**
-     * The parent controller
-     * @var GridFieldDetailForm_ItemRequest|ItemRequest
-     */
-    protected $controller;
-
-    /**
      * The record we're editing
-     * @var DataObject|DataObjectExtension
+     * @var DataObject|BetterButtons
      */
     protected $record;
 
@@ -67,16 +60,14 @@ class CustomActionRequest extends RequestHandler
 
     /**
      * Builds the request
-     * @param GridFieldDetailForm_ItemRequest|ItemRequest $parent     The extension instance
-     * @param GridFieldDetailForm_ItemRequest|ItemRequest $controller The request that points to the detail form
+     * @param GridFieldDetailForm_ItemRequest|ItemRequest $parent
      * @param Form $form
      */
-    public function __construct(ItemRequest $parent, ItemRequest $controller, Form $form)
+    public function __construct(GridFieldDetailForm_ItemRequest $parent, Form $form)
     {
         $this->parent = $parent;
-        $this->controller = $controller;
         $this->form = $form;
-        $this->record = $this->controller->getRecord();
+        $this->record = $this->parent->getRecord();
         parent::__construct();
     }
 
@@ -90,7 +81,7 @@ class CustomActionRequest extends RequestHandler
     public function handleCustomAction(HTTPRequest $r)
     {
         $action = $r->param('Action');
-        /* @var DataObject|DataObjectExtension $record */
+        /* @var DataObject|BetterButtons $record */
         $record = $this->record;
         if (!$record->isCustomActionAllowed($action)) {
             return $this->httpError(403);
@@ -112,11 +103,11 @@ class CustomActionRequest extends RequestHandler
         }
 
         if ($formAction->getRedirectType() == CustomAction::GOBACK) {
-            return Controller::curr()->redirect(preg_replace('/\?.*/', '', $this->parent->getBackLink()));
+            return $this->parent->returnToList();
         }
 
         return Controller::curr()->redirect(
-            $this->controller->getEditLink($this->record->ID)
+            $this->parent->Link()
         );
     }
 }

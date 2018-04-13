@@ -27,7 +27,7 @@ class Create extends Button
         parent::baseTransform();
 
         return $this->addExtraClass("btn-primary ss-ui-action-constructive better-button-add")
-                    ->setAttribute('title', _t('GridFieldBetterButtons.NEWRECORD', 'New record'));
+            ->setAttribute('title', _t('GridFieldBetterButtons.NEWRECORD', 'New record'));
     }
 
     /**
@@ -36,10 +36,10 @@ class Create extends Button
      */
     public function shouldDisplay()
     {
-         // Do not show create new within create new
-        if ($this->gridFieldRequest->getRequest()->param('ID') == 'new') {
+        // Do not show create new within create new
+        if ($this->getGridFieldRequest()->getRequest()->param('ID') == 'new') {
             return false;
         }
-        return $this->gridFieldRequest->getRecord()->canCreate();
+        return $this->getGridFieldRequest()->getRecord()->canCreate();
     }
 }

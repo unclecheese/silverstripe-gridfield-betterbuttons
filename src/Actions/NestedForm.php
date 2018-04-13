@@ -19,8 +19,8 @@ class NestedForm extends CustomAction
 
     /**
      * Builds the button
-     * @param string    $actionName The name of the action (method)
-     * @param string    $text       The text for the button
+     * @param string $actionName The name of the action (method)
+     * @param string $text The text for the button
      * @param FieldList $fields
      */
     public function __construct($actionName, $text, FieldList $fields)
@@ -36,9 +36,9 @@ class NestedForm extends CustomAction
      */
     public function getButtonLink()
     {
-        $link = 'nestedform?action='.$this->actionName;
+        $link = 'nestedform?action=' . $this->actionName;
 
-        return $this->gridFieldRequest->Link($link);
+        return $this->getGridFieldRequest()->Link($link);
     }
 
     /**

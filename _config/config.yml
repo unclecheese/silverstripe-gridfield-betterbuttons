@@ -3,58 +3,45 @@ Name: betterbuttons
 ---
 SilverStripe\ORM\DataObject:
   extensions:
-    - UncleCheese\BetterButtons\Extensions\DataObjectExtension
-SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest:
+    - UncleCheese\BetterButtons\Extensions\BetterButtons
+SilverStripe\Forms\GridField\GridFieldDetailForm:
   extensions:
-    - UncleCheese\BetterButtons\Extensions\ItemRequest
+    - UncleCheese\BetterButtons\Extensions\BetterButtonsGridFieldDetailForm
 
-BetterButtonsUtils:
-  edit:
-    prevNext: true
-    create: true
-  versioned_edit:
-    prevNext: true
-    create: true
-  create:
-    create: true
-
-BetterButtonsActions:
-  create:
-    save: true
-    saveAndClose: true
-
-  edit:
-    save: true
-    saveAndClose: true
-    delete: true
-    frontendLinks: true
-
-  versioned_edit:
-    Group_Versioning: true
-    frontendLinks: true
-
-BetterButtonsGroups:
-  SaveAnd:
-    label: Save and...
-    buttons:
-      saveAndAdd: true
+UncleCheese\BetterButtons\Extensions\BetterButtons:
+  utils:
+    edit:
+      prevNext: true
+      create: true
+    versioned_edit:
+      prevNext: true
+      create: true
+    create:
+      create: true
+  actions:
+    create:
+      save: true
       saveAndClose: true
-      saveAndNext: true
-      saveAndPrev: true
-  Versioning:
-    label: Versioning...
-    buttons:
-      rollback: true
-      unpublish: true
+    edit:
+      save: true
+      saveAndClose: true
+      delete: true
+      frontendLinks: true
+    versioned_edit:
+#      saveAndAdd: true
+#      saveAndNext: true
+#      saveAndPrev: true
+#      saveAndClose: true
+      group:
+        label: Versioning...
+        buttons:
+          rollback: true
+      frontendLinks: true
 ---
 Only:
-  classexists: SilverStripe\UserForms\Model\EditableFormField
+  moduleexists: silverstripe/userforms
 ---
 SilverStripe\UserForms\Model\EditableFormField:
   better_buttons_versioned_enabled: false
----
-Only:
-  classexists: SilverStripe\UserForms\Model\EditableFormField\EditableOption
----
 SilverStripe\UserForms\Model\EditableFormField\EditableOption:
   better_buttons_versioned_enabled: false

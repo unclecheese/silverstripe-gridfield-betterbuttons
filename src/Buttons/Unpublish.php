@@ -3,9 +3,9 @@
 namespace UncleCheese\BetterButtons\Buttons;
 
 use SilverStripe\Forms\FormAction;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Versioned\Versioned;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
-use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
-use UncleCheese\BetterButtons\Extensions\ItemRequest;
 
 /**
  * Defines the button that unpublishes a record
@@ -40,9 +40,9 @@ class Unpublish extends Button implements BetterButtonVersioned
      */
     public function shouldDisplay()
     {
-        /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
-        $gridFieldRequest = $this->gridFieldRequest;
+        /* @var DataObject|Versioned $record */
+        $record = $this->getGridFieldRequest()->getRecord();
 
-        return $gridFieldRequest->recordIsPublished() && $gridFieldRequest->getRecord()->canEdit();
+        return $record->isPublished() && $record->canEdit();
     }
 }

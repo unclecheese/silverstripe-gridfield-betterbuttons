@@ -24,7 +24,7 @@ class Cancel extends Action
      */
     public function getButtonLink()
     {
-        return $this->gridFieldRequest->Link("cancel");
+        return $this->getGridFieldRequest()->Link("cancel");
     }
 
     /**

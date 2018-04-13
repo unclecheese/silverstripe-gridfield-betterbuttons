@@ -20,9 +20,14 @@ interface BetterButtonInterface
     public function shouldDisplay();
 
     /**
-     * Binds the action to a GridField edit page
-     * @param  Form $form
-     * @param  GridFieldDetailForm_ItemRequest $request
+     * @param GridFieldDetailForm_ItemRequest $request
+     * @return mixed
      */
-    public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request);
+    public function setGridFieldRequest(GridFieldDetailForm_ItemRequest $request);
+
+    /**
+     * @return GridFieldDetailForm_ItemRequest
+     */
+    public function getGridFieldRequest();
+
 }

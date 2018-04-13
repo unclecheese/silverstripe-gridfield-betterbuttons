@@ -3,15 +3,19 @@
 namespace UncleCheese\BetterButtons\Extensions;
 
 use Exception;
-use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
 use UncleCheese\BetterButtons\Buttons\Button;
 use UncleCheese\BetterButtons\FormFields\DropdownFormAction;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
+use InvalidArgumentException;
 
 /**
  * An extension that offers features to DataObjects that allow them to set their own
@@ -22,9 +26,12 @@ use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
  *
  * @author  Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
+ * @property DataObject|BetterButtons $owner
  */
-class DataObjectExtension extends DataExtension
+class BetterButtons extends DataExtension
 {
+    use Configurable;
+
     /**
      * Enable better buttons for this DataObject
      *
@@ -46,6 +53,36 @@ class DataObjectExtension extends DataExtension
     private static $better_buttons_versioned_enabled = true;
 
     /**
+     * @var GridFieldDetailForm_ItemRequest
+     */
+    protected static $currentRequest;
+
+    /**
+     * @return GridFieldDetailForm_ItemRequest
+     * @throws Exception
+     */
+    public static function getGridFieldRequest()
+    {
+        if (!static::$currentRequest) {
+            throw new Exception(sprintf(
+                '%s::%s no current request handler was available',
+                static::class,
+                'get_current()'
+            ));
+        }
+
+        return static::$currentRequest;
+    }
+
+    /**
+     * @param GridFieldDetailForm_ItemRequest $request
+     */
+    public static function setGridFieldRequest(GridFieldDetailForm_ItemRequest $request)
+    {
+        static::$currentRequest = $request;
+    }
+
+    /**
      * Gets the default actions for all DataObjects. Can be overloaded in subclasses
      * <code>
      *  public function getBetterButtonsActions()
@@ -61,9 +98,8 @@ class DataObjectExtension extends DataExtension
      */
     public function getBetterButtonsActions()
     {
-        $buttons = $this->getDefaultButtonList("BetterButtonsActions");
+        $buttons = $this->getDefaultButtonList('actions');
         $actions = $this->createFieldList($buttons);
-
         $this->owner->extend('updateBetterButtonsActions', $actions);
 
         return $actions;
@@ -116,7 +152,7 @@ class DataObjectExtension extends DataExtension
      */
     public function getBetterButtonsUtils()
     {
-        $buttons = $this->getDefaultButtonList("BetterButtonsUtils");
+        $buttons = $this->getDefaultButtonList('utils');
         $utils = $this->createFieldList($buttons);
 
         $this->owner->extend('updateBetterButtonsUtils', $utils);
@@ -132,34 +168,36 @@ class DataObjectExtension extends DataExtension
     protected function getDefaultButtonList($config)
     {
         $new = ($this->owner->ID == 0);
-        $list = $new
-            ? Config::inst()->get($config, $this->checkVersioned() ? "versioned_create" : "create")
-            : Config::inst()->get($config, $this->checkVersioned() ? "versioned_edit" : "edit");
+        $buttonConfig = $this->config()->get($config);
+        if (!$buttonConfig) {
+            return [];
+        }
 
-        return $list ?: array ();
+        $key = $new
+            ? ($this->checkVersioned() ? 'versioned_create' : 'create')
+            : ($this->checkVersioned() ? 'versioned_edit' : 'edit');
+
+        return isset($buttonConfig[$key]) ? (array) $buttonConfig[$key] : [];
     }
 
     /**
      * Transforms a list of configured buttons into a usable FieldList
-     * @param  array                            $buttons An array of class names
+     * @param  array $buttons An array of class names
      * @return FieldList
+     * @throws  Exception
      */
     protected function createFieldList($buttons)
     {
         $actions = FieldList::create();
-        foreach ($buttons as $buttonType => $bool) {
-            if (!$bool || !$buttonType) {
+        foreach ($buttons as $buttonType => $config) {
+            $button = $this->createButtonFromConfig($buttonType, $config);
+            if (!$button) {
                 continue;
             }
-
-            if (substr($buttonType, 0, 6) == "Group_") {
-                $group = $this->createButtonGroup(substr($buttonType, 6));
-                if ($group->children->exists()) {
-                    $actions->push($group);
-                }
-            } elseif ($b = $this->instantiateButton($buttonType)) {
-                $actions->push($b);
+            if ($button instanceof DropdownFormAction) {
+                $this->populateButtonGroup($button, $config);
             }
+            $actions->push($button);
         }
 
         return $actions;
@@ -167,10 +205,7 @@ class DataObjectExtension extends DataExtension
 
     /**
      * Transforms a given button class name into an actual object.
-     * @param  string                           $buttonName The name of the button
-     * @param  Form                             $form      The form that will contain the button
-     * @param  GridFieldDetailForm_ItemRequest  $request   The request that points to the form
-     * @param  boolean                          $button    If the button should display as an input tag or a button
+     * @param  string $buttonName The name of the button
      * @return Button
      * @throws Exception If the requested button type does not exist
      */
@@ -185,25 +220,62 @@ class DataObjectExtension extends DataExtension
     }
 
     /**
-     * Creates a button group {@link DropdownFormAction}
-     * @param  string                           $groupName The name of the group
-     * @return DropdownFormAction
+     * @param string $buttonType
+     * @param array $config
+     * @return FormAction
+     * @throws Exception
      */
-    protected function createButtonGroup($groupName)
+    protected function createButtonFromConfig($buttonType, $config)
     {
-        $groupConfig = Config::inst()->get("BetterButtonsGroups", $groupName);
-        $label = (isset($groupConfig['label'])) ? $groupConfig['label'] : $groupName;
-        $buttons = (isset($groupConfig['buttons'])) ? $groupConfig['buttons'] : array ();
-        $button = DropdownFormAction::create(_t('GridFieldBetterButtons.'.$groupName, $label));
-        foreach ($buttons as $b => $bool) {
-            if ($bool) {
-                if ($child = $this->instantiateButton($b)) {
-                    $button->push($child);
-                }
-            }
+        if (!$config || !$buttonType) {
+            return null;
+        }
+
+        $button = $this->instantiateButton($buttonType);
+
+        if (!$button) {
+            throw new Exception(sprintf(
+                'Unknown button type %s',
+                $buttonType
+            ));
         }
 
         return $button;
+    }
+
+    /**
+     * Creates a button group {@link DropdownFormAction}
+     * @param  DropdownFormAction $group
+     * @param array $config
+     * @return DropdownFormAction
+     */
+    protected function populateButtonGroup(DropdownFormAction &$group, array $config)
+    {
+        if (
+            !is_array($config) ||
+            !isset($config['label']) ||
+            !isset($config['buttons']) ||
+            !is_array($config['buttons'])
+        ) {
+            throw new InvalidArgumentException(
+                'Button type %s must be passed an array of config that includes "label" and "buttons"',
+                $buttonType
+            );
+        }
+
+        $group->setName($config['label']);
+        $children = [];
+        foreach ($config['buttons'] as $childName => $childConfig) {
+            $child = $this->createButtonFromConfig($childName, $childConfig);
+            if ($child instanceof DropdownFormAction) {
+                throw new InvalidArgumentException(sprintf(
+                    'Nested groups are not allowed. See betterbuttons config for %s',
+                    $config['label']
+                ));
+            }
+            $children[] = $child;
+        }
+        $group->addButtons($children);
     }
 
     /**

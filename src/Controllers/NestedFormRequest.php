@@ -45,7 +45,7 @@ class NestedFormRequest extends CustomActionRequest
      */
     public function Link($action = null)
     {
-        return $this->controller->Link('nestedform');
+        return $this->parent->Link('nestedform');
     }
 
     /**
@@ -90,8 +90,8 @@ class NestedFormRequest extends CustomActionRequest
      * for the method that the BetterButtonNestedForm button has been configured
      * to use
      *
-     * @param  array $data    The form data
-     * @param  Form $form     The nested form object
+     * @param  array $data The form data
+     * @param  Form $form The nested form object
      * @param  HTTPRequest $request
      * @return HTTPResponse
      */

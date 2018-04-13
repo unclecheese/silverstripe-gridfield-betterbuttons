@@ -19,7 +19,9 @@ class FrontendLinks extends Action
      */
     public function getButtonLink()
     {
-        return $this->gridFieldRequest->getRecord()->hasMethod('Link') ? $this->gridFieldRequest->getRecord()->Link() : "";
+        return $this->getGridFieldRequest()->getRecord()->hasMethod('Link')
+            ? $this->getGridFieldRequest()->getRecord()->Link()
+            : "";
     }
 
     /**
@@ -28,7 +30,7 @@ class FrontendLinks extends Action
      */
     public function shouldDisplay()
     {
-        return $this->gridFieldRequest->getRecord() && $this->gridFieldRequest->getRecord()->hasMethod('Link');
+        return $this->getGridFieldRequest()->getRecord() && $this->getGridFieldRequest()->getRecord()->hasMethod('Link');
     }
 
     /**
@@ -44,10 +46,10 @@ class FrontendLinks extends Action
 
         return '<span class="better-buttons-frontend-links">
                     <a class="better-buttons-frontend-link" target="_blank" href="' . $stageLink . '">'
-                        ._t('GridFieldBetterButtons.VIEWONDRAFTSITE', 'Draft site').
-                    '</a> |
-                    <a class="better-buttons-frontend-link" target="_blank" href="' . $liveLink . '">'.
-                        _t('GridFieldBetterButtons.VIEWONLIVESITE', 'Live site').
-                    '</a></span>';
+            . _t('GridFieldBetterButtons.VIEWONDRAFTSITE', 'Draft site') .
+            '</a> |
+                    <a class="better-buttons-frontend-link" target="_blank" href="' . $liveLink . '">' .
+            _t('GridFieldBetterButtons.VIEWONLIVESITE', 'Live site') .
+            '</a></span>';
     }
 }

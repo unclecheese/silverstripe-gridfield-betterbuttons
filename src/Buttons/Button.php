@@ -2,7 +2,7 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
-use SilverStripe\Forms\Form;
+use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use UncleCheese\BetterButtons\Traits\Groupable;
@@ -17,26 +17,20 @@ use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
 abstract class Button extends FormAction implements BetterButtonInterface
 {
     use Groupable;
+    use Injectable;
+
+    /**
+     * @var array
+     */
+    private static $dependencies = [
+        'GridFieldRequest' => '%$' . GridFieldDetailForm_ItemRequest::class . '.betterbuttons',
+    ];
 
     /**
      * The request that points to the GridFieldDetailForm
      * @var GridFieldDetailForm_ItemRequest
      */
     protected $gridFieldRequest;
-
-    /**
-     * Bind to the GridField request
-     * @param Form $form
-     * @param GridFieldDetailForm_ItemRequest $request
-     * @return Button
-     */
-    public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request)
-    {
-        $this->setForm($form);
-        $this->gridFieldRequest = $request;
-
-        return $this;
-    }
 
     /**
      * Performs any last-minute transformations to the button in accordance with anything
@@ -85,7 +79,7 @@ abstract class Button extends FormAction implements BetterButtonInterface
      * @param array $properties
      * @return  string
      */
-    public function Field($properties = array ())
+    public function Field($properties = array())
     {
         if ($this->isGrouped()) {
             $this->transformToInput();
@@ -94,5 +88,24 @@ abstract class Button extends FormAction implements BetterButtonInterface
         }
 
         return parent::Field($properties);
+    }
+
+    /**
+     * @param GridFieldDetailForm_ItemRequest $request
+     * @return $this
+     */
+    public function setGridFieldRequest(GridFieldDetailForm_ItemRequest $request)
+    {
+        $this->gridFieldRequest = $request;
+
+        return $this;
+    }
+
+    /**
+     * @return GridFieldDetailForm_ItemRequest
+     */
+    public function getGridFieldRequest()
+    {
+        return $this->gridFieldRequest;
     }
 }

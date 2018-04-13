@@ -3,6 +3,7 @@
 namespace UncleCheese\BetterButtons\Actions;
 
 use SilverStripe\Core\Convert;
+use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use SilverStripe\Forms\LiteralField;
@@ -19,6 +20,14 @@ use UncleCheese\BetterButtons\Interfaces\BetterButtonInterface;
 class Action extends LiteralField implements BetterButtonInterface
 {
     use Groupable;
+    use Injectable;
+
+    /**
+     * @var array
+     */
+    private static $dependencies = [
+        'GridFieldRequest' => '%$' . GridFieldDetailForm_ItemRequest::class . '.betterbuttons',
+    ];
 
     /**
      * The form that this action is associated with
@@ -39,7 +48,6 @@ class Action extends LiteralField implements BetterButtonInterface
     protected $buttonName;
 
     /**
-     * The request that is associated with the gridfield
      * @var GridFieldDetailForm_ItemRequest
      */
     protected $gridFieldRequest;
@@ -52,20 +60,6 @@ class Action extends LiteralField implements BetterButtonInterface
     {
         $this->buttonText = $text;
         parent::__construct($this->getButtonName(), "");
-    }
-
-    /**
-     * Bind the button to the GridField request
-     * @param Form $form
-     * @param GridFieldDetailForm_ItemRequest $request
-     * @return $this
-     */
-    public function bindGridField(Form $form, GridFieldDetailForm_ItemRequest $request)
-    {
-        $this->setForm($form);
-        $this->gridFieldRequest = $request;
-
-        return $this;
     }
 
     /**
@@ -158,11 +152,31 @@ class Action extends LiteralField implements BetterButtonInterface
      * @param array $attributes
      * @return string
      */
-    public function FieldHolder($attributes = array ())
+    public function FieldHolder($attributes = array())
     {
         if ($this->shouldDisplay()) {
             $this->setContent($this->getButtonHTML());
             return parent::FieldHolder($attributes);
         }
     }
+
+    /**
+     * @param GridFieldDetailForm_ItemRequest $request
+     * @return $this
+     */
+    public function setGridFieldRequest(GridFieldDetailForm_ItemRequest $request)
+    {
+        $this->gridFieldRequest = $request;
+
+        return $this;
+    }
+
+    /**
+     * @return GridFieldDetailForm_ItemRequest
+     */
+    public function getGridFieldRequest()
+    {
+        return $this->gridFieldRequest;
+    }
+
 }

@@ -4,6 +4,8 @@ namespace UncleCheese\BetterButtons\Buttons;
 
 use SilverStripe\Forms\FormAction;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Versioned\Versioned;
 
 /**
  * Defines the button that rolls back the version of the record
@@ -41,8 +43,10 @@ class Rollback extends Button implements BetterButtonVersioned
      */
     public function shouldDisplay()
     {
-        return $this->gridFieldRequest->record->stagesDiffer('Stage', 'Live')
-            && $this->gridFieldRequest->recordIsPublished()
-            && $this->gridFieldRequest->record->canEdit();
+        /* @var DataObject|Versioned $record */
+        $record = $this->getGridFieldRequest()->getRecord();
+        return $record->stagesDiffer()
+            && $record->isPublished()
+            && $record->canEdit();
     }
 }

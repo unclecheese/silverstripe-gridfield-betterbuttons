@@ -44,9 +44,9 @@ class CustomAction extends Action
 
     /**
      * Builds the button
-     * @param string $actionName   The name of the action (method)
-     * @param string $text         The text for the button
-     * @param int    $redirectType The type of redirection on completion of the action
+     * @param string $actionName The name of the action (method)
+     * @param string $text The text for the button
+     * @param int $redirectType The type of redirection on completion of the action
      */
     public function __construct($actionName, $text, $redirectType = null)
     {
@@ -72,6 +72,7 @@ class CustomAction extends Action
      * See self::GOBACK and self::REFRESH constants
      *
      * @param int $type
+     * @return $this
      * @throws Exception if the redirect type is not supported
      */
     public function setRedirectType($type)
@@ -100,6 +101,7 @@ class CustomAction extends Action
      * Sets the redirect URL. Overrides $redirectType;
      *
      * @param string $url
+     * @return $this
      */
     public function setRedirectURL($url)
     {
@@ -127,6 +129,6 @@ class CustomAction extends Action
             'customaction',
             $this->actionName
         );
-        return $this->gridFieldRequest->Link($link);
+        return $this->getGridFieldRequest()->Link($link);
     }
 }

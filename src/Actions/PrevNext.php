@@ -4,8 +4,9 @@ namespace UncleCheese\BetterButtons\Actions;
 
 use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
-use UncleCheese\BetterButtons\Extensions\ItemRequest;
+use UncleCheese\BetterButtons\Controllers\ItemRequest;
 use SilverStripe\Control\Controller;
+
 /**
  * Defines a set of buttons that offers prev/next navigation from within a
  * GridField detail form
@@ -27,23 +28,22 @@ class PrevNext extends Action
 
         // Check if the gridfield as been filtered
         $params = [
-            'q' => (array)$this->gridFieldRequest->getRequest()->getVar('q')
+            'q' => (array)$this->getGridFieldRequest()->getRequest()->getVar('q')
         ];
 
         $searchVars = (bool)$params ? '?' . http_build_query($params) : '';
         /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
-        $gridFieldRequest = $this->gridFieldRequest;
-        $previousRecordID = $gridFieldRequest->getPreviousRecordID();
-        $cssClass = $previousRecordID ? "cms-panel-link" : "disabled";
-        $prevLink = $previousRecordID
+        $gridFieldRequest = $this->getGridFieldRequest();
+        $previousRecord = $gridFieldRequest->getPreviousRecord();
+        $cssClass = $previousRecord ? 'cms-panel-link' : 'disabled';
+        $prevLink = $previousRecord
             ? Controller::join_links(
-                $gridFieldRequest->gridField->Link(),
-                "item",
-                $previousRecordID . $searchVars
+                $gridFieldRequest->getGridField()->Link(),
+                'item',
+                $previousRecord->ID . $searchVars
             )
             : 'javascript:void(0);';
-        $linkTitle = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUSRECORD', 'Go to the previous record') : "";
-        $linkText = $previousRecordID ? _t('GridFieldBetterButtons.PREVIOUS', 'Previous') : "";
+        $linkTitle = $previousRecord ? _t('GridFieldBetterButtons.PREVIOUSRECORD', 'Go to the previous record') : "";
 
         $html .= sprintf(
             "<a class='ss-ui-button btn btn-default gridfield-better-buttons-prevnext gridfield-better-buttons-prev %s' href='%s' title='%s'><img src='%s' alt='previous'></a>",
@@ -53,12 +53,15 @@ class PrevNext extends Action
             ModuleResourceLoader::singleton()->resolveURL('unclecheese/betterbuttons:images/prev.png')
         );
 
-        $nextRecordID = $this->gridFieldRequest->getNextRecordID();
-        $cssClass = $nextRecordID ? "cms-panel-link" : "disabled";
-        $nextLink = $nextRecordID ? Controller::join_links($this->gridFieldRequest->gridField->Link(), "item", $nextRecordID . $searchVars) : "javascript:void(0);";
+        $nextRecord = $this->getGridFieldRequest()->getNextRecord();
+        $cssClass = $nextRecord ? "cms-panel-link" : "disabled";
+        $nextLink = $nextRecord ? Controller::join_links(
+            $this->getGridFieldRequest()->getGridField()->Link(),
+            'item',
+            $nextRecord->ID . $searchVars
+        ) : 'javascript:void(0);';
 
-        $linkTitle = $nextRecordID ? _t('GridFieldBetterButtons.NEXTRECORD', 'Go to the next record') : "";
-        $linkText = $nextRecordID ? _t('GridFieldBetterButtons.NEXT', 'Next') : "";
+        $linkTitle = $nextRecord ? _t('GridFieldBetterButtons.NEXTRECORD', 'Go to the next record') : "";
 
         $html .= sprintf(
             "<a class='ss-ui-button btn btn-default gridfield-better-buttons-prevnext gridfield-better-buttons-next %s' href='%s' title='%s'><img src='%s' alt='next'></a>",

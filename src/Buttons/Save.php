@@ -26,7 +26,7 @@ class Save extends Button
      */
     public function shouldDisplay()
     {
-        $record = $this->gridFieldRequest->record;
+        $record = $this->getGridFieldRequest()->getRecord();
 
         return $record->canEdit();
     }

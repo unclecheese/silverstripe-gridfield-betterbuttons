@@ -2,9 +2,9 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\Requirements;
-use UncleCheese\BetterButtons\Extensions\ItemRequest;
-use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 
 /**
  * Defines the button that deletes a record, with confirmation
@@ -44,8 +44,9 @@ class Delete extends Button
      */
     public function shouldDisplay()
     {
-        /* @var GridFieldDetailForm_ItemRequest|ItemRequest $gridFieldRequest */
-        $gridFieldRequest = $this->gridFieldRequest;
-        return !$gridFieldRequest->recordIsPublished() && $gridFieldRequest->getRecord()->canDelete();
+        /* @var DataObject|Versioned $record */
+        $record = $this->getGridFieldRequest()->getRecord();
+
+        return !$record->isPublished() && $record->canDelete();
     }
 }
