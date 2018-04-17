@@ -1,5 +1,8 @@
-Better Buttons for GridField
-====================================
+# Much of this module is getting merged into core
+https://github.com/silverstripe/silverstripe-admin/issues/436
+
+## But I want to use it now!
+If you're looking to use it in SS4 ahead of the merge, you can use [this branch](https://github.com/unclecheese/silverstripe-gridfield-betterbuttons/tree/feature/ss4-upgrade).
 
 [![Build Status](https://travis-ci.org/unclecheese/silverstripe-gridfield-betterbuttons.svg?branch=master)](https://travis-ci.org/unclecheese/silverstripe-gridfield-betterbuttons)
 
