@@ -111,8 +111,8 @@ class GridFieldBetterButtonsItemRequest extends DataExtension
         if ($this->owner->record->stat('better_buttons_enabled') !== true) {
             return false;
         }
-        Requirements::css(BETTER_BUTTONS_DIR.'/css/gridfield_betterbuttons.css');
-        Requirements::javascript(BETTER_BUTTONS_DIR.'/javascript/gridfield_betterbuttons.js');
+        Requirements::css('unclecheese/betterbuttons:css/gridfield_betterbuttons.css');
+        Requirements::javascript('unclecheese/betterbuttons:javascript/gridfield_betterbuttons.js');
 
 
         $actions = $this->owner->record->getBetterButtonsActions();
