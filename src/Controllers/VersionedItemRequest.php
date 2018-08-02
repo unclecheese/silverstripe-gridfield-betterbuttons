@@ -64,9 +64,14 @@ class VersionedItemRequest extends VersionedGridFieldItemRequest
         Requirements::css('unclecheese/betterbuttons:css/gridfield_betterbuttons.css');
         Requirements::javascript('unclecheese/betterbuttons:javascript/gridfield_betterbuttons.js');
 
-        $actions->merge(
-            $this->filterFieldList($record->getBetterButtonsActions())
-        );
+        $newButtons = $this->filterFieldList($record->getBetterButtonsActions());
+
+        if ($record->hasMethod("replaceDefaultButtons") &&
+            $record->replaceDefaultButtons() === true) {
+            $actions = $newButtons;
+        } else {
+            $actions->merge($newButtons);
+        }
 
         $utils = $record->getBetterButtonsUtils();
         $actions->push(

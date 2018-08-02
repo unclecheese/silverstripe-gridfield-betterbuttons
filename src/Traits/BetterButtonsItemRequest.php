@@ -245,6 +245,14 @@ trait BetterButtonsItemRequest
      */
     public function returnToList()
     {
+        $crumbs = $this->Breadcrumbs();
+        if ($crumbs && $crumbs->count() >= 2) {
+            $oneLevelUp = $crumbs->offsetGet($crumbs->count() - 2);
+            $controller = $this->getToplevelController();
+            $controller->getRequest()->addHeader('X-Pjax', 'Content');
+            return $controller->redirect($oneLevelUp->Link, 302);
+        }
+
         $oldID = $this->getRecord()->ID;
         // Hack the ID so the record isn't found in the list
         $this->getRecord()->ID = -1;
