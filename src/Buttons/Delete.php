@@ -33,7 +33,7 @@ class Delete extends Button
 
         return $this
             ->setUseButtonTag(true)
-            ->addExtraClass('btn-danger-outline btn-hide-outline font-icon-trash-bin gridfield-better-buttons-delete')
+            ->addExtraClass('btn-outline-danger btn-hide-outline font-icon-trash-bin gridfield-better-buttons-delete')
             ->setAttribute("data-toggletext", _t('GridFieldBetterButtons.AREYOUSURE', 'Yes. Delete this item.'))
             ->setAttribute("data-confirmtext", _t('GridFieldDetailForm.CANCELDELETE', 'No. Don\'t delete.'));
     }
