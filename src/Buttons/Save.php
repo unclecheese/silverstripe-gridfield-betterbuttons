@@ -18,7 +18,7 @@ class Save extends Button
      */
     public function __construct()
     {
-        parent::__construct('save', _t(GridFieldDetailForm::class . '.Save', 'Save'));
+        parent::__construct('doSave', _t(GridFieldDetailForm::class . '.Save', 'Save'));
     }
 
     /**
