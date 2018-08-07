@@ -3,6 +3,7 @@
 namespace UncleCheese\BetterButtons\Buttons;
 
 use SilverStripe\Forms\Form;
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
 use UncleCheese\BetterButtons\Traits\SaveAndAddTransforms;
@@ -25,7 +26,7 @@ class PublishAndAdd extends Button implements BetterButtonVersioned
      */
     public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request)
     {
-        parent::__construct('doPublishAndAdd', _t('GridFieldDetailForm.PUBLISHANDADD', 'Publish and add new'));
+        parent::__construct('doPublishAndAdd', _t(GridFieldDetailForm::class . '.PUBLISHANDADD', 'Publish and add new'));
     }
 
     /**

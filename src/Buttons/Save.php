@@ -3,11 +3,12 @@
 namespace UncleCheese\BetterButtons\Buttons;
 
 use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
 
 /**
  * Defines the button that saves a record
  *
- * @author  Uncle Cheese <unclecheese@leftandmain.com>
+ * @author   Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
 class Save extends Button
@@ -17,11 +18,12 @@ class Save extends Button
      */
     public function __construct()
     {
-        parent::__construct('save', _t('GridFieldDetailForm.SAVE', 'Save'));
+        parent::__construct('save', _t(GridFieldDetailForm::class . '.Save', 'Save'));
     }
 
     /**
      * Determines if the button should show
+     *
      * @return boolean
      */
     public function shouldDisplay()
@@ -33,6 +35,7 @@ class Save extends Button
 
     /**
      * Adds the appropriate icon and style
+     *
      * @return FormAction
      */
     public function transformToButton()

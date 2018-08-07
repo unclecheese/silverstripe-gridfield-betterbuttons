@@ -2,6 +2,7 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\Requirements;
@@ -19,7 +20,7 @@ class Delete extends Button
      */
     public function __construct()
     {
-        parent::__construct('doDelete', _t('GridFieldDetailForm.Delete', 'Delete'));
+        parent::__construct('doDelete', _t(GridFieldDetailForm::class . '.Delete', 'Delete'));
     }
 
     /**

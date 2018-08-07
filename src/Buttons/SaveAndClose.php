@@ -2,6 +2,7 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use UncleCheese\BetterButtons\Traits\SaveAndCloseTransforms;
 
 /**
@@ -19,7 +20,7 @@ class SaveAndClose extends Button
      */
     public function __construct()
     {
-        parent::__construct("doSaveAndQuit", _t('GridFieldDetailForm.SAVEANDCLOSE', 'Save and close'));
+        parent::__construct("doSaveAndQuit", _t(GridFieldDetailForm::class .'.SAVEANDCLOSE', 'Save and close'));
     }
 
     /**
