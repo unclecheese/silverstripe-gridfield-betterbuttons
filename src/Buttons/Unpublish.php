@@ -32,7 +32,7 @@ class Unpublish extends Button implements BetterButtonVersioned
     {
         parent::baseTransform();
 
-        return $this->addExtraClass('ss-ui-action-destructive');
+        return $this->addExtraClass('btn-outline-danger');
     }
 
     /**
