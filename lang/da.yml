@@ -1,0 +1,9 @@
+da:
+  GridFieldBetterButtons:
+    NEWRECORD: 'Ny'
+    PUBLISHANDADD: 'Udgiv og tilføj ny'
+    PUBLISHANDQUITE: 'Udgiv og luk'
+    SAVEANDADDNEW: 'Gem og tilføj ny'
+    SAVEANDCLOSE: 'Gem og luk'
+    SAVEANDNEXT: 'Gem og gå til næste'
+    SAVEANDPREV: 'Gem og gå til forrige'
