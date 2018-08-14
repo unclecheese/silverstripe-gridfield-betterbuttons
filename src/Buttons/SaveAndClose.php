@@ -20,7 +20,7 @@ class SaveAndClose extends Button
      */
     public function __construct()
     {
-        parent::__construct("doSaveAndQuit", _t(GridFieldDetailForm::class .'.SAVEANDCLOSE', 'Save and close'));
+        parent::__construct("doSaveAndQuit", _t('GridFieldBetterButtons.SAVEANDCLOSE', 'Save and close'));
     }
 
     /**

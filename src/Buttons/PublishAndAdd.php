@@ -26,7 +26,7 @@ class PublishAndAdd extends Button implements BetterButtonVersioned
      */
     public function __construct(Form $form, GridFieldDetailForm_ItemRequest $request)
     {
-        parent::__construct('doPublishAndAdd', _t(GridFieldDetailForm::class . '.PUBLISHANDADD', 'Publish and add new'));
+        parent::__construct('doPublishAndAdd', _t('GridFieldBetterButtons.PUBLISHANDADD', 'Publish and add new'));
     }
 
     /**

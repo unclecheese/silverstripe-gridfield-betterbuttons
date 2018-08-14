@@ -18,7 +18,7 @@ class Publish extends Button
      */
     public function __construct()
     {
-        parent::__construct('doPublish', _t(GridFieldDetailForm::class . '.Publish', 'Publish'));
+        parent::__construct('doPublish', _t('SilverStripe\Versioned\VersionedGridFieldItemRequest.BUTTONPUBLISH', 'Publish'));
     }
 
     /**

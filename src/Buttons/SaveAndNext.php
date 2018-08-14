@@ -20,7 +20,7 @@ class SaveAndNext extends Button
      */
     public function __construct()
     {
-        parent::__construct("doSaveAndNext", _t(GridFieldDetailForm::class . '.SAVEANDNEXT', 'Save and go to next record'));
+        parent::__construct("doSaveAndNext", _t('GridFieldBetterButtons.SAVEANDNEXT', 'Save and go to next record'));
     }
 
     /**

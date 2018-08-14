@@ -20,7 +20,7 @@ class Archive extends Button
      */
     public function __construct()
     {
-        parent::__construct('doArchive', _t(GridFieldDetailForm::class . '.Archive', 'Archive'));
+        parent::__construct('doArchive', _t('SilverStripe\Versioned\VersionedGridFieldItemRequest.ARCHIVE', 'Archive'));
     }
 
     /**

@@ -20,7 +20,7 @@ class SaveAndPrev extends Button
      */
     public function __construct()
     {
-        parent::__construct("doSaveAndPrev", _t(GridFieldDetailForm::class . '.SAVEANDPREV', 'Save and go to previous record'));
+        parent::__construct("doSaveAndPrev", _t('GridFieldBetterButtons.SAVEANDPREV', 'Save and go to previous record'));
     }
 
     /**

@@ -21,7 +21,7 @@ class PublishAndClose extends Button implements BetterButtonVersioned
      */
     public function __construct()
     {
-        return parent::__construct('doPublishAndQuit', _t(GridFieldDetailForm::class . '.PUBLISHANDQUITE', 'Publish and close'));
+        return parent::__construct('doPublishAndQuit', _t('GridFieldBetterButtons.PUBLISHANDQUITE', 'Publish and close'));
     }
 
     /**
