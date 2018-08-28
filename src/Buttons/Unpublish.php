@@ -2,6 +2,7 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Versioned\Versioned;
@@ -20,7 +21,7 @@ class Unpublish extends Button implements BetterButtonVersioned
      */
     public function __construct()
     {
-        parent::__construct('unpublish', _t('SiteTree.BUTTONUNPUBLISH', 'Unpublish'));
+        parent::__construct('unpublish', _t(SiteTree::class . '.BUTTONUNPUBLISH', 'Unpublish'));
     }
 
     /**
@@ -31,7 +32,7 @@ class Unpublish extends Button implements BetterButtonVersioned
     {
         parent::baseTransform();
 
-        return $this->addExtraClass('ss-ui-action-destructive');
+        return $this->addExtraClass('btn-outline-danger');
     }
 
     /**

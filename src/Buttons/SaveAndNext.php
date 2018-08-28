@@ -3,6 +3,7 @@
 namespace UncleCheese\BetterButtons\Buttons;
 
 use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use UncleCheese\BetterButtons\Controllers\ItemRequest;
 
@@ -19,7 +20,7 @@ class SaveAndNext extends Button
      */
     public function __construct()
     {
-        parent::__construct("doSaveAndNext", _t('GridFieldDetailForm.SAVEANDNEXT', 'Save and go to next record'));
+        parent::__construct("doSaveAndNext", _t('GridFieldBetterButtons.SAVEANDNEXT', 'Save and go to next record'));
     }
 
     /**

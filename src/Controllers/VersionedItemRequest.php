@@ -54,28 +54,33 @@ class VersionedItemRequest extends VersionedGridFieldItemRequest
      */
     protected function getFormActions()
     {
-        $actions = parent::getFormActions();
-        /* @var DataObject|BetterButtons $record */
-        $record = $this->getRecord();
-        if ($record->config()->get('better_buttons_enabled') !== true) {
-            return $actions;
-        }
-
         Requirements::css('unclecheese/betterbuttons:css/gridfield_betterbuttons.css');
         Requirements::javascript('unclecheese/betterbuttons:javascript/gridfield_betterbuttons.js');
+        //$actions = parent::getFormActions();
+        $this->beforeExtending('updateFormActions', function(&$list) {
+            /* @var DataObject|BetterButtons $record */
+            $record = $this->getRecord();
+            if ($record->config()->get('better_buttons_enabled') !== true) {
+                return $list;
+            }
 
-        $actions->merge(
-            $this->filterFieldList($record->getBetterButtonsActions())
-        );
+            if (method_exists($record, "mergeBetterButtonsActions")) {
+                $list->merge($this->filterFieldList($record->mergeBetterButtonsActions()));
+            } else {
+                $list = $this->filterFieldList($record->getBetterButtonsActions());
+            }
 
-        $utils = $record->getBetterButtonsUtils();
-        $actions->push(
-            CompositeField::create(
-                $this->filterFieldList($utils)
-            )->addExtraClass('better-buttons-utils')
-        );
+            $utils = $record->getBetterButtonsUtils();
+            $list->push(
+                CompositeField::create(
+                    $this->filterFieldList($utils)
+                )->addExtraClass('better-buttons-utils')
+            );
 
-        return $actions;
+        });
+
+
+        return parent::getFormActions();
     }
 
     /**

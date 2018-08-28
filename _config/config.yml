@@ -28,6 +28,9 @@ UncleCheese\BetterButtons\Extensions\BetterButtons:
       delete: true
       frontendLinks: true
     versioned_edit:
+      save: true
+      publish: true
+#      publishAndClose: true
 #      saveAndAdd: true
 #      saveAndNext: true
 #      saveAndPrev: true
@@ -36,6 +39,8 @@ UncleCheese\BetterButtons\Extensions\BetterButtons:
         label: Versioning...
         buttons:
           rollback: true
+      archive: true
+      unpublish: true
       frontendLinks: true
 ---
 Only:

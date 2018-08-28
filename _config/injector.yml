@@ -4,6 +4,8 @@ Name: betterbuttonsinjector
 SilverStripe\Core\Injector\Injector:
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.delete:
     class: UncleCheese\BetterButtons\Buttons\Delete
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.archive:
+    class: UncleCheese\BetterButtons\Buttons\Archive
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.create:
     class: UncleCheese\BetterButtons\Buttons\Create
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.publishAndAdd:
@@ -14,6 +16,8 @@ SilverStripe\Core\Injector\Injector:
     class: UncleCheese\BetterButtons\Buttons\Rollback
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.save:
     class: UncleCheese\BetterButtons\Buttons\Save
+  UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.publish:
+    class: UncleCheese\BetterButtons\Buttons\Publish
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.unpublish:
     class: UncleCheese\BetterButtons\Buttons\Unpublish
   UncleCheese\BetterButtons\Interfaces\BetterButtonInterface.saveAndAdd:

@@ -3,6 +3,8 @@
 namespace UncleCheese\BetterButtons\Traits;
 
 use Exception;
+use SilverStripe\Admin\ModelAdmin;
+use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\RequestHandler;
@@ -245,6 +247,36 @@ trait BetterButtonsItemRequest
      */
     public function returnToList()
     {
+        $crumbs = $this->Breadcrumbs();
+        if ($crumbs && $crumbs->count() >= 2) {
+            $oneLevelUp = $crumbs->offsetGet($crumbs->count() - 2);
+            $controller = $this->getToplevelController();
+            $controller->getRequest()->addHeader('X-Pjax', 'Content');
+            $url = $oneLevelUp->Link;
+
+            // TODO make a proper solution for this
+            // HORRIBLE Hack to save filter params in ModelAdmin detail view
+            // Better buttons does not maintain the filter params set in URL
+            if($controller instanceof ModelAdmin){
+                $backURL = $this->getGridField()->getRequest()->postVar('BackURL');
+                $parts = explode("?q", $backURL);
+
+                // Dumb assumption that filter params not exist
+                if(!isset($parts[1])){
+                    return $controller->redirect($url, 302);
+                }
+
+                $paramsString = $parts[1];
+
+                $url = Controller::join_links(
+                    $url,
+                    '?q' . $paramsString
+                );
+            }
+
+            return $controller->redirect($url, 302);
+        }
+
         $oldID = $this->getRecord()->ID;
         // Hack the ID so the record isn't found in the list
         $this->getRecord()->ID = -1;

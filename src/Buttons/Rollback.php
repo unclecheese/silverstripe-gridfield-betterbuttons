@@ -2,6 +2,7 @@
 
 namespace UncleCheese\BetterButtons\Buttons;
 
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FormAction;
 use UncleCheese\BetterButtons\Interfaces\BetterButtonVersioned;
 use SilverStripe\ORM\DataObject;
@@ -20,7 +21,7 @@ class Rollback extends Button implements BetterButtonVersioned
      */
     public function __construct()
     {
-        parent::__construct('rollback', _t('SiteTree.BUTTONCANCELDRAFT', 'Cancel draft changes'));
+        parent::__construct('rollback', _t(SiteTree::class . '.BUTTONCANCELDRAFT', 'Cancel draft changes'));
     }
 
     /**

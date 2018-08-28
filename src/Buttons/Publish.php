@@ -11,14 +11,14 @@ use SilverStripe\Forms\GridField\GridFieldDetailForm;
  * @author   Uncle Cheese <unclecheese@leftandmain.com>
  * @package  silverstripe-gridfield-betterbuttons
  */
-class Save extends Button
+class Publish extends Button
 {
     /**
      * Builds the button
      */
     public function __construct()
     {
-        parent::__construct('doSave', _t(GridFieldDetailForm::class . '.Save', 'Save'));
+        parent::__construct('doPublish', _t('SilverStripe\Versioned\VersionedGridFieldItemRequest.BUTTONPUBLISH', 'Publish'));
     }
 
     /**
