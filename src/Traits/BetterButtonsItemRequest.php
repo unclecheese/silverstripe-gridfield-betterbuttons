@@ -269,7 +269,7 @@ trait BetterButtonsItemRequest
                 $paramsString = $parts[1];
 
                 $url = Controller::join_links(
-                    $controller->Link(),
+                    $url,
                     '?q' . $paramsString
                 );
             }
