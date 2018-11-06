@@ -25,15 +25,6 @@ $.entwine('ss', function($) {
 			}
 			this._super(e);
 		}
-	});
-
-	// This kills the publish/save button switch that happens on blur in CMSMain.
-	$('.better-buttons-form.cms-edit-form.changed').entwine({
-		onmatch: function(e) {
-		},
-		onunmatch: function(e) {
-		}
-	});
-
+	})	
 });
 })(jQuery);
