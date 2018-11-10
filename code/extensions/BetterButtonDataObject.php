@@ -177,9 +177,11 @@ class BetterButtonDataObject extends DataExtension {
     protected function createButtonGroup($groupName) {        
         $groupConfig = Config::inst()->get("BetterButtonsGroups", $groupName);
         $label = (isset($groupConfig['label'])) ? $groupConfig['label'] : $groupName;
+        $icon = (isset($groupConfig['icon'])) ? $groupConfig['icon'] : '';
         $buttons = (isset($groupConfig['buttons'])) ? $groupConfig['buttons'] : array ();
         $button = DropdownFormAction::create(_t('GridFieldBetterButtons.'.$groupName, $label));
-        foreach($buttons as $b => $bool) {              
+        if ($icon !== '') $button->setAttribute('data-icon', $icon);
+        foreach($buttons as $b => $bool) {
             if($bool) {
                 if($child = $this->instantiateButton($b)) {
                     $button->push($child);

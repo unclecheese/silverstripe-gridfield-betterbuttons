@@ -48,6 +48,7 @@ BetterButtonsGroups:
       BetterButton_SaveAndPrev: true
   Versioning:
     label: Versioning...
+    icon: arrow-circle-double
     buttons:
       BetterButton_Rollback: true
       BetterButton_Unpublish: true
