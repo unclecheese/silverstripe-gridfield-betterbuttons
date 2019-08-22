@@ -47,6 +47,11 @@ class Delete extends Button
         /* @var DataObject|Versioned $record */
         $record = $this->getGridFieldRequest()->getRecord();
 
-        return !$record->isPublished() && $record->canDelete();
+        $isVersioned = $record && $record->hasExtension(Versioned::class);
+
+        // Considered published if this record is not versioned
+        $isPublished = $isVersioned ? $record->isPublished() : true;
+
+        return !$isPublished && $record->canDelete();
     }
 }
