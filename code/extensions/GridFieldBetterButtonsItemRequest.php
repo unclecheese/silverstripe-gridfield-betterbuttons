@@ -445,6 +445,21 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		return $backlink;
 	}
 
+	protected function getExtraSavedData($record, $list) {
+		// Skip extra data if not ManyManyList
+		if(!($list instanceof ManyManyList)) {
+			return null;
+		}
+
+		$data = array();
+		foreach($list->getExtraFields() as $field => $dbSpec) {
+			$savedField = "ManyMany[{$field}]";
+			if($record->hasField($savedField)) {
+				$data[$field] = $record->getField($savedField);
+			}
+		}
+		return $data;
+	}
 
 	/**
 	 * Oh, the horror! DRY police be advised. This function is a serious offender.
@@ -460,13 +475,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		$controller = Controller::curr();
 		$list = $this->owner->gridField->getList();
 
-		if($list instanceof ManyManyList) {
-			// Data is escaped in ManyManyList->add()
-			$extraData = (isset($data['ManyMany'])) ? $data['ManyMany'] : null;
-		} else {
-			$extraData = null;
-		}
-
 		if(!$this->owner->record->canEdit()) {
 			return $controller->httpError(403);
 		}
@@ -474,7 +482,11 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
 		try {
 			$form->saveInto($this->owner->record);
 			$this->owner->record->write();
-			$list->add($this->owner->record, $extraData);
+
+			if($list instanceof ManyManyList) {
+				$extraData = $this->getExtraSavedData($this->owner->record, $list);
+				$list->add($this->owner->record, $extraData);
+			}
 		} catch(ValidationException $e) {
 			$form->sessionMessage($e->getResult()->message(), 'bad');
 			$responseNegotiator = new PjaxResponseNegotiator(array(
