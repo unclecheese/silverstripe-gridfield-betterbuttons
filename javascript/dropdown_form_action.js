@@ -61,6 +61,11 @@ $.entwine('ss', function($) {
 			}
 
 			this._super();
+		},
+
+		onmouseup: function() {
+		    $("[data-form-action-dropdown]").addClass('loading');
+		    this._super();
 		}
 
 	});
