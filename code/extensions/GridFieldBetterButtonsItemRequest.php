@@ -103,7 +103,6 @@ class GridFieldBetterButtonsItemRequest extends DataExtension {
         $utils = $this->owner->record->getBetterButtonsUtils();
 		$form->Utils = $this->filterFieldList($form, $utils);
 		$form->setTemplate('BetterButtons_EditForm');
-		$form->addExtraClass('better-buttons-form');
 	}
 
 

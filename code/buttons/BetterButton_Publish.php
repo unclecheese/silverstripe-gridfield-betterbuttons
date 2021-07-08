@@ -54,7 +54,7 @@ class BetterButton_Publish extends BetterButton implements BetterButton_Versione
             $this->setTitle(_t('SiteTree.BUTTONPUBLISHED', 'Published'));
         }
 
-        if($this->gridFieldRequest->record->stagesDiffer('Stage','Live') && $this->gridFieldRequest->recordIsDeletedFromStage()) {
+        if($this->gridFieldRequest->record->stagesDiffer('Stage','Live')) {
             $this->addExtraClass('ss-ui-alternate');
         }
 
